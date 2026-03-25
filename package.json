@@ -30,6 +30,7 @@
     },
     "linux": {
       "target": [
+        "deb",
         "zip"
       ],
       "category": "AudioVideo",
