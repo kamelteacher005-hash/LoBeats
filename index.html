@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LoBeats is a Lo-Fi-first desktop radio player with curated chill stations, custom stream support, and expressive visual themes.">
+  <title>LoBeats - Lo-Fi Radio Desktop Player</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="backdrop"></div>
+
+  <header class="hero">
+    <div class="hero-shell">
+      <p class="eyebrow">LoBeats v1.0.0</p>
+      <h1>Your Lo-Fi corner on desktop.</h1>
+      <p class="lead">LoBeats is built around Lo-Fi listening first: curated chill stations, distraction-free playback, and visuals designed for focus, coding, and late-night sessions.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/alnyxcs/LoBeats/releases/latest/download/LoBeats-windows.exe">Download for Windows</a>
+        <a class="btn btn-ghost" href="https://github.com/alnyxcs/LoBeats/releases/latest/download/LoBeats-linux.zip">Download for Linux</a>
+        <a class="btn btn-ghost" href="https://github.com/alnyxcs/LoBeats" target="_blank" rel="noreferrer">View Source</a>
+      </div>
+      <div class="hero-metrics">
+        <span>6 Lo-Fi Stations</span>
+        <span>10 Themes</span>
+        <span>Weather FX Pack</span>
+        <span>Desktop App</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Lo-Fi First Experience</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3>Curated Lo-Fi Core</h3>
+          <p>Starts with handpicked Lo-Fi streams so you can hit play and instantly land in a calm, productive vibe.</p>
+        </article>
+        <article class="card">
+          <h3>Lo-Fi + Anything Else</h3>
+          <p>Stay Lo-Fi by default, then add any extra internet radio stream and organize it in your own sections.</p>
+        </article>
+        <article class="card">
+          <h3>Mood-Driven Visuals</h3>
+          <p>Reactive Glass, Theme Aura, Weather FX, Pixel Mode, Pulse, and Ambient Noise shape the atmosphere around your music.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Built-in Lo-Fi Stations</h2>
+      <div class="grid three">
+        <article class="card station-card"><span class="station-tag">01</span><h3>24/7 Lofi Radio</h3><p>Always-on mellow beats.</p></article>
+        <article class="card station-card"><span class="station-tag">02</span><h3>Hotmix LoFi</h3><p>Smooth chillhop and relaxed grooves.</p></article>
+        <article class="card station-card"><span class="station-tag">03</span><h3>LoFi 320kbps</h3><p>Higher bitrate stream for cleaner sound.</p></article>
+        <article class="card station-card"><span class="station-tag">04</span><h3>Chillsky Chillhop</h3><p>Warm instrumental loops and soft drums.</p></article>
+        <article class="card station-card"><span class="station-tag">05</span><h3>PsyBrazil LoFi</h3><p>Lo-Fi with a unique regional touch.</p></article>
+        <article class="card station-card"><span class="station-tag">06</span><h3>Box Lofi Radio</h3><p>Balanced study beats for long sessions.</p></article>
+      </div>
+    </section>
+
+    <section class="panel split">
+      <div>
+        <h2>Quick Start</h2>
+        <pre><code>git clone https://github.com/alnyxcs/LoBeats.git
+cd flowtune
+npm install
+npm start</code></pre>
+      </div>
+      <div>
+        <h2>Build</h2>
+        <pre><code>npm run build</code></pre>
+        <p class="muted">Release assets: <code>LoBeats-windows.exe</code> and <code>LoBeats-linux.zip</code> (always latest)</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made for focused listening. Licensed under ISC.</p>
+  </footer>
+</body>
+</html>

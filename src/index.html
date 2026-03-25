@@ -1,0 +1,3342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src * blob:; img-src 'self' data:;">
+    <title>LoBeats</title>
+    <style>
+        :root {
+            --md-sys-color-primary: #e8def8;
+            --md-sys-color-on-primary: #381e72;
+            --md-sys-color-primary-container: #4f378b;
+            --md-sys-color-on-primary-container: #eaddff;
+            --md-sys-color-secondary: #ccc2dc;
+            --md-sys-color-on-secondary: #332d41;
+            --md-sys-color-surface: #1c1b1f;
+            --md-sys-color-surface-variant: #49454f;
+            --md-sys-color-on-surface: #e6e1e5;
+            --md-sys-color-on-surface-variant: #cac4d0;
+            --md-sys-color-outline: #938f99;
+            --md-sys-color-background: #1c1b1f;
+            --md-shape-corner-none: 0;
+            --md-shape-corner-extra-small: 4px;
+            --md-shape-corner-small: 8px;
+            --md-shape-corner-medium: 12px;
+            --md-shape-corner-large: 16px;
+            --md-shape-corner-extra-large: 28px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: var(--md-sys-color-background);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--md-sys-color-on-surface);
+            overflow: hidden;
+            border-radius: var(--md-shape-corner-large);
+        }
+
+        .title-bar,
+        .tabs,
+        .tab-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .title-bar {
+            -webkit-app-region: drag;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: transparent;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--md-sys-color-on-surface-variant);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--md-sys-color-primary);
+        }
+
+        .window-controls {
+            -webkit-app-region: no-drag;
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-btn {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .window-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .minimize-btn {
+            background: #f1c40f;
+        }
+
+        .close-btn {
+            background: #e74c3c;
+        }
+
+        .player {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 16px 16px;
+            gap: 12px;
+        }
+
+        .now-playing-card {
+            width: 100%;
+            background: linear-gradient(135deg, var(--md-card-bg, #2d2a3e) 0%, var(--md-sys-color-surface, #1a1625) 100%);
+            border-radius: var(--md-shape-corner-extra-large);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reactive-glass .now-playing-card {
+            background: color-mix(in srgb, var(--md-sys-color-surface) 72%, transparent);
+            border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 30%, white 10%);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 12px calc(26px + var(--reactive-energy, 0) * 22px) rgba(0, 0, 0, 0.35);
+            transform: translateY(calc(var(--reactive-energy, 0) * -1.5px));
+            transition: box-shadow 0.12s linear, transform 0.12s linear, border-color 0.2s ease;
+        }
+
+        .now-playing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(180deg, var(--md-sys-color-primary-container, rgba(79, 55, 139, 0.3)) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .vinyl-container {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vinyl {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #1a1625 20%, #2d2a3e 21%, #1a1625 22%, #2d2a3e 23%, #1a1625 24%, #2d2a3e 25%, #1a1625 26%, #2d2a3e 27%, #1a1625 28%, #2d2a3e 29%, #1a1625 30%, #2d2a3e 70%, #1a1625 71%, #2d2a3e 72%, #1a1625 73%, #2d2a3e 74%, #1a1625 75%, #2d2a3e 76%, #1a1625 77%, #2d2a3e 78%, #1a1625 79%, #2d2a3e 80%, #1a1625 100%);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .vinyl.playing {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .visualizer {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 4px;
+            padding: 0 20px;
+        }
+
+        .visualizer-bar {
+            width: 6px;
+            background: linear-gradient(180deg, var(--md-visualizer, #e8def8) 0%, var(--md-visualizer-end, #4f378b) 100%);
+            border-radius: 3px;
+            transition: height 0.05s ease;
+        }
+
+        .visualizer.circle {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visualizer.circle .visualizer-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: all 0.1s ease;
+        }
+
+        .vinyl-center {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e8def8 0%, #4f378b 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .station-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            text-align: center;
+        }
+
+        .station-url {
+            font-size: 13px;
+            color: var(--md-sys-color-on-surface-variant);
+            text-align: center;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--md-sys-color-on-surface-variant);
+        }
+
+        .status-dot.playing {
+            background: #4caf50;
+            animation: none;
+        }
+
+        .now-playing-pulse .status-dot.playing {
+            position: relative;
+            background: var(--md-sys-color-primary);
+            animation: none;
+        }
+
+        .now-playing-pulse .status-dot.playing::before,
+        .now-playing-pulse .status-dot.playing::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 1px solid var(--md-sys-color-primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: now-pulse 1.8s ease-out infinite;
+        }
+
+        .now-playing-pulse .status-dot.playing::after {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes now-pulse {
+            0% {
+                transform: scale(0.6);
+                opacity: 0.65;
+            }
+            100% {
+                transform: scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .play-btn {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        .play-btn svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--md-sys-color-on-primary);
+        }
+
+        .volume-section {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--md-shape-corner-large);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .volume-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--md-sys-color-on-surface-variant);
+            flex-shrink: 0;
+        }
+
+        .volume-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 20px;
+            background: transparent;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .volume-slider::-webkit-slider-runnable-track {
+            height: 6px;
+            background: linear-gradient(90deg, var(--md-sys-color-primary-container, #4f378b) 0%, var(--md-sys-color-primary, #e8def8) 100%);
+            border-radius: 3px;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--md-sys-color-surface, #fff);
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--md-sys-color-primary, #4f378b);
+            transition: transform 0.2s;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .volume-slider::-moz-range-track {
+            height: 6px;
+            background: linear-gradient(90deg, var(--md-sys-color-primary-container, #4f378b) 0%, var(--md-sys-color-primary, #e8def8) 100%);
+            border-radius: 3px;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--md-sys-color-surface, #fff);
+            cursor: pointer;
+            border: 2px solid var(--md-sys-color-primary, #4f378b);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .volume-value {
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .add-station {
+            display: none;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            padding: 0 16px;
+            margin-bottom: 8px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 20px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            background: color-mix(in srgb, var(--md-sys-color-primary) 18%, transparent);
+            color: var(--md-sys-color-primary);
+        }
+
+        .tab-content {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 16px 16px;
+            gap: 12px;
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        .station-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        .station-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .station-list::-webkit-scrollbar-track {
+            background: var(--md-sys-color-surface-variant, rgba(255, 255, 255, 0.05));
+            border-radius: 3px;
+        }
+
+        .station-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
+            border-radius: 3px;
+        }
+
+        .station-list::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
+            opacity: 0.8;
+        }
+
+        #settingsTab {
+            scrollbar-width: thin;
+            scrollbar-color: var(--md-sys-color-primary, #e8def8) var(--md-sys-color-surface-variant, rgba(255, 255, 255, 0.05));
+        }
+
+        #settingsTab::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #settingsTab::-webkit-scrollbar-track {
+            background: var(--md-sys-color-surface-variant, rgba(255, 255, 255, 0.05));
+            border-radius: 3px;
+        }
+
+        #settingsTab::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
+            border-radius: 3px;
+        }
+
+        #settingsTab::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
+            opacity: 0.8;
+        }
+
+        .library-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            gap: 12px;
+        }
+
+        .station-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--md-shape-corner-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .station-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .station-item.active {
+            background: rgba(232, 222, 248, 0.15);
+            border: 1px solid rgba(232, 222, 248, 0.3);
+        }
+
+        .station-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--md-sys-color-primary-container, #4f378b) 0%, var(--md-card-bg, #2d2a3e) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .station-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--md-sys-color-primary, #e8def8);
+        }
+
+        .station-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .station-item-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .station-item-url {
+            font-size: 11px;
+            color: var(--md-sys-color-on-surface-variant);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .station-health {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 3px;
+            font-size: 10px;
+            color: var(--md-sys-color-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .health-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #8a8a8a;
+        }
+
+        .health-dot.online {
+            background: #4ade80;
+        }
+
+        .health-dot.slow {
+            background: #f59e0b;
+        }
+
+        .health-dot.offline {
+            background: #f87171;
+        }
+
+        .category-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 0 6px;
+            width: 100%;
+        }
+
+        .library-header {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
+        .library-header input {
+            min-width: 0;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: var(--md-shape-corner-medium);
+            color: var(--md-sys-color-on-surface);
+            font-size: 13px;
+            outline: none;
+        }
+
+        .library-header input:focus {
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .library-header input::placeholder {
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .library-header .add-btn {
+            padding: 10px 12px;
+            min-width: 72px;
+        }
+
+        .add-btn {
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: var(--md-shape-corner-medium);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.08) 100%);
+            color: var(--md-sys-color-on-surface);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .add-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.12) 100%);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .add-btn:active {
+            transform: scale(0.98);
+        }
+
+        .station-actions {
+            display: none;
+        }
+
+        .station-list {
+            overflow-x: hidden;
+        }
+
+        .tab-content {
+            overflow-x: hidden;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-delete-btn {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .action-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .action-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .edit-btn {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .edit-btn svg {
+            fill: var(--md-sys-color-on-surface-variant);
+        }
+
+        .delete-btn {
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        .delete-btn:hover {
+            background: rgba(231, 76, 60, 0.4);
+        }
+
+        .delete-btn svg {
+            fill: #e74c3c;
+        }
+
+        .settings-section {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--md-shape-corner-large);
+        }
+
+        .settings-section + .settings-section {
+            margin-top: 10px;
+        }
+
+        .settings-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .theme-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .theme-preview {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-preview.dark {
+            background: linear-gradient(135deg, #1c1b1f 0%, #4f378b 50%, #2d2a3e 100%);
+        }
+
+        .theme-preview.light {
+            background: linear-gradient(135deg, #fffbfe 0%, #e7e0ec 50%, #f5f0ff 100%);
+            border: 1px solid #e7e0ec;
+        }
+
+        .theme-preview.midnight {
+            background: linear-gradient(135deg, #0d1117 0%, #58a6ff 50%, #161b22 100%);
+        }
+
+        .theme-preview.ocean {
+            background: linear-gradient(135deg, #0c4a6e 0%, #38bdf8 50%, #164e63 100%);
+        }
+
+        .theme-preview.sunset {
+            background: linear-gradient(135deg, #1f090e 0%, #fb7185 50%, #3f121c 100%);
+        }
+
+        .theme-preview.forest {
+            background: linear-gradient(135deg, #0f1f16 0%, #4ade80 50%, #1a3d25 100%);
+        }
+
+        .theme-preview.amber {
+            background: linear-gradient(135deg, #24160a 0%, #f59e0b 50%, #3d2a16 100%);
+        }
+
+        .theme-preview.rosegold {
+            background: linear-gradient(135deg, #25161b 0%, #fda4af 50%, #3b232a 100%);
+        }
+
+        .theme-preview.graphite {
+            background: linear-gradient(135deg, #111318 0%, #9ca3af 50%, #1f2937 100%);
+        }
+
+        .theme-preview.monochrome {
+            background: linear-gradient(135deg, #000000 0%, #666666 50%, #ffffff 100%);
+        }
+
+        .mono-theme .now-playing-card,
+        .mono-theme .now-playing-card::before,
+        .mono-theme .play-btn,
+        .mono-theme .visualizer-bar,
+        .mono-theme .volume-slider::-webkit-slider-runnable-track,
+        .mono-theme .volume-slider::-moz-range-track,
+        .mono-theme .library-content,
+        .mono-theme .add-btn,
+        .mono-theme .add-btn:hover,
+        .mono-theme .modal-btn.save,
+        .mono-theme .vinyl-center,
+        .mono-theme .station-icon {
+            background: var(--md-sys-color-surface) !important;
+        }
+
+        .mono-theme .station-icon svg,
+        .mono-theme .play-btn svg,
+        .mono-theme .volume-icon,
+        .mono-theme .status-dot.playing,
+        .mono-theme .title-icon {
+            fill: var(--md-sys-color-on-surface) !important;
+            background: transparent !important;
+        }
+
+        .mono-theme .window-btn {
+            background: #ffffff !important;
+        }
+
+        .mono-theme .now-playing-card,
+        .mono-theme .play-btn,
+        .mono-theme .modal,
+        .mono-theme .context-menu,
+        .mono-theme .volume-slider::-webkit-slider-thumb,
+        .mono-theme .volume-slider::-moz-range-thumb {
+            box-shadow: none !important;
+        }
+
+        .theme-label {
+            font-size: 11px;
+            color: var(--md-sys-color-on-surface);
+            margin-top: 4px;
+        }
+
+        .theme-option {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: var(--md-shape-corner-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .theme-option.active {
+            border-color: var(--md-sys-color-primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .setting-label {
+            font-size: 13px;
+            color: var(--md-sys-color-on-surface);
+            font-weight: 500;
+        }
+
+        .setting-control {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: var(--md-shape-corner-small);
+            padding: 6px 10px;
+            font-size: 12px;
+            min-width: 118px;
+            outline: none;
+        }
+
+        .setting-control:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .custom-select {
+            position: relative;
+            min-width: 176px;
+        }
+
+        .native-select {
+            display: none;
+        }
+
+        .custom-select-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: var(--md-shape-corner-small);
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .custom-select-trigger:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .custom-select-arrow {
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid var(--md-sys-color-on-surface-variant);
+            border-bottom: 2px solid var(--md-sys-color-on-surface-variant);
+            transform: rotate(45deg) translateY(-1px);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .custom-select.open .custom-select-arrow {
+            transform: rotate(-135deg) translateY(-1px);
+        }
+
+        .custom-select.disabled .custom-select-trigger {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .custom-select-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: var(--md-shape-corner-small);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: none;
+            z-index: 50;
+        }
+
+        .custom-select.open .custom-select-menu {
+            display: block;
+        }
+
+        .custom-select-option {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: var(--md-sys-color-on-surface);
+            text-align: left;
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .custom-select-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-select-option.active {
+            background: color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent);
+            color: var(--md-sys-color-on-surface);
+            font-weight: 600;
+        }
+
+        .setting-button {
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .setting-button:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .update-status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.4;
+        }
+
+        .update-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .settings-inline-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .setting-note {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.4;
+        }
+
+        .switch {
+            position: relative;
+            width: 46px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: var(--md-sys-color-surface-variant);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 3px;
+            border-radius: 50%;
+            background: var(--md-sys-color-on-surface);
+            transition: transform 0.2s;
+        }
+
+        .switch input:checked + .slider {
+            background: var(--md-sys-color-primary-container);
+        }
+
+        .switch input:checked + .slider::before {
+            transform: translateX(20px);
+        }
+
+        .ambient-aura {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-aura .ambient-aura {
+            opacity: 0.9;
+        }
+
+        .aura-blob {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            filter: blur(52px);
+            opacity: 0.35;
+            animation: aura-drift 16s ease-in-out infinite alternate;
+        }
+
+        .aura-blob.primary {
+            left: -70px;
+            top: 92px;
+            background: color-mix(in srgb, var(--md-sys-color-primary) 78%, transparent);
+        }
+
+        .aura-blob.secondary {
+            right: -90px;
+            bottom: 84px;
+            background: color-mix(in srgb, var(--md-sys-color-primary-container) 74%, transparent);
+            animation-delay: -4s;
+        }
+
+        @keyframes aura-drift {
+            from { transform: translate3d(0, 0, 0) scale(1); }
+            to { transform: translate3d(24px, -14px, 0) scale(1.12); }
+        }
+
+        .weather-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 4;
+            overflow: hidden;
+        }
+
+        .weather-particle {
+            position: absolute;
+            top: -16px;
+            border-radius: 50%;
+            animation-name: weather-fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .weather-particle.snow {
+            background: rgba(255, 255, 255, 0.9);
+            filter: blur(0.2px);
+        }
+
+        .weather-particle.rain {
+            width: 1.7px !important;
+            height: 16px !important;
+            border-radius: 999px;
+            background: rgba(170, 210, 255, 0.72);
+        }
+
+        .weather-particle.dust {
+            background: rgba(236, 223, 195, 0.45);
+            filter: blur(0.3px);
+        }
+
+        .weather-particle.stars {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            animation-name: stars-fall;
+        }
+
+        @keyframes weather-fall {
+            from {
+                transform: translate3d(0, -10vh, 0);
+            }
+            to {
+                transform: translate3d(var(--drift, 10px), 110vh, 0);
+            }
+        }
+
+        @keyframes stars-fall {
+            from {
+                transform: translate3d(0, -10vh, 0) scale(0.65);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.95;
+            }
+            to {
+                transform: translate3d(var(--drift, 8px), 110vh, 0) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .noise-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            background-image:
+                radial-gradient(rgba(255, 255, 255, 0.06) 0.6px, transparent 0.6px),
+                radial-gradient(rgba(0, 0, 0, 0.08) 0.6px, transparent 0.6px);
+            background-size: 4px 4px, 6px 6px;
+            background-position: 0 0, 2px 2px;
+            mix-blend-mode: soft-light;
+            transition: opacity 0.25s ease;
+        }
+
+        .ambient-noise .noise-layer {
+            opacity: 0.42;
+        }
+
+        .pixel-mode {
+            image-rendering: pixelated;
+            font-family: Consolas, 'Courier New', monospace;
+        }
+
+        .pixel-mode * {
+            border-radius: 0 !important;
+            text-shadow: none !important;
+        }
+
+        .pixel-mode .ambient-aura,
+        .pixel-mode .noise-layer {
+            display: none !important;
+        }
+
+        .pixel-mode .weather-container {
+            opacity: 0.55;
+        }
+
+        .pixel-mode .visualizer-bar {
+            width: 8px;
+            transition: none;
+        }
+
+        .pixel-mode .play-btn:hover,
+        .pixel-mode .theme-option:hover {
+            transform: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .context-menu {
+            position: fixed;
+            min-width: 160px;
+            background: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: var(--md-shape-corner-medium);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 2000;
+        }
+
+        .context-menu.active {
+            display: flex;
+        }
+
+        .context-menu-item {
+            border: none;
+            background: transparent;
+            color: var(--md-sys-color-on-surface);
+            text-align: left;
+            padding: 8px 10px;
+            border-radius: var(--md-shape-corner-small);
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .context-menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .context-menu-item.delete {
+            color: #ff8b8b;
+        }
+
+        .modal {
+            width: 280px;
+            background: var(--md-sys-color-surface);
+            border-radius: var(--md-shape-corner-large);
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: var(--md-shape-corner-medium);
+            color: var(--md-sys-color-on-surface);
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 16px;
+        }
+
+        .modal-input:focus {
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: var(--md-shape-corner-medium);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .modal-btn.cancel:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .modal-btn.save {
+            background: linear-gradient(135deg, #e8def8 0%, #4f378b 100%);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .modal-btn.save:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 55, 139, 0.4);
+        }
+
+        .settings-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .custom-station-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--md-shape-corner-medium);
+        }
+
+        .custom-station-item .station-actions {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-aura" id="auraLayer">
+        <div class="aura-blob primary"></div>
+        <div class="aura-blob secondary"></div>
+    </div>
+    <div class="noise-layer" id="noiseLayer"></div>
+    <div class="weather-container" id="weatherContainer"></div>
+
+    <div class="title-bar">
+        <span class="title">
+            <svg class="title-icon" viewBox="0 0 24 24">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+            LoBeats
+        </span>
+        <div class="window-controls">
+            <button class="window-btn minimize-btn" id="minimizeBtn" title="Minimize"></button>
+            <button class="window-btn close-btn" id="closeBtn" title="Close to tray"></button>
+        </div>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab active" id="tabPlayer">Player</button>
+        <button class="tab" id="tabLibrary">Library</button>
+        <button class="tab" id="tabSettings">Settings</button>
+    </div>
+    
+    <div class="tab-content active" id="playerTab">
+        <select class="station-select" id="stationSelect" style="display: none;">
+            <optgroup label="Lo-Fi">
+                <option value="0">Lofi Girl Radio</option>
+                <option value="1">Chillhop Radio</option>
+                <option value="2">Box Lofi</option>
+                <option value="3">Lofi Hip Hop</option>
+            </optgroup>
+            <optgroup label="Ambient">
+                <option value="4">SomaFM Drone Zone</option>
+                <option value="5">SomaFM Space Station</option>
+            </optgroup>
+            <optgroup label="Jazz">
+                <option value="6">Smooth Jazz</option>
+                <option value="7">Jazz Radio</option>
+            </optgroup>
+            <optgroup label="Custom" id="customGroup">
+            </optgroup>
+        </select>
+        
+        <div class="now-playing-card">
+            <div class="visualizer" id="visualizer"></div>
+            <div class="station-name" id="stationName">Lofi Radio</div>
+            <div class="station-url" id="stationUrl">stream.laut.fm</div>
+            <div class="status-badge">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Tap to play</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="play-btn" id="playBtn">
+                <svg id="playIcon" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="volume-section">
+            <svg class="volume-icon" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+            <span class="volume-value" id="volumeValue">70%</span>
+        </div>
+
+        <div class="add-station">
+            <input type="text" id="customUrl" placeholder="Add custom stream URL...">
+            <button class="add-btn" id="addBtn">Add</button>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="libraryTab">
+        <div class="library-content">
+            <div class="library-header">
+                <input type="text" id="libraryUrl" placeholder="Add custom stream URL...">
+                <button class="add-btn" id="libraryAddBtn">Add</button>
+                <button class="add-btn" id="addSectionBtn">Section</button>
+                <button class="add-btn" id="checkHealthBtn">Health</button>
+            </div>
+            <div class="station-list" id="stationList"></div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="settingsTab">
+        <div class="settings-section">
+            <div class="settings-title">Theme</div>
+            <div class="theme-options">
+                <div class="theme-option active" data-theme="dark">
+                    <div class="theme-preview dark"></div>
+                    <span class="theme-label">Purple</span>
+                </div>
+                <div class="theme-option" data-theme="light">
+                    <div class="theme-preview light"></div>
+                    <span class="theme-label">Light</span>
+                </div>
+                <div class="theme-option" data-theme="midnight">
+                    <div class="theme-preview midnight"></div>
+                    <span class="theme-label">Midnight</span>
+                </div>
+                <div class="theme-option" data-theme="ocean">
+                    <div class="theme-preview ocean"></div>
+                    <span class="theme-label">Ocean</span>
+                </div>
+                <div class="theme-option" data-theme="sunset">
+                    <div class="theme-preview sunset"></div>
+                    <span class="theme-label">Sunset</span>
+                </div>
+                <div class="theme-option" data-theme="forest">
+                    <div class="theme-preview forest"></div>
+                    <span class="theme-label">Forest</span>
+                </div>
+                <div class="theme-option" data-theme="amber">
+                    <div class="theme-preview amber"></div>
+                    <span class="theme-label">Amber</span>
+                </div>
+                <div class="theme-option" data-theme="rosegold">
+                    <div class="theme-preview rosegold"></div>
+                    <span class="theme-label">Rose Gold</span>
+                </div>
+                <div class="theme-option" data-theme="graphite">
+                    <div class="theme-preview graphite"></div>
+                    <span class="theme-label">Graphite</span>
+                </div>
+                <div class="theme-option" data-theme="monochrome">
+                    <div class="theme-preview monochrome"></div>
+                    <span class="theme-label">Monochrome</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-title">Effects</div>
+            <div class="setting-row">
+                <span class="setting-label">Reactive Glass</span>
+                <label class="switch">
+                    <input type="checkbox" id="reactiveGlassToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row" style="margin-top: 10px;">
+                <span class="setting-label">Theme Aura</span>
+                <label class="switch">
+                    <input type="checkbox" id="themeAuraToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row" style="margin-top: 10px;">
+                <span class="setting-label">Weather FX</span>
+                <div class="custom-select" id="weatherModeCustomSelect">
+                    <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="custom-select-value"></span>
+                        <span class="custom-select-arrow"></span>
+                    </button>
+                    <div class="custom-select-menu" role="listbox"></div>
+                    <select class="native-select" id="weatherModeSelect">
+                        <option value="none">Off</option>
+                        <option value="snow">Snow</option>
+                        <option value="rain">Rain</option>
+                        <option value="dust">Dust</option>
+                        <option value="stars">Stars</option>
+                    </select>
+                </div>
+            </div>
+            <div class="setting-row" style="margin-top: 10px;">
+                <span class="setting-label">Weather Intensity</span>
+                <div class="custom-select" id="weatherIntensityCustomSelect">
+                    <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="custom-select-value"></span>
+                        <span class="custom-select-arrow"></span>
+                    </button>
+                    <div class="custom-select-menu" role="listbox"></div>
+                    <select class="native-select" id="weatherIntensitySelect">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="setting-row" style="margin-top: 10px;">
+                <span class="setting-label">Pixel Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="pixelModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row" style="margin-top: 10px;">
+                <span class="setting-label">Now Playing Pulse</span>
+                <label class="switch">
+                    <input type="checkbox" id="pulseToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row" style="margin-top: 10px;">
+                <span class="setting-label">Ambient Noise</span>
+                <label class="switch">
+                    <input type="checkbox" id="noiseToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-title">Playback & Window</div>
+            <div class="setting-row">
+                <span class="setting-label">Always on Top</span>
+                <label class="switch">
+                    <input type="checkbox" id="alwaysOnTopToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row" style="margin-top: 10px;">
+                <span class="setting-label">Sleep Timer</span>
+                <div class="custom-select" id="sleepTimerCustomSelect">
+                    <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="custom-select-value"></span>
+                        <span class="custom-select-arrow"></span>
+                    </button>
+                    <div class="custom-select-menu" role="listbox"></div>
+                    <select class="native-select" id="sleepTimerSelect">
+                        <option value="0">Off</option>
+                        <option value="15">15 min</option>
+                        <option value="30">30 min</option>
+                        <option value="45">45 min</option>
+                        <option value="60">60 min</option>
+                        <option value="90">90 min</option>
+                    </select>
+                </div>
+            </div>
+            <div class="settings-inline-actions">
+                <button class="setting-control setting-button" id="startSleepTimerBtn">Start Timer</button>
+                <button class="setting-control setting-button" id="cancelSleepTimerBtn">Cancel Timer</button>
+            </div>
+            <div class="setting-note" id="sleepTimerStatusText">Sleep timer is off.</div>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-title">Library Tools</div>
+            <div class="settings-inline-actions">
+                <button class="setting-control setting-button" id="exportLibraryBtn">Export Library</button>
+                <button class="setting-control setting-button" id="importLibraryBtn">Import Library</button>
+            </div>
+            <div class="setting-note" id="libraryToolsStatusText">Export/import custom and built-in stations with sections.</div>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-title">Updates</div>
+            <div class="setting-row">
+                <span class="setting-label">Current Version</span>
+                <span class="setting-control" id="currentVersionLabel">v1.5.3</span>
+            </div>
+            <div class="update-actions">
+                <button class="setting-control setting-button" id="checkUpdatesBtn">Check Updates</button>
+                <button class="setting-control setting-button" id="downloadUpdateBtn" style="display: none;">Download Update</button>
+            </div>
+            <div class="update-status" id="updateStatusText">Check for updates from GitHub releases.</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-title" id="modalTitle">Edit Station</div>
+            <input type="text" class="modal-input" id="modalInput" placeholder="Station name">
+            <input type="text" class="modal-input" id="modalUrlInput" placeholder="Stream URL">
+            <select class="modal-input" id="modalSectionSelect"></select>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="modalCancel">Cancel</button>
+                <button class="modal-btn save" id="modalSave">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="context-menu" id="stationContextMenu">
+        <button class="context-menu-item" id="contextPlayBtn">Play</button>
+        <button class="context-menu-item" id="contextEditBtn">Edit</button>
+        <button class="context-menu-item delete" id="contextDeleteBtn">Delete</button>
+    </div>
+
+    <script>
+        const defaultStreams = [
+            { id: 'default-247-lofi-radio', name: '24/7 Lofi Radio', url: 'http://ec3.yesstreaming.net:3750/stream', sectionId: 'section-lofi', isDefault: true },
+            { id: 'default-hotmix-lofi', name: 'Hotmix LoFi', url: 'https://streaming.hotmixradio.com/hotmix-lofi-en-mp3', sectionId: 'section-lofi', isDefault: true },
+            { id: 'default-lofi-320', name: 'LoFi 320kbps', url: 'http://icecast.z8r.de:8000/lofi', sectionId: 'section-lofi', isDefault: true },
+            { id: 'default-chillsky-chillhop', name: 'Chillsky Chillhop', url: 'https://chill.radioca.st/stream', sectionId: 'section-lofi', isDefault: true },
+            { id: 'default-psybrazil-lofi', name: 'PsyBrazil LoFi', url: 'http://vectra.psybrazil.com.br:9000/lofi', sectionId: 'section-lofi', isDefault: true },
+            { id: 'default-box-lofi-radio', name: 'Box Lofi Radio', url: 'https://stream.zeno.fm/tabzverz0fctv', sectionId: 'section-lofi', isDefault: true }
+        ];
+        const defaultSections = [
+            { id: 'section-lofi', name: 'Lo-Fi', locked: true },
+            { id: 'section-ambient', name: 'Ambient', locked: true },
+            { id: 'section-jazz', name: 'Jazz', locked: true },
+            { id: 'section-custom', name: 'Custom', locked: false }
+        ];
+        
+        let streams = [];
+        let sections = [];
+        let customStreams = [];
+        let currentStreamIndex = 0;
+        let isPlaying = false;
+        let audio = new Audio();
+        let audioContext = null;
+        let analyser = null;
+        let dataArray = null;
+        let animationId = null;
+        let retryCount = 0;
+        const maxRetries = 3;
+        
+        const playBtn = document.getElementById('playBtn');
+        const visualizer = document.getElementById('visualizer');
+        const playIcon = document.getElementById('playIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        const statusText = document.getElementById('statusText');
+        const statusDot = document.getElementById('statusDot');
+        const stationSelect = document.getElementById('stationSelect');
+        const stationName = document.getElementById('stationName');
+        const stationUrl = document.getElementById('stationUrl');
+        const customUrl = document.getElementById('customUrl');
+        const addBtn = document.getElementById('addBtn');
+        const customGroup = document.getElementById('customGroup');
+        const minimizeBtn = document.getElementById('minimizeBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        
+        const tabPlayer = document.getElementById('tabPlayer');
+        const tabLibrary = document.getElementById('tabLibrary');
+        const tabSettings = document.getElementById('tabSettings');
+        const playerTab = document.getElementById('playerTab');
+        const libraryTab = document.getElementById('libraryTab');
+        const settingsTab = document.getElementById('settingsTab');
+        const stationList = document.getElementById('stationList');
+        const libraryUrl = document.getElementById('libraryUrl');
+        const libraryAddBtn = document.getElementById('libraryAddBtn');
+        const addSectionBtn = document.getElementById('addSectionBtn');
+        const nowPlayingCard = document.querySelector('.now-playing-card');
+        const reactiveGlassToggle = document.getElementById('reactiveGlassToggle');
+        const themeAuraToggle = document.getElementById('themeAuraToggle');
+        const weatherModeSelect = document.getElementById('weatherModeSelect');
+        const weatherIntensitySelect = document.getElementById('weatherIntensitySelect');
+        const pixelModeToggle = document.getElementById('pixelModeToggle');
+        const pulseToggle = document.getElementById('pulseToggle');
+        const noiseToggle = document.getElementById('noiseToggle');
+        const alwaysOnTopToggle = document.getElementById('alwaysOnTopToggle');
+        const sleepTimerSelect = document.getElementById('sleepTimerSelect');
+        const startSleepTimerBtn = document.getElementById('startSleepTimerBtn');
+        const cancelSleepTimerBtn = document.getElementById('cancelSleepTimerBtn');
+        const sleepTimerStatusText = document.getElementById('sleepTimerStatusText');
+        const exportLibraryBtn = document.getElementById('exportLibraryBtn');
+        const importLibraryBtn = document.getElementById('importLibraryBtn');
+        const checkHealthBtn = document.getElementById('checkHealthBtn');
+        const libraryToolsStatusText = document.getElementById('libraryToolsStatusText');
+        const currentVersionLabel = document.getElementById('currentVersionLabel');
+        const checkUpdatesBtn = document.getElementById('checkUpdatesBtn');
+        const downloadUpdateBtn = document.getElementById('downloadUpdateBtn');
+        const updateStatusText = document.getElementById('updateStatusText');
+        const weatherContainer = document.getElementById('weatherContainer');
+        const stationContextMenu = document.getElementById('stationContextMenu');
+        const contextPlayBtn = document.getElementById('contextPlayBtn');
+        const contextEditBtn = document.getElementById('contextEditBtn');
+        const contextDeleteBtn = document.getElementById('contextDeleteBtn');
+        
+        let contextMenuStreamId = null;
+        let contextMenuStreamIndex = -1;
+        let streamHealth = {};
+        let latestDownloadUrl = '';
+        let sleepTimerId = null;
+        let sleepTickerId = null;
+        let sleepTimerEndsAt = 0;
+        let visualEffects = {
+            reactiveGlass: true,
+            themeAura: true,
+            weatherMode: 'none',
+            weatherIntensity: 'medium',
+            pixelMode: false,
+            pulse: true,
+            ambientNoise: false
+        };
+        
+        function generateId(prefix) {
+            return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        }
+        
+        function buildStreams() {
+            streams = [...defaultStreams, ...customStreams];
+        }
+        
+        function ensureSections() {
+            if (!Array.isArray(sections) || sections.length === 0) {
+                sections = defaultSections.map(section => ({ ...section }));
+            }
+            
+            const knownSectionIds = new Set(sections.map(section => section.id));
+            defaultSections.forEach(section => {
+                if (!knownSectionIds.has(section.id)) {
+                    sections.push({ ...section });
+                }
+            });
+            
+            const validIds = new Set(sections.map(section => section.id));
+            streams.forEach(stream => {
+                if (!validIds.has(stream.sectionId)) {
+                    stream.sectionId = stream.isDefault ? 'section-lofi' : 'section-custom';
+                }
+            });
+        }
+        
+        function saveSections() {
+            try {
+                localStorage.setItem('lofi-sections', JSON.stringify(sections));
+            } catch (e) {}
+        }
+        
+        function saveDefaultStreams() {
+            try {
+                localStorage.setItem('lofi-default-streams', JSON.stringify(defaultStreams));
+            } catch (e) {}
+        }
+        
+        function loadSections() {
+            try {
+                const saved = localStorage.getItem('lofi-sections');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) {
+                        sections = parsed.map(section => ({
+                            id: section.id,
+                            name: section.name,
+                            locked: Boolean(section.locked)
+                        })).filter(section => section.id && section.name);
+                    }
+                }
+            } catch (e) {
+                sections = [];
+            }
+        }
+        
+        function loadDefaultStreams() {
+            try {
+                const saved = localStorage.getItem('lofi-default-streams');
+                if (!saved) return;
+                const parsed = JSON.parse(saved);
+                if (!Array.isArray(parsed)) return;
+                const byId = new Map(parsed.map(stream => [stream.id, stream]));
+                defaultStreams.forEach(stream => {
+                    const savedStream = byId.get(stream.id);
+                    if (!savedStream) return;
+                    stream.name = savedStream.name || stream.name;
+                    stream.url = savedStream.url || stream.url;
+                    stream.sectionId = savedStream.sectionId || stream.sectionId;
+                });
+            } catch (e) {}
+        }
+        
+        function init() {
+            loadDefaultStreams();
+            loadCustomStreams();
+            buildStreams();
+            loadSections();
+            ensureSections();
+            populateSelect();
+            loadSavedStation();
+            renderLibrary();
+            setupTabs();
+            setupCustomSelects();
+            setupVisualEffects();
+            setupWindowOptions();
+            setupSleepTimer();
+            setupLibraryTools();
+            setupUpdates();
+            createVisualizerBars();
+            setupContextMenu();
+        }
+
+        function closeAllCustomSelects() {
+            document.querySelectorAll('.custom-select.open').forEach(select => {
+                select.classList.remove('open');
+                const trigger = select.querySelector('.custom-select-trigger');
+                if (trigger) {
+                    trigger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        function initCustomSelect(selectEl) {
+            const wrapper = selectEl.closest('.custom-select');
+            if (!wrapper) return;
+
+            const trigger = wrapper.querySelector('.custom-select-trigger');
+            const valueEl = wrapper.querySelector('.custom-select-value');
+            const menu = wrapper.querySelector('.custom-select-menu');
+            if (!trigger || !valueEl || !menu) return;
+
+            function syncValue() {
+                const selectedOption = selectEl.options[selectEl.selectedIndex];
+                valueEl.textContent = selectedOption ? selectedOption.textContent : '';
+
+                menu.querySelectorAll('.custom-select-option').forEach(optionBtn => {
+                    optionBtn.classList.toggle('active', optionBtn.dataset.value === selectEl.value);
+                });
+            }
+
+            function syncDisabled() {
+                const disabled = selectEl.disabled;
+                wrapper.classList.toggle('disabled', disabled);
+                trigger.disabled = disabled;
+                if (disabled) {
+                    wrapper.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                }
+            }
+
+            menu.innerHTML = '';
+            Array.from(selectEl.options).forEach(option => {
+                const optionBtn = document.createElement('button');
+                optionBtn.type = 'button';
+                optionBtn.className = 'custom-select-option';
+                optionBtn.dataset.value = option.value;
+                optionBtn.textContent = option.textContent;
+                optionBtn.addEventListener('click', () => {
+                    selectEl.value = option.value;
+                    selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+                    closeAllCustomSelects();
+                });
+                menu.appendChild(optionBtn);
+            });
+
+            trigger.addEventListener('click', (event) => {
+                event.stopPropagation();
+                if (trigger.disabled) return;
+                const isOpen = wrapper.classList.contains('open');
+                closeAllCustomSelects();
+                if (!isOpen) {
+                    wrapper.classList.add('open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                }
+            });
+
+            menu.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+
+            selectEl.addEventListener('change', () => {
+                syncValue();
+                syncDisabled();
+            });
+
+            selectEl._syncCustomSelect = () => {
+                syncValue();
+                syncDisabled();
+            };
+
+            syncValue();
+            syncDisabled();
+        }
+
+        function setupCustomSelects() {
+            initCustomSelect(weatherModeSelect);
+            initCustomSelect(weatherIntensitySelect);
+            initCustomSelect(sleepTimerSelect);
+
+            document.addEventListener('click', () => {
+                closeAllCustomSelects();
+            });
+        }
+
+        function saveVisualEffects() {
+            try {
+                localStorage.setItem('lofi-visual-effects', JSON.stringify(visualEffects));
+            } catch (e) {}
+        }
+
+        function createWeatherParticles() {
+            weatherContainer.innerHTML = '';
+            if (visualEffects.weatherMode === 'none') return;
+
+            const densityMap = { low: 28, medium: 52, high: 78 };
+            const speedMap = { low: [12, 20], medium: [8, 16], high: [5, 12] };
+            const sizeMap = {
+                snow: [2, 5],
+                rain: [1.2, 1.8],
+                dust: [1.5, 3.8],
+                stars: [1, 3]
+            };
+
+            const count = densityMap[visualEffects.weatherIntensity] || densityMap.medium;
+            const speed = speedMap[visualEffects.weatherIntensity] || speedMap.medium;
+            const sizes = sizeMap[visualEffects.weatherMode] || sizeMap.snow;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                const size = sizes[0] + Math.random() * (sizes[1] - sizes[0]);
+                const duration = speed[0] + Math.random() * (speed[1] - speed[0]);
+                const delay = Math.random() * 15;
+                const left = Math.random() * 100;
+                const opacity = 0.25 + Math.random() * 0.7;
+                const driftScale = visualEffects.weatherMode === 'rain' ? 10 : 44;
+                const drift = -driftScale + Math.random() * (driftScale * 2);
+
+                particle.className = `weather-particle ${visualEffects.weatherMode}`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${visualEffects.weatherMode === 'rain' ? 16 + Math.random() * 14 : size}px`;
+                particle.style.left = `${left}vw`;
+                particle.style.opacity = `${opacity}`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `-${delay}s`;
+                particle.style.setProperty('--drift', `${drift}px`);
+                weatherContainer.appendChild(particle);
+            }
+        }
+
+        function applyVisualEffects() {
+            document.body.classList.toggle('reactive-glass', visualEffects.reactiveGlass);
+            document.body.classList.toggle('theme-aura', visualEffects.themeAura);
+            document.body.classList.toggle('pixel-mode', visualEffects.pixelMode);
+            document.body.classList.toggle('now-playing-pulse', visualEffects.pulse);
+            document.body.classList.toggle('ambient-noise', visualEffects.ambientNoise);
+
+            reactiveGlassToggle.checked = visualEffects.reactiveGlass;
+            themeAuraToggle.checked = visualEffects.themeAura;
+            weatherModeSelect.value = visualEffects.weatherMode;
+            weatherIntensitySelect.value = visualEffects.weatherIntensity;
+            weatherIntensitySelect.disabled = visualEffects.weatherMode === 'none';
+            if (weatherModeSelect._syncCustomSelect) {
+                weatherModeSelect._syncCustomSelect();
+            }
+            if (weatherIntensitySelect._syncCustomSelect) {
+                weatherIntensitySelect._syncCustomSelect();
+            }
+            pixelModeToggle.checked = visualEffects.pixelMode;
+            pulseToggle.checked = visualEffects.pulse;
+            noiseToggle.checked = visualEffects.ambientNoise;
+
+            createWeatherParticles();
+        }
+
+        function setupVisualEffects() {
+            try {
+                const saved = localStorage.getItem('lofi-visual-effects');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    visualEffects = {
+                        ...visualEffects,
+                        ...parsed
+                    };
+                }
+            } catch (e) {}
+
+            applyVisualEffects();
+
+            reactiveGlassToggle.addEventListener('change', () => {
+                visualEffects.reactiveGlass = reactiveGlassToggle.checked;
+                saveVisualEffects();
+                applyVisualEffects();
+            });
+
+            themeAuraToggle.addEventListener('change', () => {
+                visualEffects.themeAura = themeAuraToggle.checked;
+                saveVisualEffects();
+                applyVisualEffects();
+            });
+
+            weatherModeSelect.addEventListener('change', () => {
+                visualEffects.weatherMode = weatherModeSelect.value;
+                saveVisualEffects();
+                applyVisualEffects();
+            });
+
+            weatherIntensitySelect.addEventListener('change', () => {
+                visualEffects.weatherIntensity = weatherIntensitySelect.value;
+                saveVisualEffects();
+                applyVisualEffects();
+            });
+
+            pixelModeToggle.addEventListener('change', () => {
+                visualEffects.pixelMode = pixelModeToggle.checked;
+                saveVisualEffects();
+                applyVisualEffects();
+            });
+
+            pulseToggle.addEventListener('change', () => {
+                visualEffects.pulse = pulseToggle.checked;
+                saveVisualEffects();
+                applyVisualEffects();
+            });
+
+            noiseToggle.addEventListener('change', () => {
+                visualEffects.ambientNoise = noiseToggle.checked;
+                saveVisualEffects();
+                applyVisualEffects();
+            });
+        }
+
+        async function applyAlwaysOnTop(enabled) {
+            if (!window.electronAPI || !window.electronAPI.setAlwaysOnTop) {
+                return { ok: false, error: 'Always-on-top API unavailable' };
+            }
+
+            const result = await window.electronAPI.setAlwaysOnTop(Boolean(enabled));
+            if (result && result.ok) {
+                localStorage.setItem('lofi-always-on-top', String(Boolean(result.enabled)));
+            }
+            return result;
+        }
+
+        function setupWindowOptions() {
+            const savedOnTop = localStorage.getItem('lofi-always-on-top') === 'true';
+
+            alwaysOnTopToggle.checked = savedOnTop;
+
+            applyAlwaysOnTop(savedOnTop).then((result) => {
+                if (!result || !result.ok) {
+                    alwaysOnTopToggle.checked = false;
+                } else {
+                    alwaysOnTopToggle.checked = Boolean(result.enabled);
+                }
+            });
+
+            alwaysOnTopToggle.addEventListener('change', async () => {
+                const desired = alwaysOnTopToggle.checked;
+                const result = await applyAlwaysOnTop(desired);
+                if (!result || !result.ok) {
+                    alwaysOnTopToggle.checked = !desired;
+                    return;
+                }
+                alwaysOnTopToggle.checked = Boolean(result.enabled);
+            });
+        }
+
+        function formatSleepRemaining(ms) {
+            const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function clearSleepTimer(message) {
+            if (sleepTimerId) {
+                clearTimeout(sleepTimerId);
+                sleepTimerId = null;
+            }
+            if (sleepTickerId) {
+                clearInterval(sleepTickerId);
+                sleepTickerId = null;
+            }
+            sleepTimerEndsAt = 0;
+            sleepTimerStatusText.textContent = message || 'Sleep timer is off.';
+        }
+
+        function updateSleepTimerStatus() {
+            if (!sleepTimerEndsAt) {
+                sleepTimerStatusText.textContent = 'Sleep timer is off.';
+                return;
+            }
+
+            const remaining = sleepTimerEndsAt - Date.now();
+            if (remaining <= 0) {
+                clearSleepTimer('Sleep timer finished. Playback paused.');
+                return;
+            }
+
+            sleepTimerStatusText.textContent = `Sleep timer: ${formatSleepRemaining(remaining)} remaining.`;
+        }
+
+        function startSleepTimer() {
+            const minutes = parseInt(sleepTimerSelect.value, 10) || 0;
+            localStorage.setItem('lofi-sleep-minutes', String(minutes));
+
+            if (minutes <= 0) {
+                clearSleepTimer('Sleep timer is off.');
+                return;
+            }
+
+            clearSleepTimer();
+            sleepTimerEndsAt = Date.now() + minutes * 60 * 1000;
+            updateSleepTimerStatus();
+
+            sleepTimerId = setTimeout(() => {
+                pause();
+                clearSleepTimer('Sleep timer finished. Playback paused.');
+                statusText.textContent = 'Paused by sleep timer';
+            }, minutes * 60 * 1000);
+
+            sleepTickerId = setInterval(updateSleepTimerStatus, 1000);
+        }
+
+        function setupSleepTimer() {
+            const savedMinutes = localStorage.getItem('lofi-sleep-minutes');
+            if (savedMinutes !== null) {
+                sleepTimerSelect.value = savedMinutes;
+                if (sleepTimerSelect._syncCustomSelect) {
+                    sleepTimerSelect._syncCustomSelect();
+                }
+            }
+
+            startSleepTimerBtn.addEventListener('click', () => {
+                startSleepTimer();
+            });
+
+            cancelSleepTimerBtn.addEventListener('click', () => {
+                clearSleepTimer('Sleep timer cancelled.');
+            });
+
+            sleepTimerSelect.addEventListener('change', () => {
+                localStorage.setItem('lofi-sleep-minutes', sleepTimerSelect.value);
+            });
+
+            updateSleepTimerStatus();
+        }
+
+        function setLibraryToolsStatus(message) {
+            libraryToolsStatusText.textContent = message;
+        }
+
+        function loadStreamHealth() {
+            try {
+                const saved = localStorage.getItem('lofi-stream-health');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed && typeof parsed === 'object') {
+                        streamHealth = parsed;
+                    }
+                }
+            } catch (e) {
+                streamHealth = {};
+            }
+        }
+
+        function saveStreamHealth() {
+            try {
+                localStorage.setItem('lofi-stream-health', JSON.stringify(streamHealth));
+            } catch (e) {}
+        }
+
+        function getHealthLabel(health) {
+            if (!health || !health.status) return 'Unchecked';
+            if (health.status === 'online') {
+                const ms = typeof health.responseMs === 'number' ? ` (${health.responseMs}ms)` : '';
+                return `Online${ms}`;
+            }
+            if (health.status === 'slow') {
+                const ms = typeof health.responseMs === 'number' ? ` (${health.responseMs}ms)` : '';
+                return `Slow${ms}`;
+            }
+            return 'Offline';
+        }
+
+        async function checkStationHealth() {
+            if (!window.electronAPI || !window.electronAPI.checkStreamHealth) {
+                setLibraryToolsStatus('Health check is unavailable in this environment.');
+                return;
+            }
+
+            checkHealthBtn.disabled = true;
+            setLibraryToolsStatus('Checking station health...');
+
+            const payload = streams.map(stream => ({ id: stream.id, url: stream.url }));
+            const result = await window.electronAPI.checkStreamHealth(payload);
+
+            if (!result || !result.ok || !Array.isArray(result.results)) {
+                setLibraryToolsStatus(`Health check failed: ${(result && result.error) || 'Unknown error'}`);
+                checkHealthBtn.disabled = false;
+                return;
+            }
+
+            const nextHealth = {};
+            result.results.forEach(item => {
+                if (item && item.id) {
+                    nextHealth[item.id] = {
+                        status: item.status || 'offline',
+                        responseMs: typeof item.responseMs === 'number' ? item.responseMs : null,
+                        statusCode: typeof item.statusCode === 'number' ? item.statusCode : null,
+                        checkedAt: Date.now()
+                    };
+                }
+            });
+
+            streamHealth = nextHealth;
+            saveStreamHealth();
+            renderLibrary();
+
+            const onlineCount = result.results.filter(item => item.status === 'online').length;
+            const slowCount = result.results.filter(item => item.status === 'slow').length;
+            const offlineCount = result.results.filter(item => item.status === 'offline').length;
+            setLibraryToolsStatus(`Health check done: ${onlineCount} online, ${slowCount} slow, ${offlineCount} offline.`);
+            checkHealthBtn.disabled = false;
+        }
+
+        function normalizeImportedSection(section, index) {
+            return {
+                id: (section && section.id) || generateId(`import-section-${index}`),
+                name: (section && section.name) || `Section ${index + 1}`,
+                locked: Boolean(section && section.locked)
+            };
+        }
+
+        function normalizeImportedStream(stream, index, isDefault) {
+            const url = stream && typeof stream.url === 'string' ? stream.url.trim() : '';
+            if (!url) return null;
+
+            return {
+                id: (stream && stream.id) || generateId(`${isDefault ? 'default' : 'custom'}-${index}`),
+                name: (stream && stream.name) || 'Custom Stream',
+                url,
+                sectionId: (stream && stream.sectionId) || (isDefault ? 'section-lofi' : 'section-custom'),
+                isDefault: Boolean(isDefault)
+            };
+        }
+
+        async function setupLibraryTools() {
+            loadStreamHealth();
+            renderLibrary();
+
+            exportLibraryBtn.addEventListener('click', async () => {
+                if (!window.electronAPI || !window.electronAPI.exportLibraryData) {
+                    setLibraryToolsStatus('Export is unavailable in this environment.');
+                    return;
+                }
+
+                const payload = {
+                    format: 'lobeats-library-v1',
+                    exportedAt: new Date().toISOString(),
+                    appVersion: currentVersionLabel.textContent.replace(/^v/, ''),
+                    sections,
+                    defaultStreams,
+                    customStreams
+                };
+
+                const result = await window.electronAPI.exportLibraryData(payload);
+                if (result && result.ok) {
+                    setLibraryToolsStatus(`Library exported: ${result.filePath}`);
+                } else if (result && result.canceled) {
+                    setLibraryToolsStatus('Export canceled.');
+                } else {
+                    setLibraryToolsStatus(`Export failed: ${(result && result.error) || 'Unknown error'}`);
+                }
+            });
+
+            importLibraryBtn.addEventListener('click', async () => {
+                if (!window.electronAPI || !window.electronAPI.importLibraryData) {
+                    setLibraryToolsStatus('Import is unavailable in this environment.');
+                    return;
+                }
+
+                const result = await window.electronAPI.importLibraryData();
+                if (result && result.canceled) {
+                    setLibraryToolsStatus('Import canceled.');
+                    return;
+                }
+                if (!result || !result.ok || !result.data) {
+                    setLibraryToolsStatus(`Import failed: ${(result && result.error) || 'Invalid file'}`);
+                    return;
+                }
+
+                try {
+                    const data = result.data;
+                    const hasDefault = Array.isArray(data.defaultStreams);
+                    const hasCustom = Array.isArray(data.customStreams);
+                    const hasSections = Array.isArray(data.sections);
+
+                    const nextDefaults = hasDefault
+                        ? data.defaultStreams.map((item, idx) => normalizeImportedStream(item, idx, true)).filter(Boolean)
+                        : [...defaultStreams];
+                    const nextCustom = hasCustom
+                        ? data.customStreams.map((item, idx) => normalizeImportedStream(item, idx, false)).filter(Boolean)
+                        : [...customStreams];
+                    const nextSections = hasSections
+                        ? data.sections.map((item, idx) => normalizeImportedSection(item, idx)).filter(Boolean)
+                        : [...sections];
+
+                    if (nextDefaults.length + nextCustom.length === 0) {
+                        throw new Error('Imported library has no valid stations');
+                    }
+
+                    if (hasDefault) {
+                        defaultStreams.splice(0, defaultStreams.length, ...nextDefaults);
+                    }
+                    if (hasCustom) {
+                        customStreams = nextCustom;
+                    }
+                    if (hasSections) {
+                        sections = nextSections;
+                    }
+
+                    buildStreams();
+                    ensureSections();
+                    if (currentStreamIndex >= streams.length) {
+                        currentStreamIndex = 0;
+                    }
+
+                    saveDefaultStreams();
+                    saveCustomStreams();
+                    saveSections();
+                    saveStation();
+                    populateSelect();
+                    updateStationName();
+                    renderLibrary();
+
+                    if (isPlaying) {
+                        loadStream(currentStreamIndex);
+                        audio.play().catch(() => {});
+                    }
+
+                    setLibraryToolsStatus('Library imported successfully.');
+                } catch (error) {
+                    setLibraryToolsStatus(`Import failed: ${error.message || 'Invalid data format'}`);
+                }
+            });
+
+            checkHealthBtn.addEventListener('click', () => {
+                checkStationHealth();
+            });
+        }
+
+        function setUpdateStatus(message) {
+            updateStatusText.textContent = message;
+        }
+
+        async function checkForUpdates() {
+            if (!window.electronAPI || !window.electronAPI.checkForUpdates) {
+                setUpdateStatus('Update service is unavailable in this environment.');
+                return;
+            }
+
+            checkUpdatesBtn.disabled = true;
+            setUpdateStatus('Checking for updates...');
+            downloadUpdateBtn.style.display = 'none';
+            latestDownloadUrl = '';
+
+            try {
+                const result = await window.electronAPI.checkForUpdates();
+
+                if (!result || !result.ok) {
+                    setUpdateStatus(result && result.error ? `Update check failed: ${result.error}` : 'Update check failed.');
+                    return;
+                }
+
+                currentVersionLabel.textContent = `v${result.currentVersion}`;
+
+                if (result.hasUpdate) {
+                    latestDownloadUrl = result.downloadUrl || result.releasePageUrl || '';
+                    const targetAsset = result.assetName || (result.platform === 'win32' ? 'LoBeats-windows.exe' : result.platform === 'linux' ? 'LoBeats-linux.zip' : 'release asset');
+                    setUpdateStatus(`New version available: v${result.latestVersion}. Recommended file: ${targetAsset}.`);
+                    if (latestDownloadUrl) {
+                        downloadUpdateBtn.style.display = 'inline-block';
+                    }
+                } else {
+                    setUpdateStatus(`You are up to date (v${result.currentVersion}).`);
+                }
+            } catch (error) {
+                setUpdateStatus(`Update check failed: ${error.message || 'Unknown error'}`);
+            } finally {
+                checkUpdatesBtn.disabled = false;
+            }
+        }
+
+        function setupUpdates() {
+            checkUpdatesBtn.addEventListener('click', () => {
+                checkForUpdates();
+            });
+
+            downloadUpdateBtn.addEventListener('click', async () => {
+                if (!latestDownloadUrl) return;
+
+                if (!window.electronAPI || !window.electronAPI.openExternalUrl) {
+                    setUpdateStatus('Cannot open browser in this environment.');
+                    return;
+                }
+
+                const opened = await window.electronAPI.openExternalUrl(latestDownloadUrl);
+                if (opened && opened.ok) {
+                    setUpdateStatus('Download page opened. After downloading, run the new version and replace the old one.');
+                } else {
+                    setUpdateStatus(`Unable to open download link: ${(opened && opened.error) || 'Unknown error'}`);
+                }
+            });
+
+            checkForUpdates();
+        }
+
+        function closeStationContextMenu() {
+            stationContextMenu.classList.remove('active');
+            contextMenuStreamId = null;
+            contextMenuStreamIndex = -1;
+        }
+
+        function openStationContextMenu(x, y, streamId, streamIndex) {
+            contextMenuStreamId = streamId;
+            contextMenuStreamIndex = streamIndex;
+            stationContextMenu.style.left = '0px';
+            stationContextMenu.style.top = '0px';
+            stationContextMenu.classList.add('active');
+
+            const menuRect = stationContextMenu.getBoundingClientRect();
+            const maxLeft = window.innerWidth - menuRect.width - 8;
+            const maxTop = window.innerHeight - menuRect.height - 8;
+            const left = Math.min(Math.max(8, x), Math.max(8, maxLeft));
+            const top = Math.min(Math.max(8, y), Math.max(8, maxTop));
+
+            stationContextMenu.style.left = `${left}px`;
+            stationContextMenu.style.top = `${top}px`;
+        }
+
+        function setupContextMenu() {
+            document.addEventListener('click', () => {
+                closeStationContextMenu();
+            });
+
+            document.addEventListener('scroll', () => {
+                closeStationContextMenu();
+            }, true);
+
+            window.addEventListener('resize', () => {
+                closeStationContextMenu();
+            });
+
+            stationContextMenu.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+
+            contextPlayBtn.addEventListener('click', () => {
+                if (contextMenuStreamIndex >= 0) {
+                    selectStation(contextMenuStreamIndex);
+                    play();
+                }
+                closeStationContextMenu();
+            });
+
+            contextEditBtn.addEventListener('click', () => {
+                if (contextMenuStreamId) {
+                    window.openEditModal(contextMenuStreamId);
+                }
+                closeStationContextMenu();
+            });
+
+            contextDeleteBtn.addEventListener('click', () => {
+                if (contextMenuStreamId) {
+                    window.deleteStation(contextMenuStreamId);
+                }
+                closeStationContextMenu();
+            });
+        }
+        
+        function createVisualizerBars() {
+            const barCount = 16;
+            visualizer.innerHTML = '';
+            for (let i = 0; i < barCount; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'visualizer-bar';
+                bar.style.height = '4px';
+                visualizer.appendChild(bar);
+            }
+        }
+        
+        function initAudioContext() {
+            if (audioContext) return;
+            
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 64;
+                const source = audioContext.createMediaElementSource(audio);
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+            } catch (e) {
+                console.log('Audio context not supported');
+            }
+        }
+        
+        function updateVisualizer() {
+            if (!analyser || !dataArray) {
+                animationId = requestAnimationFrame(updateVisualizer);
+                return;
+            }
+            
+            analyser.getByteFrequencyData(dataArray);
+            const bars = visualizer.querySelectorAll('.visualizer-bar');
+            
+            bars.forEach((bar, i) => {
+                const value = dataArray[i] || 0;
+                const height = Math.max(4, (value / 255) * 50);
+                bar.style.height = height + 'px';
+                const opacity = 0.3 + (value / 255) * 0.7;
+                bar.style.opacity = opacity;
+            });
+
+            const avgEnergy = dataArray.reduce((sum, value) => sum + value, 0) / (dataArray.length || 1);
+            const normalized = Math.min(1, avgEnergy / 180);
+            nowPlayingCard.style.setProperty('--reactive-energy', normalized.toFixed(3));
+            
+            animationId = requestAnimationFrame(updateVisualizer);
+        }
+        
+        function startVisualizer() {
+            initAudioContext();
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            if (animationId) cancelAnimationFrame(animationId);
+            updateVisualizer();
+        }
+        
+        function stopVisualizer() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            const bars = visualizer.querySelectorAll('.visualizer-bar');
+            bars.forEach(bar => {
+                bar.style.height = '4px';
+                bar.style.opacity = '0.3';
+            });
+            nowPlayingCard.style.setProperty('--reactive-energy', '0');
+        }
+        
+        function setupTabs() {
+            tabPlayer.addEventListener('click', () => {
+                tabPlayer.classList.add('active');
+                tabLibrary.classList.remove('active');
+                tabSettings.classList.remove('active');
+                playerTab.classList.add('active');
+                libraryTab.classList.remove('active');
+                settingsTab.classList.remove('active');
+            });
+            
+            tabLibrary.addEventListener('click', () => {
+                tabLibrary.classList.add('active');
+                tabPlayer.classList.remove('active');
+                tabSettings.classList.remove('active');
+                libraryTab.classList.add('active');
+                playerTab.classList.remove('active');
+                settingsTab.classList.remove('active');
+            });
+            
+            tabSettings.addEventListener('click', () => {
+                tabSettings.classList.add('active');
+                tabPlayer.classList.remove('active');
+                tabLibrary.classList.remove('active');
+                settingsTab.classList.add('active');
+                playerTab.classList.remove('active');
+                libraryTab.classList.remove('active');
+            });
+            
+            setupTheme();
+            setupModal();
+        }
+        
+        function setupTheme() {
+            const themes = {
+                dark: {
+                    '--md-sys-color-primary': '#e8def8',
+                    '--md-sys-color-on-primary': '#381e72',
+                    '--md-sys-color-primary-container': '#4f378b',
+                    '--md-sys-color-surface': '#1c1b1f',
+                    '--md-sys-color-on-surface': '#e6e1e5',
+                    '--md-sys-color-surface-variant': '#49454f',
+                    '--md-sys-color-on-surface-variant': '#cac4d0',
+                    '--md-sys-color-background': '#1c1b1f',
+                    '--md-card-bg': '#2d2a3e',
+                    '--md-visualizer': '#e8def8',
+                    '--md-visualizer-end': '#4f378b',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                light: {
+                    '--md-sys-color-primary': '#6750a4',
+                    '--md-sys-color-on-primary': '#ffffff',
+                    '--md-sys-color-primary-container': '#eaddff',
+                    '--md-sys-color-surface': '#fffbfe',
+                    '--md-sys-color-on-surface': '#1c1b1f',
+                    '--md-sys-color-surface-variant': '#e7e0ec',
+                    '--md-sys-color-on-surface-variant': '#49454f',
+                    '--md-sys-color-background': '#f5f0ff',
+                    '--md-card-bg': '#ffffff',
+                    '--md-visualizer': '#6750a4',
+                    '--md-visualizer-end': '#b794f4',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                midnight: {
+                    '--md-sys-color-primary': '#58a6ff',
+                    '--md-sys-color-on-primary': '#ffffff',
+                    '--md-sys-color-primary-container': '#1f6feb',
+                    '--md-sys-color-surface': '#0d1117',
+                    '--md-sys-color-on-surface': '#c9d1d9',
+                    '--md-sys-color-surface-variant': '#21262d',
+                    '--md-sys-color-on-surface-variant': '#8b949e',
+                    '--md-sys-color-background': '#0d1117',
+                    '--md-card-bg': '#161b22',
+                    '--md-visualizer': '#58a6ff',
+                    '--md-visualizer-end': '#1f6feb',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                ocean: {
+                    '--md-sys-color-primary': '#38bdf8',
+                    '--md-sys-color-on-primary': '#0c4a6e',
+                    '--md-sys-color-primary-container': '#0369a1',
+                    '--md-sys-color-surface': '#0c4a6e',
+                    '--md-sys-color-on-surface': '#e0f2fe',
+                    '--md-sys-color-surface-variant': '#164e63',
+                    '--md-sys-color-on-surface-variant': '#7dd3fc',
+                    '--md-sys-color-background': '#0c4a6e',
+                    '--md-card-bg': '#164e63',
+                    '--md-visualizer': '#38bdf8',
+                    '--md-visualizer-end': '#06b6d4',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                sunset: {
+                    '--md-sys-color-primary': '#fb7185',
+                    '--md-sys-color-on-primary': '#881337',
+                    '--md-sys-color-primary-container': '#be123c',
+                    '--md-sys-color-surface': '#1f090e',
+                    '--md-sys-color-on-surface': '#ffe4e6',
+                    '--md-sys-color-surface-variant': '#3f121c',
+                    '--md-sys-color-on-surface-variant': '#fda4af',
+                    '--md-sys-color-background': '#1f090e',
+                    '--md-card-bg': '#3f121c',
+                    '--md-visualizer': '#fb7185',
+                    '--md-visualizer-end': '#f472b6',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                forest: {
+                    '--md-sys-color-primary': '#4ade80',
+                    '--md-sys-color-on-primary': '#14532d',
+                    '--md-sys-color-primary-container': '#22c55e',
+                    '--md-sys-color-surface': '#0f1f16',
+                    '--md-sys-color-on-surface': '#dcfce7',
+                    '--md-sys-color-surface-variant': '#1a3d25',
+                    '--md-sys-color-on-surface-variant': '#86efac',
+                    '--md-sys-color-background': '#0f1f16',
+                    '--md-card-bg': '#1a3d25',
+                    '--md-visualizer': '#4ade80',
+                    '--md-visualizer-end': '#22c55e',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                amber: {
+                    '--md-sys-color-primary': '#f59e0b',
+                    '--md-sys-color-on-primary': '#1f1305',
+                    '--md-sys-color-primary-container': '#d97706',
+                    '--md-sys-color-surface': '#24160a',
+                    '--md-sys-color-on-surface': '#fde68a',
+                    '--md-sys-color-surface-variant': '#3d2a16',
+                    '--md-sys-color-on-surface-variant': '#fcd34d',
+                    '--md-sys-color-background': '#24160a',
+                    '--md-card-bg': '#3d2a16',
+                    '--md-visualizer': '#fbbf24',
+                    '--md-visualizer-end': '#f59e0b',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                rosegold: {
+                    '--md-sys-color-primary': '#fda4af',
+                    '--md-sys-color-on-primary': '#3e1c25',
+                    '--md-sys-color-primary-container': '#fb7185',
+                    '--md-sys-color-surface': '#25161b',
+                    '--md-sys-color-on-surface': '#ffe4e6',
+                    '--md-sys-color-surface-variant': '#3b232a',
+                    '--md-sys-color-on-surface-variant': '#fecdd3',
+                    '--md-sys-color-background': '#25161b',
+                    '--md-card-bg': '#3b232a',
+                    '--md-visualizer': '#fda4af',
+                    '--md-visualizer-end': '#fb7185',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                graphite: {
+                    '--md-sys-color-primary': '#9ca3af',
+                    '--md-sys-color-on-primary': '#111318',
+                    '--md-sys-color-primary-container': '#6b7280',
+                    '--md-sys-color-surface': '#111318',
+                    '--md-sys-color-on-surface': '#e5e7eb',
+                    '--md-sys-color-surface-variant': '#1f2937',
+                    '--md-sys-color-on-surface-variant': '#cbd5e1',
+                    '--md-sys-color-background': '#111318',
+                    '--md-card-bg': '#1f2937',
+                    '--md-visualizer': '#cbd5e1',
+                    '--md-visualizer-end': '#6b7280',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                },
+                monochrome: {
+                    '--md-sys-color-primary': '#ffffff',
+                    '--md-sys-color-on-primary': '#000000',
+                    '--md-sys-color-primary-container': '#2a2a2a',
+                    '--md-sys-color-surface': '#000000',
+                    '--md-sys-color-on-surface': '#ffffff',
+                    '--md-sys-color-surface-variant': '#1a1a1a',
+                    '--md-sys-color-on-surface-variant': '#d4d4d4',
+                    '--md-sys-color-background': '#000000',
+                    '--md-card-bg': '#000000',
+                    '--md-visualizer': '#ffffff',
+                    '--md-visualizer-end': '#ffffff',
+                    '--md-shape-corner-none': '0',
+                    '--md-shape-corner-extra-small': '4px',
+                    '--md-shape-corner-small': '8px',
+                    '--md-shape-corner-medium': '12px',
+                    '--md-shape-corner-large': '16px',
+                    '--md-shape-corner-extra-large': '28px'
+                }
+            };
+            
+            const savedTheme = localStorage.getItem('lofi-theme') || 'dark';
+            applyTheme(savedTheme);
+
+            const themeOptions = document.querySelectorAll('.theme-option');
+            themeOptions.forEach(option => option.classList.remove('active'));
+            
+            themeOptions.forEach(option => {
+                if (option.dataset.theme === savedTheme) {
+                    option.classList.add('active');
+                }
+                
+                option.addEventListener('click', () => {
+                    themeOptions.forEach(o => o.classList.remove('active'));
+                    option.classList.add('active');
+                    applyTheme(option.dataset.theme);
+                    localStorage.setItem('lofi-theme', option.dataset.theme);
+                });
+            });
+            
+            function applyTheme(themeName) {
+                const theme = themes[themeName];
+                if (!theme) return;
+                
+                Object.keys(theme).forEach(key => {
+                    document.documentElement.style.setProperty(key, theme[key]);
+                });
+
+                if (themeName === 'monochrome') {
+                    document.body.classList.add('mono-theme');
+                } else {
+                    document.body.classList.remove('mono-theme');
+                }
+                
+                if (themeName === 'monochrome') {
+                    document.body.style.background = theme['--md-sys-color-background'] || '#000000';
+                } else {
+                    document.body.style.background = theme['--md-sys-color-background']
+                        ? `linear-gradient(135deg, ${theme['--md-sys-color-background']} 0%, ${theme['--md-sys-color-surface-variant']} 100%)`
+                        : 'linear-gradient(135deg, #1c1b1f 0%, #16213e 100%)';
+                }
+            }
+        }
+        
+        let modalMode = null;
+        let modalStationId = null;
+        
+        function setupModal() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalInput = document.getElementById('modalInput');
+            const modalUrlInput = document.getElementById('modalUrlInput');
+            const modalSectionSelect = document.getElementById('modalSectionSelect');
+            const modalCancel = document.getElementById('modalCancel');
+            const modalSave = document.getElementById('modalSave');
+            
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+                modalMode = null;
+                modalStationId = null;
+            }
+            
+            function fillSectionSelect(selectedId) {
+                modalSectionSelect.innerHTML = '';
+                sections.forEach(section => {
+                    const option = document.createElement('option');
+                    option.value = section.id;
+                    option.textContent = section.name;
+                    if (section.id === selectedId) {
+                        option.selected = true;
+                    }
+                    modalSectionSelect.appendChild(option);
+                });
+            }
+            
+            window.openEditModal = (streamId) => {
+                const station = streams.find(stream => stream.id === streamId);
+                if (!station) return;
+                modalMode = 'edit-station';
+                modalStationId = streamId;
+                modalTitle.textContent = 'Edit Station';
+                modalInput.placeholder = 'Station name';
+                modalInput.value = station.name;
+                modalUrlInput.value = station.url;
+                fillSectionSelect(station.sectionId);
+                modalUrlInput.style.display = 'block';
+                modalSectionSelect.style.display = 'block';
+                modalOverlay.classList.add('active');
+                modalInput.focus();
+            };
+            
+            window.openSectionModal = () => {
+                modalMode = 'create-section';
+                modalStationId = null;
+                modalTitle.textContent = 'Create Section';
+                modalInput.placeholder = 'Section name';
+                modalInput.value = '';
+                modalUrlInput.value = '';
+                modalUrlInput.style.display = 'none';
+                modalSectionSelect.style.display = 'none';
+                modalOverlay.classList.add('active');
+                modalInput.focus();
+            };
+            
+            window.deleteStation = (streamId) => {
+                closeStationContextMenu();
+                const stream = streams.find(item => item.id === streamId);
+                if (!stream) return;
+                
+                if (stream.isDefault) {
+                    const defaultIndex = defaultStreams.findIndex(item => item.id === streamId);
+                    if (defaultIndex >= 0) {
+                        defaultStreams.splice(defaultIndex, 1);
+                        saveDefaultStreams();
+                    }
+                } else {
+                    customStreams = customStreams.filter(item => item.id !== streamId);
+                    saveCustomStreams();
+                }
+                
+                buildStreams();
+                if (currentStreamIndex >= streams.length) {
+                    currentStreamIndex = Math.max(0, streams.length - 1);
+                }
+                populateSelect();
+                updateStationName();
+                saveStation();
+                renderLibrary();
+            };
+            
+            window.deleteSection = (sectionId) => {
+                const section = sections.find(item => item.id === sectionId);
+                if (!section || section.locked) return;
+                streams.forEach(stream => {
+                    if (stream.sectionId === sectionId) {
+                        stream.sectionId = stream.isDefault ? 'section-lofi' : 'section-custom';
+                    }
+                });
+                sections = sections.filter(item => item.id !== sectionId);
+                saveSections();
+                saveDefaultStreams();
+                saveCustomStreams();
+                renderLibrary();
+            };
+            
+            function saveModal() {
+                const title = modalInput.value.trim();
+                if (!title) {
+                    closeModal();
+                    return;
+                }
+                
+                if (modalMode === 'create-section') {
+                    sections.push({
+                        id: generateId('section'),
+                        name: title,
+                        locked: false
+                    });
+                    saveSections();
+                    renderLibrary();
+                    closeModal();
+                    return;
+                }
+                
+                if (modalMode === 'edit-station' && modalStationId) {
+                    const newUrl = modalUrlInput.value.trim();
+                    if (!newUrl || (!newUrl.startsWith('http://') && !newUrl.startsWith('https://'))) {
+                        statusText.textContent = 'Invalid URL';
+                        closeModal();
+                        return;
+                    }
+                    
+                    const station = streams.find(stream => stream.id === modalStationId);
+                    if (!station) {
+                        closeModal();
+                        return;
+                    }
+                    
+                    station.name = title;
+                    station.url = newUrl;
+                    station.sectionId = modalSectionSelect.value;
+                    
+                    saveDefaultStreams();
+                    saveCustomStreams();
+                    populateSelect();
+                    updateStationName();
+                    renderLibrary();
+                }
+                
+                closeModal();
+            }
+            
+            modalCancel.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+            modalSave.addEventListener('click', saveModal);
+        }
+        
+        function renderLibrary() {
+            let html = '';
+            
+            sections.forEach(section => {
+                const items = streams.map((station, index) => ({ station, index }))
+                    .filter(item => item.station.sectionId === section.id);
+                
+                if (items.length === 0 && section.id !== 'section-custom') {
+                    return;
+                }
+                
+                html += `<div class="category-title">${section.name}${section.locked ? '' : `<button class="action-btn delete-btn section-delete-btn" onclick="event.stopPropagation(); deleteSection('${section.id}')"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>`}</div>`;
+                
+                items.forEach(item => {
+                    const station = item.station;
+                    const globalIdx = item.index;
+                    const isActive = globalIdx === currentStreamIndex;
+                    const url = station.url.replace('https://', '').replace('http://', '').split('/')[0];
+                    const health = streamHealth[station.id];
+                    const healthStatus = health && health.status ? health.status : 'unchecked';
+                    const healthLabel = getHealthLabel(health);
+                    html += `
+                        <div class="station-item ${isActive ? 'active' : ''}" data-index="${globalIdx}">
+                            <div class="station-icon">
+                                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            </div>
+                            <div class="station-info">
+                                <div class="station-item-name">${station.name}</div>
+                                <div class="station-item-url">${url}</div>
+                                <div class="station-health"><span class="health-dot ${healthStatus}"></span>${healthLabel}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            
+            stationList.innerHTML = html;
+            
+            document.querySelectorAll('.station-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const idx = parseInt(item.dataset.index, 10);
+                    selectStation(idx);
+                    play();
+                });
+
+                item.addEventListener('contextmenu', (event) => {
+                    event.preventDefault();
+                    const idx = parseInt(item.dataset.index, 10);
+                    const stream = streams[idx];
+                    if (!stream) return;
+                    openStationContextMenu(event.clientX, event.clientY, stream.id, idx);
+                });
+            });
+        }
+        
+        function selectStation(idx) {
+            if (!streams[idx]) return;
+            currentStreamIndex = idx;
+            stationSelect.value = String(idx);
+            updateStationName();
+            saveStation();
+            renderLibrary();
+        }
+        
+        function loadCustomStreams() {
+            try {
+                const saved = localStorage.getItem('lofi-custom-streams');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) {
+                        customStreams = parsed.map((stream, index) => ({
+                            id: stream.id || generateId(`custom-${index}`),
+                            name: stream.name || 'Custom Stream',
+                            url: stream.url || '',
+                            sectionId: stream.sectionId || 'section-custom',
+                            isDefault: false
+                        })).filter(stream => stream.url);
+                    }
+                }
+            } catch (e) {
+                customStreams = [];
+            }
+        }
+        
+        function saveCustomStreams() {
+            try {
+                localStorage.setItem('lofi-custom-streams', JSON.stringify(customStreams));
+            } catch (e) {}
+        }
+        
+        function populateSelect() {
+            stationSelect.innerHTML = '';
+            streams.forEach((stream, index) => {
+                const option = document.createElement('option');
+                option.value = String(index);
+                option.textContent = stream.name;
+                stationSelect.appendChild(option);
+            });
+            stationSelect.value = String(currentStreamIndex);
+        }
+        
+        function loadSavedStation() {
+            try {
+                const saved = localStorage.getItem('lofi-current-station');
+                if (saved !== null) {
+                    const idx = parseInt(saved, 10);
+                    if (!Number.isNaN(idx) && idx >= 0 && idx < streams.length) {
+                        currentStreamIndex = idx;
+                    }
+                }
+                updateStationName();
+            } catch (e) {}
+        }
+        
+        function saveStation() {
+            try {
+                localStorage.setItem('lofi-current-station', currentStreamIndex);
+            } catch (e) {}
+        }
+        
+        function updateStationName() {
+            const stream = streams[currentStreamIndex];
+            if (!stream) return;
+            stationName.textContent = stream.name;
+            const url = stream.url.replace('https://', '').replace('http://', '').split('/')[0];
+            stationUrl.textContent = url;
+        }
+        
+        function loadStream(index) {
+            if (!streams[index]) return;
+            currentStreamIndex = index;
+            audio.src = streams[index].url;
+            audio.load();
+            updateStationName();
+            saveStation();
+            stationSelect.value = String(index);
+        }
+        
+        function play() {
+            loadStream(currentStreamIndex);
+            audio.volume = volumeSlider.value / 100;
+            audio.play().then(() => {
+                isPlaying = true;
+                updateUI();
+                statusText.textContent = 'Now playing';
+                statusDot.classList.add('playing');
+                startVisualizer();
+                retryCount = 0;
+            }).catch(err => {
+                console.error('Play error:', err);
+                handleStreamError();
+            });
+        }
+        
+        function pause() {
+            audio.pause();
+            isPlaying = false;
+            updateUI();
+            statusText.textContent = 'Paused';
+            statusDot.classList.remove('playing');
+            stopVisualizer();
+        }
+        
+        function togglePlay() {
+            if (isPlaying) {
+                pause();
+            } else {
+                play();
+            }
+        }
+        
+        function updateUI() {
+            if (isPlaying) {
+                playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+            } else {
+                playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+            }
+        }
+        
+        function handleStreamError() {
+            retryCount++;
+            console.log('Stream error, retry:', retryCount);
+            
+            if (retryCount < maxRetries) {
+                const nextIndex = (currentStreamIndex + 1) % streams.length;
+                loadStream(nextIndex);
+                if (isPlaying) {
+                    audio.play().catch(() => {});
+                }
+            } else {
+                statusText.textContent = 'Connection failed';
+                statusDot.classList.remove('playing');
+                stopVisualizer();
+                isPlaying = false;
+                updateUI();
+            }
+        }
+        
+        function addCustomStream(urlToAdd) {
+            const url = urlToAdd || customUrl.value.trim();
+            if (!url) return;
+            
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                statusText.textContent = 'Invalid URL';
+                return;
+            }
+            
+            const name = url.replace('https://', '').replace('http://', '').split('/')[0] || 'Custom Stream';
+            
+            customStreams.push({
+                id: generateId('custom-stream'),
+                name: name,
+                url: url,
+                sectionId: 'section-custom',
+                isDefault: false
+            });
+            saveCustomStreams();
+            
+            buildStreams();
+            ensureSections();
+            saveSections();
+            populateSelect();
+            renderLibrary();
+            
+            const newIndex = streams.length - 1;
+            currentStreamIndex = newIndex;
+            stationSelect.value = String(newIndex);
+            updateStationName();
+            
+            customUrl.value = '';
+            libraryUrl.value = '';
+            
+            tabLibrary.click();
+            play();
+            statusText.textContent = 'Station added';
+        }
+        
+        audio.addEventListener('error', (e) => {
+            console.error('Audio error:', e);
+            handleStreamError();
+        });
+        
+        audio.addEventListener('stalled', () => {
+            console.log('Stream stalled');
+        });
+        
+        audio.addEventListener('playing', () => {
+            retryCount = 0;
+            statusText.textContent = 'Now playing';
+            statusDot.classList.add('playing');
+        });
+        
+        stationSelect.addEventListener('change', (e) => {
+            const idx = parseInt(e.target.value, 10);
+            currentStreamIndex = idx;
+            updateStationName();
+            saveStation();
+            if (isPlaying) {
+                loadStream(idx);
+                audio.play().catch(() => {});
+            }
+        });
+        
+        addSectionBtn.addEventListener('click', () => {
+            window.openSectionModal();
+        });
+        
+        addBtn.addEventListener('click', () => addCustomStream());
+        
+        customUrl.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addCustomStream();
+            }
+        });
+        
+        libraryAddBtn.addEventListener('click', () => addCustomStream(libraryUrl.value));
+        
+        libraryUrl.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addCustomStream(libraryUrl.value);
+            }
+        });
+        
+        playBtn.addEventListener('click', togglePlay);
+        
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value / 100;
+            volumeValue.textContent = e.target.value + '%';
+            saveVolume(e.target.value);
+        });
+        
+        volumeSlider.addEventListener('click', (e) => {
+            if (e.detail === 2) {
+                audio.muted = !audio.muted;
+            }
+        });
+        
+        minimizeBtn.addEventListener('click', () => {
+            window.electronAPI.minimize();
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            window.electronAPI.close();
+        });
+        
+        if (window.electronAPI) {
+            window.electronAPI.onTogglePlay(() => {
+                togglePlay();
+            });
+        }
+        
+        function saveVolume(value) {
+            try {
+                localStorage.setItem('lofi-volume', value);
+            } catch (e) {}
+        }
+        
+        function loadVolume() {
+            try {
+                const saved = localStorage.getItem('lofi-volume');
+                if (saved !== null) {
+                    volumeSlider.value = saved;
+                    volumeValue.textContent = saved + '%';
+                    audio.volume = saved / 100;
+                }
+            } catch (e) {}
+        }
+        
+        init();
+        loadVolume();
+        
+        audio.volume = volumeSlider.value / 100;
+    </script>
+</body>
+</html>
