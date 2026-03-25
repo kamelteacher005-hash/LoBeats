@@ -18,7 +18,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Upload Windows artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: LoBeats-windows
           path: dist/LoBeats-windows.exe
@@ -34,12 +34,12 @@ jobs:
       - run: npm ci
       - run: npm run build:linux
       - name: Upload Linux DEB artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: LoBeats-linux-deb
           path: dist/LoBeats-linux.deb
       - name: Upload Linux ZIP artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: LoBeats-linux-zip
           path: dist/LoBeats-linux.zip
