@@ -192,22 +192,6 @@
             transition: height 0.05s ease;
         }
 
-        .visualizer.circle {
-            width: 80px;
-            height: 80px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .visualizer.circle .visualizer-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            transition: all 0.1s ease;
-        }
-
         .vinyl-center {
             position: absolute;
             width: 22px;
@@ -279,19 +263,8 @@
         }
 
         @keyframes now-pulse {
-            0% {
-                transform: scale(0.6);
-                opacity: 0.65;
-            }
-            100% {
-                transform: scale(2.2);
-                opacity: 0;
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0% { transform: scale(0.6); opacity: 0.65; }
+            100% { transform: scale(2.2); opacity: 0; }
         }
 
         .controls {
@@ -319,9 +292,7 @@
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
         }
 
-        .play-btn:active {
-            transform: scale(0.95);
-        }
+        .play-btn:active { transform: scale(0.95); }
 
         .play-btn svg {
             width: 32px;
@@ -355,7 +326,6 @@
             border-radius: 10px;
             outline: none;
             cursor: pointer;
-            position: relative;
         }
 
         .volume-slider::-webkit-slider-runnable-track {
@@ -366,7 +336,6 @@
 
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -378,9 +347,7 @@
             transition: transform 0.2s;
         }
 
-        .volume-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
+        .volume-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
         .volume-slider::-moz-range-track {
             height: 6px;
@@ -405,9 +372,7 @@
             text-align: right;
         }
 
-        .add-station {
-            display: none;
-        }
+        .add-station { display: none; }
 
         .tabs {
             display: flex;
@@ -429,9 +394,7 @@
             transition: all 0.2s;
         }
 
-        .tab:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+        .tab:hover { background: rgba(255, 255, 255, 0.05); }
 
         .tab.active {
             background: color-mix(in srgb, var(--md-sys-color-primary) 18%, transparent);
@@ -446,11 +409,10 @@
             padding: 0 16px 16px;
             gap: 12px;
             overflow-y: auto;
+            overflow-x: hidden;
         }
 
-        .tab-content.active {
-            display: flex;
-        }
+        .tab-content.active { display: flex; }
 
         .station-list {
             width: 100%;
@@ -459,50 +421,32 @@
             gap: 6px;
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             min-height: 0;
         }
 
-        .station-list::-webkit-scrollbar {
-            width: 6px;
-        }
-
+        .station-list::-webkit-scrollbar { width: 6px; }
         .station-list::-webkit-scrollbar-track {
-            background: var(--md-sys-color-surface-variant, rgba(255, 255, 255, 0.05));
+            background: var(--md-sys-color-surface-variant, rgba(255,255,255,0.05));
             border-radius: 3px;
         }
-
         .station-list::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
             border-radius: 3px;
         }
 
-        .station-list::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
-            opacity: 0.8;
-        }
-
         #settingsTab {
             scrollbar-width: thin;
-            scrollbar-color: var(--md-sys-color-primary, #e8def8) var(--md-sys-color-surface-variant, rgba(255, 255, 255, 0.05));
+            scrollbar-color: var(--md-sys-color-primary, #e8def8) var(--md-sys-color-surface-variant, rgba(255,255,255,0.05));
         }
-
-        #settingsTab::-webkit-scrollbar {
-            width: 6px;
-        }
-
+        #settingsTab::-webkit-scrollbar { width: 6px; }
         #settingsTab::-webkit-scrollbar-track {
-            background: var(--md-sys-color-surface-variant, rgba(255, 255, 255, 0.05));
+            background: var(--md-sys-color-surface-variant, rgba(255,255,255,0.05));
             border-radius: 3px;
         }
-
         #settingsTab::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
             border-radius: 3px;
-        }
-
-        #settingsTab::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
-            opacity: 0.8;
         }
 
         .library-content {
@@ -524,9 +468,7 @@
             transition: all 0.2s;
         }
 
-        .station-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+        .station-item:hover { background: rgba(255, 255, 255, 0.1); }
 
         .station-item.active {
             background: rgba(232, 222, 248, 0.15);
@@ -541,6 +483,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .station-icon svg {
@@ -552,6 +495,7 @@
         .station-info {
             flex: 1;
             overflow: hidden;
+            min-width: 0;
         }
 
         .station-item-name {
@@ -587,19 +531,11 @@
             height: 7px;
             border-radius: 50%;
             background: #8a8a8a;
+            flex-shrink: 0;
         }
-
-        .health-dot.online {
-            background: #4ade80;
-        }
-
-        .health-dot.slow {
-            background: #f59e0b;
-        }
-
-        .health-dot.offline {
-            background: #f87171;
-        }
+        .health-dot.online { background: #4ade80; }
+        .health-dot.slow { background: #f59e0b; }
+        .health-dot.offline { background: #f87171; }
 
         .category-title {
             font-size: 12px;
@@ -609,11 +545,14 @@
             letter-spacing: 1px;
             padding: 12px 0 6px;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .library-header {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) auto auto;
+            grid-template-columns: minmax(0, 1fr) auto auto auto;
             gap: 8px;
             width: 100%;
             margin-bottom: 4px;
@@ -630,61 +569,31 @@
             outline: none;
         }
 
-        .library-header input:focus {
-            border-color: var(--md-sys-color-primary);
-        }
-
-        .library-header input::placeholder {
-            color: var(--md-sys-color-on-surface-variant);
-        }
-
-        .library-header .add-btn {
-            padding: 10px 12px;
-            min-width: 72px;
-        }
+        .library-header input:focus { border-color: var(--md-sys-color-primary); }
+        .library-header input::placeholder { color: var(--md-sys-color-on-surface-variant); }
+        .library-header .add-btn { padding: 10px 12px; }
 
         .add-btn {
             border: 1px solid var(--md-sys-color-surface-variant);
             border-radius: var(--md-shape-corner-medium);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.08) 100%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 100%);
             color: var(--md-sys-color-on-surface);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
+            white-space: nowrap;
+            font-size: 12px;
         }
 
         .add-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.12) 100%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.12) 100%);
             border-color: var(--md-sys-color-primary);
         }
+        .add-btn:active { transform: scale(0.98); }
 
-        .add-btn:active {
-            transform: scale(0.98);
-        }
+        .station-actions { display: none; }
 
-        .station-actions {
-            display: none;
-        }
-
-        .station-list {
-            overflow-x: hidden;
-        }
-
-        .tab-content {
-            overflow-x: hidden;
-        }
-
-        .category-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .section-delete-btn {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
+        .section-delete-btn { width: 20px; height: 20px; flex-shrink: 0; }
 
         .action-btn {
             width: 28px;
@@ -697,46 +606,21 @@
             justify-content: center;
             transition: all 0.2s;
         }
-
-        .action-btn svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        .edit-btn {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .edit-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .edit-btn svg {
-            fill: var(--md-sys-color-on-surface-variant);
-        }
-
-        .delete-btn {
-            background: rgba(231, 76, 60, 0.2);
-        }
-
-        .delete-btn:hover {
-            background: rgba(231, 76, 60, 0.4);
-        }
-
-        .delete-btn svg {
-            fill: #e74c3c;
-        }
+        .action-btn svg { width: 14px; height: 14px; }
+        .edit-btn { background: rgba(255,255,255,0.1); }
+        .edit-btn:hover { background: rgba(255,255,255,0.2); }
+        .edit-btn svg { fill: var(--md-sys-color-on-surface-variant); }
+        .delete-btn { background: rgba(231,76,60,0.2); }
+        .delete-btn:hover { background: rgba(231,76,60,0.4); }
+        .delete-btn svg { fill: #e74c3c; }
 
         .settings-section {
             width: 100%;
             padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border-radius: var(--md-shape-corner-large);
         }
-
-        .settings-section + .settings-section {
-            margin-top: 10px;
-        }
+        .settings-section + .settings-section { margin-top: 10px; }
 
         .settings-title {
             font-size: 12px;
@@ -754,82 +638,32 @@
             justify-content: center;
         }
 
+        /* ── Theme previews ── */
         .theme-preview {
             width: 44px;
             height: 44px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
+        .theme-preview.dark { background: linear-gradient(135deg, #1c1b1f 0%, #4f378b 50%, #2d2a3e 100%); }
+        .theme-preview.light { background: linear-gradient(135deg, #fffbfe 0%, #e7e0ec 50%, #f5f0ff 100%); border: 1px solid #e7e0ec; }
+        .theme-preview.midnight { background: linear-gradient(135deg, #0d1117 0%, #58a6ff 50%, #161b22 100%); }
+        .theme-preview.ocean { background: linear-gradient(135deg, #0c4a6e 0%, #38bdf8 50%, #164e63 100%); }
+        .theme-preview.sunset { background: linear-gradient(135deg, #1f090e 0%, #fb7185 50%, #3f121c 100%); }
+        .theme-preview.forest { background: linear-gradient(135deg, #0f1f16 0%, #4ade80 50%, #1a3d25 100%); }
+        .theme-preview.amber { background: linear-gradient(135deg, #24160a 0%, #f59e0b 50%, #3d2a16 100%); }
+        .theme-preview.rosegold { background: linear-gradient(135deg, #25161b 0%, #fda4af 50%, #3b232a 100%); }
+        .theme-preview.graphite { background: linear-gradient(135deg, #111318 0%, #9ca3af 50%, #1f2937 100%); }
+        .theme-preview.monochrome { background: linear-gradient(135deg, #000000 0%, #666666 50%, #ffffff 100%); }
+        /* New themes */
+        .theme-preview.cyberpunk { background: linear-gradient(135deg, #0a0a0f 0%, #ff0066 30%, #00ffcc 70%, #110022 100%); }
+        .theme-preview.vaporwave { background: linear-gradient(135deg, #1a0533 0%, #ff71ce 40%, #05ffa1 70%, #b967ff 100%); }
+        .theme-preview.arctic { background: linear-gradient(135deg, #eaf4fb 0%, #a8d8ea 50%, #d4eef7 100%); border: 1px solid #c2dff0; }
+        .theme-preview.sakura { background: linear-gradient(135deg, #1a0d14 0%, #ffb7c5 40%, #ff6b9d 70%, #2d0f20 100%); }
+        .theme-preview.deepspace { background: linear-gradient(135deg, #000005 0%, #1a0038 40%, #6600cc 70%, #cc00ff 100%); }
+        .theme-preview.noir { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #d4af37 70%, #0a0a0a 100%); }
 
-        .theme-preview.dark {
-            background: linear-gradient(135deg, #1c1b1f 0%, #4f378b 50%, #2d2a3e 100%);
-        }
-
-        .theme-preview.light {
-            background: linear-gradient(135deg, #fffbfe 0%, #e7e0ec 50%, #f5f0ff 100%);
-            border: 1px solid #e7e0ec;
-        }
-
-        .theme-preview.midnight {
-            background: linear-gradient(135deg, #0d1117 0%, #58a6ff 50%, #161b22 100%);
-        }
-
-        .theme-preview.ocean {
-            background: linear-gradient(135deg, #0c4a6e 0%, #38bdf8 50%, #164e63 100%);
-        }
-
-        .theme-preview.sunset {
-            background: linear-gradient(135deg, #1f090e 0%, #fb7185 50%, #3f121c 100%);
-        }
-
-        .theme-preview.forest {
-            background: linear-gradient(135deg, #0f1f16 0%, #4ade80 50%, #1a3d25 100%);
-        }
-
-        .theme-preview.amber {
-            background: linear-gradient(135deg, #24160a 0%, #f59e0b 50%, #3d2a16 100%);
-        }
-
-        .theme-preview.rosegold {
-            background: linear-gradient(135deg, #25161b 0%, #fda4af 50%, #3b232a 100%);
-        }
-
-        .theme-preview.graphite {
-            background: linear-gradient(135deg, #111318 0%, #9ca3af 50%, #1f2937 100%);
-        }
-
-        .theme-preview.monochrome {
-            background: linear-gradient(135deg, #000000 0%, #666666 50%, #ffffff 100%);
-        }
-
-        .mono-theme .now-playing-card,
-        .mono-theme .now-playing-card::before,
-        .mono-theme .play-btn,
-        .mono-theme .visualizer-bar,
-        .mono-theme .volume-slider::-webkit-slider-runnable-track,
-        .mono-theme .volume-slider::-moz-range-track,
-        .mono-theme .library-content,
-        .mono-theme .add-btn,
-        .mono-theme .add-btn:hover,
-        .mono-theme .modal-btn.save,
-        .mono-theme .vinyl-center,
-        .mono-theme .station-icon {
-            background: var(--md-sys-color-surface) !important;
-        }
-
-        .mono-theme .station-icon svg,
-        .mono-theme .play-btn svg,
-        .mono-theme .volume-icon,
-        .mono-theme .status-dot.playing,
-        .mono-theme .title-icon {
-            fill: var(--md-sys-color-on-surface) !important;
-            background: transparent !important;
-        }
-
-        .mono-theme .window-btn {
-            background: #ffffff !important;
-        }
-
+        /* Monochrome overrides */
         .mono-theme .now-playing-card,
         .mono-theme .play-btn,
         .mono-theme .modal,
@@ -838,17 +672,20 @@
         .mono-theme .volume-slider::-moz-range-thumb {
             box-shadow: none !important;
         }
+        .mono-theme .window-btn { background: #ffffff !important; }
 
         .theme-label {
             font-size: 11px;
             color: var(--md-sys-color-on-surface);
             margin-top: 4px;
+            text-align: center;
         }
 
         .theme-option {
             flex: 1;
+            min-width: 52px;
             padding: 8px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border: 2px solid transparent;
             border-radius: var(--md-shape-corner-medium);
             cursor: pointer;
@@ -858,16 +695,8 @@
             align-items: center;
             gap: 6px;
         }
-
-        .theme-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .theme-option.active {
-            border-color: var(--md-sys-color-primary);
-            background: rgba(255, 255, 255, 0.1);
-        }
+        .theme-option:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .theme-option.active { border-color: var(--md-sys-color-primary); background: rgba(255,255,255,0.1); }
 
         .setting-row {
             display: flex;
@@ -875,15 +704,10 @@
             justify-content: space-between;
             gap: 12px;
         }
-
-        .setting-label {
-            font-size: 13px;
-            color: var(--md-sys-color-on-surface);
-            font-weight: 500;
-        }
+        .setting-label { font-size: 13px; color: var(--md-sys-color-on-surface); font-weight: 500; }
 
         .setting-control {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.08);
             color: var(--md-sys-color-on-surface);
             border: 1px solid var(--md-sys-color-surface-variant);
             border-radius: var(--md-shape-corner-small);
@@ -892,20 +716,10 @@
             min-width: 118px;
             outline: none;
         }
+        .setting-control:disabled { opacity: 0.55; cursor: not-allowed; }
 
-        .setting-control:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
-
-        .custom-select {
-            position: relative;
-            min-width: 176px;
-        }
-
-        .native-select {
-            display: none;
-        }
+        .custom-select { position: relative; min-width: 176px; }
+        .native-select { display: none; }
 
         .custom-select-trigger {
             width: 100%;
@@ -913,7 +727,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.08);
             color: var(--md-sys-color-on-surface);
             border: 1px solid var(--md-sys-color-surface-variant);
             border-radius: var(--md-shape-corner-small);
@@ -923,52 +737,34 @@
             cursor: pointer;
             transition: background 0.2s, border-color 0.2s;
         }
-
-        .custom-select-trigger:hover {
-            background: rgba(255, 255, 255, 0.16);
-            border-color: var(--md-sys-color-primary);
-        }
-
+        .custom-select-trigger:hover { background: rgba(255,255,255,0.16); border-color: var(--md-sys-color-primary); }
         .custom-select-arrow {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             border-right: 2px solid var(--md-sys-color-on-surface-variant);
             border-bottom: 2px solid var(--md-sys-color-on-surface-variant);
             transform: rotate(45deg) translateY(-1px);
             transition: transform 0.2s;
             flex-shrink: 0;
         }
-
-        .custom-select.open .custom-select-arrow {
-            transform: rotate(-135deg) translateY(-1px);
-        }
-
-        .custom-select.disabled .custom-select-trigger {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
+        .custom-select.open .custom-select-arrow { transform: rotate(-135deg) translateY(-1px); }
+        .custom-select.disabled .custom-select-trigger { opacity: 0.55; cursor: not-allowed; }
 
         .custom-select-menu {
             position: absolute;
             top: calc(100% + 6px);
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             background: var(--md-sys-color-surface);
             border: 1px solid var(--md-sys-color-surface-variant);
             border-radius: var(--md-shape-corner-small);
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 26px rgba(0,0,0,0.3);
             overflow: hidden;
             display: none;
             z-index: 50;
         }
-
-        .custom-select.open .custom-select-menu {
-            display: block;
-        }
+        .custom-select.open .custom-select-menu { display: block; }
 
         .custom-select-option {
-            width: 100%;
-            border: none;
+            width: 100%; border: none;
             background: transparent;
             color: var(--md-sys-color-on-surface);
             text-align: left;
@@ -977,387 +773,181 @@
             cursor: pointer;
             transition: background 0.15s;
         }
+        .custom-select-option:hover { background: rgba(255,255,255,0.1); }
+        .custom-select-option.active { background: color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent); font-weight: 600; }
 
-        .custom-select-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+        .setting-button { cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+        .setting-button:hover { background: rgba(255,255,255,0.16); border-color: var(--md-sys-color-primary); }
 
-        .custom-select-option.active {
-            background: color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent);
-            color: var(--md-sys-color-on-surface);
-            font-weight: 600;
-        }
+        .update-status { margin-top: 10px; font-size: 12px; color: var(--md-sys-color-on-surface-variant); line-height: 1.4; }
+        .update-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .settings-inline-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .setting-note { margin-top: 10px; font-size: 12px; color: var(--md-sys-color-on-surface-variant); line-height: 1.4; }
 
-        .setting-button {
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .setting-button:hover {
-            background: rgba(255, 255, 255, 0.16);
-            border-color: var(--md-sys-color-primary);
-        }
-
-        .update-status {
-            margin-top: 10px;
-            font-size: 12px;
-            color: var(--md-sys-color-on-surface-variant);
-            line-height: 1.4;
-        }
-
-        .update-actions {
-            margin-top: 10px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .settings-inline-actions {
-            margin-top: 10px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .setting-note {
-            margin-top: 10px;
-            font-size: 12px;
-            color: var(--md-sys-color-on-surface-variant);
-            line-height: 1.4;
-        }
-
-        .switch {
-            position: relative;
-            width: 46px;
-            height: 26px;
-            flex-shrink: 0;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
+        .switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             border-radius: 999px;
             background: var(--md-sys-color-surface-variant);
             cursor: pointer;
             transition: background 0.2s;
         }
-
         .slider::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            left: 3px;
-            top: 3px;
+            content: ''; position: absolute;
+            width: 20px; height: 20px;
+            left: 3px; top: 3px;
             border-radius: 50%;
             background: var(--md-sys-color-on-surface);
             transition: transform 0.2s;
         }
+        .switch input:checked + .slider { background: var(--md-sys-color-primary-container); }
+        .switch input:checked + .slider::before { transform: translateX(20px); }
 
-        .switch input:checked + .slider {
-            background: var(--md-sys-color-primary-container);
-        }
-
-        .switch input:checked + .slider::before {
-            transform: translateX(20px);
-        }
-
+        /* Ambient aura */
         .ambient-aura {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 0;
+            opacity: 0; transition: opacity 0.3s ease;
         }
-
-        .theme-aura .ambient-aura {
-            opacity: 0.9;
-        }
-
+        .theme-aura .ambient-aura { opacity: 0.9; }
         .aura-blob {
             position: absolute;
-            width: 260px;
-            height: 260px;
+            width: 260px; height: 260px;
             border-radius: 50%;
             filter: blur(52px);
             opacity: 0.35;
             animation: aura-drift 16s ease-in-out infinite alternate;
         }
-
-        .aura-blob.primary {
-            left: -70px;
-            top: 92px;
-            background: color-mix(in srgb, var(--md-sys-color-primary) 78%, transparent);
-        }
-
-        .aura-blob.secondary {
-            right: -90px;
-            bottom: 84px;
-            background: color-mix(in srgb, var(--md-sys-color-primary-container) 74%, transparent);
-            animation-delay: -4s;
-        }
-
+        .aura-blob.primary { left: -70px; top: 92px; background: color-mix(in srgb, var(--md-sys-color-primary) 78%, transparent); }
+        .aura-blob.secondary { right: -90px; bottom: 84px; background: color-mix(in srgb, var(--md-sys-color-primary-container) 74%, transparent); animation-delay: -4s; }
         @keyframes aura-drift {
-            from { transform: translate3d(0, 0, 0) scale(1); }
-            to { transform: translate3d(24px, -14px, 0) scale(1.12); }
+            from { transform: translate3d(0,0,0) scale(1); }
+            to { transform: translate3d(24px,-14px,0) scale(1.12); }
         }
 
-        .weather-container {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 4;
-            overflow: hidden;
-        }
-
-        .weather-particle {
-            position: absolute;
-            top: -16px;
-            border-radius: 50%;
-            animation-name: weather-fall;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-
-        .weather-particle.snow {
-            background: rgba(255, 255, 255, 0.9);
-            filter: blur(0.2px);
-        }
-
-        .weather-particle.rain {
-            width: 1.7px !important;
-            height: 16px !important;
-            border-radius: 999px;
-            background: rgba(170, 210, 255, 0.72);
-        }
-
-        .weather-particle.dust {
-            background: rgba(236, 223, 195, 0.45);
-            filter: blur(0.3px);
-        }
-
-        .weather-particle.stars {
-            background: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-            animation-name: stars-fall;
-        }
-
-        @keyframes weather-fall {
-            from {
-                transform: translate3d(0, -10vh, 0);
-            }
-            to {
-                transform: translate3d(var(--drift, 10px), 110vh, 0);
-            }
-        }
-
+        /* Weather */
+        .weather-container { position: fixed; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
+        .weather-particle { position: absolute; top: -16px; border-radius: 50%; animation-name: weather-fall; animation-timing-function: linear; animation-iteration-count: infinite; }
+        .weather-particle.snow { background: rgba(255,255,255,0.9); filter: blur(0.2px); }
+        .weather-particle.rain { width: 1.7px !important; height: 16px !important; border-radius: 999px; background: rgba(170,210,255,0.72); }
+        .weather-particle.dust { background: rgba(236,223,195,0.45); filter: blur(0.3px); }
+        .weather-particle.stars { background: rgba(255,255,255,0.92); box-shadow: 0 0 8px rgba(255,255,255,0.5); animation-name: stars-fall; }
+        @keyframes weather-fall { from { transform: translate3d(0,-10vh,0); } to { transform: translate3d(var(--drift,10px),110vh,0); } }
         @keyframes stars-fall {
-            from {
-                transform: translate3d(0, -10vh, 0) scale(0.65);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.95;
-            }
-            to {
-                transform: translate3d(var(--drift, 8px), 110vh, 0) scale(1);
-                opacity: 0;
-            }
+            from { transform: translate3d(0,-10vh,0) scale(0.65); opacity: 0; }
+            20% { opacity: 0.95; }
+            to { transform: translate3d(var(--drift,8px),110vh,0) scale(1); opacity: 0; }
         }
 
+        /* Noise */
         .noise-layer {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 3;
+            position: fixed; inset: 0; pointer-events: none; z-index: 3;
             opacity: 0;
-            background-image:
-                radial-gradient(rgba(255, 255, 255, 0.06) 0.6px, transparent 0.6px),
-                radial-gradient(rgba(0, 0, 0, 0.08) 0.6px, transparent 0.6px);
+            background-image: radial-gradient(rgba(255,255,255,0.06) 0.6px, transparent 0.6px), radial-gradient(rgba(0,0,0,0.08) 0.6px, transparent 0.6px);
             background-size: 4px 4px, 6px 6px;
             background-position: 0 0, 2px 2px;
             mix-blend-mode: soft-light;
             transition: opacity 0.25s ease;
         }
+        .ambient-noise .noise-layer { opacity: 0.42; }
 
-        .ambient-noise .noise-layer {
-            opacity: 0.42;
+        /* Pixel mode */
+        .pixel-mode { image-rendering: pixelated; font-family: Consolas, 'Courier New', monospace; }
+        .pixel-mode * { border-radius: 0 !important; text-shadow: none !important; }
+        .pixel-mode .ambient-aura, .pixel-mode .noise-layer { display: none !important; }
+        .pixel-mode .weather-container { opacity: 0.55; }
+        .pixel-mode .visualizer-bar { width: 8px; transition: none; }
+        .pixel-mode .play-btn:hover, .pixel-mode .theme-option:hover { transform: none; }
+
+        /* Cyberpunk scan lines */
+        .cyberpunk-theme::after {
+            content: '';
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 5;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,204,0.02) 2px, rgba(0,255,204,0.02) 4px);
+            animation: scanlines 8s linear infinite;
+        }
+        @keyframes scanlines { from { background-position: 0 0; } to { background-position: 0 100px; } }
+
+        /* Vaporwave grid */
+        .vaporwave-theme::after {
+            content: '';
+            position: fixed; bottom: 0; left: 0; right: 0;
+            height: 40%;
+            pointer-events: none; z-index: 1;
+            background:
+                linear-gradient(transparent 60%, rgba(255,113,206,0.08) 100%),
+                repeating-linear-gradient(90deg, rgba(5,255,161,0.07) 0px, transparent 1px, transparent 40px, rgba(5,255,161,0.07) 41px),
+                repeating-linear-gradient(0deg, rgba(5,255,161,0.07) 0px, transparent 1px, transparent 30px, rgba(5,255,161,0.07) 31px);
         }
 
-        .pixel-mode {
-            image-rendering: pixelated;
-            font-family: Consolas, 'Courier New', monospace;
-        }
+        /* Noir film grain */
+        .noir-theme .noise-layer { opacity: 0.18 !important; }
 
-        .pixel-mode * {
-            border-radius: 0 !important;
-            text-shadow: none !important;
-        }
-
-        .pixel-mode .ambient-aura,
-        .pixel-mode .noise-layer {
-            display: none !important;
-        }
-
-        .pixel-mode .weather-container {
-            opacity: 0.55;
-        }
-
-        .pixel-mode .visualizer-bar {
-            width: 8px;
-            transition: none;
-        }
-
-        .pixel-mode .play-btn:hover,
-        .pixel-mode .theme-option:hover {
-            transform: none;
-        }
-
+        /* Modal */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none; align-items: center; justify-content: center;
             z-index: 1000;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .context-menu {
-            position: fixed;
-            min-width: 160px;
+            position: fixed; min-width: 160px;
             background: var(--md-sys-color-surface);
             border: 1px solid var(--md-sys-color-surface-variant);
             border-radius: var(--md-shape-corner-medium);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.45);
             padding: 6px;
-            display: none;
-            flex-direction: column;
-            gap: 4px;
+            display: none; flex-direction: column; gap: 4px;
             z-index: 2000;
         }
-
-        .context-menu.active {
-            display: flex;
-        }
-
+        .context-menu.active { display: flex; }
         .context-menu-item {
-            border: none;
-            background: transparent;
+            border: none; background: transparent;
             color: var(--md-sys-color-on-surface);
-            text-align: left;
-            padding: 8px 10px;
+            text-align: left; padding: 8px 10px;
             border-radius: var(--md-shape-corner-small);
-            cursor: pointer;
-            font-size: 13px;
+            cursor: pointer; font-size: 13px;
         }
-
-        .context-menu-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .context-menu-item.delete {
-            color: #ff8b8b;
-        }
+        .context-menu-item:hover { background: rgba(255,255,255,0.1); }
+        .context-menu-item.delete { color: #ff8b8b; }
 
         .modal {
             width: 280px;
             background: var(--md-sys-color-surface);
             border-radius: var(--md-shape-corner-large);
             padding: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
         }
-
-        .modal-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
+        .modal-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
         .modal-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.08);
+            width: 100%; padding: 12px 16px;
+            background: rgba(255,255,255,0.08);
             border: 1px solid var(--md-sys-color-surface-variant);
             border-radius: var(--md-shape-corner-medium);
             color: var(--md-sys-color-on-surface);
-            font-size: 14px;
-            outline: none;
-            margin-bottom: 16px;
+            font-size: 14px; outline: none; margin-bottom: 16px;
         }
-
-        .modal-input:focus {
-            border-color: var(--md-sys-color-primary);
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 8px;
-            justify-content: flex-end;
-        }
-
+        .modal-input:focus { border-color: var(--md-sys-color-primary); }
+        .modal-buttons { display: flex; gap: 8px; justify-content: flex-end; }
         .modal-btn {
             padding: 10px 20px;
             border-radius: var(--md-shape-corner-medium);
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
+            font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s; border: none;
         }
-
-        .modal-btn.cancel {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--md-sys-color-on-surface);
-        }
-
-        .modal-btn.cancel:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
+        .modal-btn.cancel { background: rgba(255,255,255,0.1); color: var(--md-sys-color-on-surface); }
+        .modal-btn.cancel:hover { background: rgba(255,255,255,0.15); }
         .modal-btn.save {
-            background: linear-gradient(135deg, #e8def8 0%, #4f378b 100%);
-            color: var(--md-sys-color-on-primary);
+            background: linear-gradient(135deg, var(--md-sys-color-primary, #e8def8) 0%, var(--md-sys-color-primary-container, #4f378b) 100%);
+            color: var(--md-sys-color-on-primary, #fff);
         }
+        .modal-btn.save:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(79,55,139,0.4); }
 
-        .modal-btn.save:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(79, 55, 139, 0.4);
-        }
-
-        .settings-list {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .custom-station-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--md-shape-corner-medium);
-        }
-
-        .custom-station-item .station-actions {
-            opacity: 1;
-        }
+        .settings-list { width: 100%; display: flex; flex-direction: column; gap: 6px; }
     </style>
 </head>
 <body>
@@ -1388,24 +978,7 @@
     </div>
     
     <div class="tab-content active" id="playerTab">
-        <select class="station-select" id="stationSelect" style="display: none;">
-            <optgroup label="Lo-Fi">
-                <option value="0">Lofi Girl Radio</option>
-                <option value="1">Chillhop Radio</option>
-                <option value="2">Box Lofi</option>
-                <option value="3">Lofi Hip Hop</option>
-            </optgroup>
-            <optgroup label="Ambient">
-                <option value="4">SomaFM Drone Zone</option>
-                <option value="5">SomaFM Space Station</option>
-            </optgroup>
-            <optgroup label="Jazz">
-                <option value="6">Smooth Jazz</option>
-                <option value="7">Jazz Radio</option>
-            </optgroup>
-            <optgroup label="Custom" id="customGroup">
-            </optgroup>
-        </select>
+        <select class="station-select" id="stationSelect" style="display: none;"></select>
         
         <div class="now-playing-card">
             <div class="visualizer" id="visualizer"></div>
@@ -1432,7 +1005,6 @@
             <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
             <span class="volume-value" id="volumeValue">70%</span>
         </div>
-
         <div class="add-station">
             <input type="text" id="customUrl" placeholder="Add custom stream URL...">
             <button class="add-btn" id="addBtn">Add</button>
@@ -1485,7 +1057,7 @@
                 </div>
                 <div class="theme-option" data-theme="rosegold">
                     <div class="theme-preview rosegold"></div>
-                    <span class="theme-label">Rose Gold</span>
+                    <span class="theme-label">Rose</span>
                 </div>
                 <div class="theme-option" data-theme="graphite">
                     <div class="theme-preview graphite"></div>
@@ -1493,7 +1065,32 @@
                 </div>
                 <div class="theme-option" data-theme="monochrome">
                     <div class="theme-preview monochrome"></div>
-                    <span class="theme-label">Monochrome</span>
+                    <span class="theme-label">Mono</span>
+                </div>
+                <!-- New themes -->
+                <div class="theme-option" data-theme="cyberpunk">
+                    <div class="theme-preview cyberpunk"></div>
+                    <span class="theme-label">Cyberpunk</span>
+                </div>
+                <div class="theme-option" data-theme="vaporwave">
+                    <div class="theme-preview vaporwave"></div>
+                    <span class="theme-label">Vapor</span>
+                </div>
+                <div class="theme-option" data-theme="arctic">
+                    <div class="theme-preview arctic"></div>
+                    <span class="theme-label">Arctic</span>
+                </div>
+                <div class="theme-option" data-theme="sakura">
+                    <div class="theme-preview sakura"></div>
+                    <span class="theme-label">Sakura</span>
+                </div>
+                <div class="theme-option" data-theme="deepspace">
+                    <div class="theme-preview deepspace"></div>
+                    <span class="theme-label">Deep Space</span>
+                </div>
+                <div class="theme-option" data-theme="noir">
+                    <div class="theme-preview noir"></div>
+                    <span class="theme-label">Noir</span>
                 </div>
             </div>
         </div>
@@ -1502,19 +1099,13 @@
             <div class="settings-title">Effects</div>
             <div class="setting-row">
                 <span class="setting-label">Reactive Glass</span>
-                <label class="switch">
-                    <input type="checkbox" id="reactiveGlassToggle">
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="reactiveGlassToggle"><span class="slider"></span></label>
             </div>
-            <div class="setting-row" style="margin-top: 10px;">
+            <div class="setting-row" style="margin-top:10px;">
                 <span class="setting-label">Theme Aura</span>
-                <label class="switch">
-                    <input type="checkbox" id="themeAuraToggle">
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="themeAuraToggle"><span class="slider"></span></label>
             </div>
-            <div class="setting-row" style="margin-top: 10px;">
+            <div class="setting-row" style="margin-top:10px;">
                 <span class="setting-label">Weather FX</span>
                 <div class="custom-select" id="weatherModeCustomSelect">
                     <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
@@ -1531,7 +1122,7 @@
                     </select>
                 </div>
             </div>
-            <div class="setting-row" style="margin-top: 10px;">
+            <div class="setting-row" style="margin-top:10px;">
                 <span class="setting-label">Weather Intensity</span>
                 <div class="custom-select" id="weatherIntensityCustomSelect">
                     <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
@@ -1546,26 +1137,17 @@
                     </select>
                 </div>
             </div>
-            <div class="setting-row" style="margin-top: 10px;">
+            <div class="setting-row" style="margin-top:10px;">
                 <span class="setting-label">Pixel Mode</span>
-                <label class="switch">
-                    <input type="checkbox" id="pixelModeToggle">
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="pixelModeToggle"><span class="slider"></span></label>
             </div>
-            <div class="setting-row" style="margin-top: 10px;">
+            <div class="setting-row" style="margin-top:10px;">
                 <span class="setting-label">Now Playing Pulse</span>
-                <label class="switch">
-                    <input type="checkbox" id="pulseToggle" checked>
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="pulseToggle" checked><span class="slider"></span></label>
             </div>
-            <div class="setting-row" style="margin-top: 10px;">
+            <div class="setting-row" style="margin-top:10px;">
                 <span class="setting-label">Ambient Noise</span>
-                <label class="switch">
-                    <input type="checkbox" id="noiseToggle">
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="noiseToggle"><span class="slider"></span></label>
             </div>
         </div>
 
@@ -1573,12 +1155,9 @@
             <div class="settings-title">Playback & Window</div>
             <div class="setting-row">
                 <span class="setting-label">Always on Top</span>
-                <label class="switch">
-                    <input type="checkbox" id="alwaysOnTopToggle">
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="alwaysOnTopToggle"><span class="slider"></span></label>
             </div>
-            <div class="setting-row" style="margin-top: 10px;">
+            <div class="setting-row" style="margin-top:10px;">
                 <span class="setting-label">Sleep Timer</span>
                 <div class="custom-select" id="sleepTimerCustomSelect">
                     <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
@@ -1614,13 +1193,13 @@
 
         <div class="settings-section">
             <div class="settings-title">Updates</div>
-            <div class="setting-row">
-                <span class="setting-label">Current Version</span>
-                <span class="setting-control" id="currentVersionLabel">v1.5.3</span>
+        <div class="setting-row">
+            <span class="setting-label">Current Version</span>
+            <span class="setting-control" id="currentVersionLabel">v1.2.0</span>
             </div>
             <div class="update-actions">
                 <button class="setting-control setting-button" id="checkUpdatesBtn">Check Updates</button>
-                <button class="setting-control setting-button" id="downloadUpdateBtn" style="display: none;">Download Update</button>
+                <button class="setting-control setting-button" id="downloadUpdateBtn" style="display:none;">Download Update</button>
             </div>
             <div class="update-status" id="updateStatusText">Check for updates from GitHub releases.</div>
         </div>
@@ -1686,7 +1265,6 @@
         const stationUrl = document.getElementById('stationUrl');
         const customUrl = document.getElementById('customUrl');
         const addBtn = document.getElementById('addBtn');
-        const customGroup = document.getElementById('customGroup');
         const minimizeBtn = document.getElementById('minimizeBtn');
         const closeBtn = document.getElementById('closeBtn');
         
@@ -1743,7 +1321,229 @@
             pulse: true,
             ambientNoise: false
         };
-        
+
+        // ── Theme definitions ────────────────────────────────────────────────
+        const themes = {
+            dark: {
+                '--md-sys-color-primary': '#e8def8',
+                '--md-sys-color-on-primary': '#381e72',
+                '--md-sys-color-primary-container': '#4f378b',
+                '--md-sys-color-surface': '#1c1b1f',
+                '--md-sys-color-on-surface': '#e6e1e5',
+                '--md-sys-color-surface-variant': '#49454f',
+                '--md-sys-color-on-surface-variant': '#cac4d0',
+                '--md-sys-color-background': '#1c1b1f',
+                '--md-card-bg': '#2d2a3e',
+                '--md-visualizer': '#e8def8',
+                '--md-visualizer-end': '#4f378b',
+            },
+            light: {
+                '--md-sys-color-primary': '#6750a4',
+                '--md-sys-color-on-primary': '#ffffff',
+                '--md-sys-color-primary-container': '#eaddff',
+                '--md-sys-color-surface': '#fffbfe',
+                '--md-sys-color-on-surface': '#1c1b1f',
+                '--md-sys-color-surface-variant': '#e7e0ec',
+                '--md-sys-color-on-surface-variant': '#49454f',
+                '--md-sys-color-background': '#f5f0ff',
+                '--md-card-bg': '#ffffff',
+                '--md-visualizer': '#6750a4',
+                '--md-visualizer-end': '#b794f4',
+            },
+            midnight: {
+                '--md-sys-color-primary': '#58a6ff',
+                '--md-sys-color-on-primary': '#ffffff',
+                '--md-sys-color-primary-container': '#1f6feb',
+                '--md-sys-color-surface': '#0d1117',
+                '--md-sys-color-on-surface': '#c9d1d9',
+                '--md-sys-color-surface-variant': '#21262d',
+                '--md-sys-color-on-surface-variant': '#8b949e',
+                '--md-sys-color-background': '#0d1117',
+                '--md-card-bg': '#161b22',
+                '--md-visualizer': '#58a6ff',
+                '--md-visualizer-end': '#1f6feb',
+            },
+            ocean: {
+                '--md-sys-color-primary': '#38bdf8',
+                '--md-sys-color-on-primary': '#0c4a6e',
+                '--md-sys-color-primary-container': '#0369a1',
+                '--md-sys-color-surface': '#0c4a6e',
+                '--md-sys-color-on-surface': '#e0f2fe',
+                '--md-sys-color-surface-variant': '#164e63',
+                '--md-sys-color-on-surface-variant': '#7dd3fc',
+                '--md-sys-color-background': '#0c4a6e',
+                '--md-card-bg': '#164e63',
+                '--md-visualizer': '#38bdf8',
+                '--md-visualizer-end': '#06b6d4',
+            },
+            sunset: {
+                '--md-sys-color-primary': '#fb7185',
+                '--md-sys-color-on-primary': '#881337',
+                '--md-sys-color-primary-container': '#be123c',
+                '--md-sys-color-surface': '#1f090e',
+                '--md-sys-color-on-surface': '#ffe4e6',
+                '--md-sys-color-surface-variant': '#3f121c',
+                '--md-sys-color-on-surface-variant': '#fda4af',
+                '--md-sys-color-background': '#1f090e',
+                '--md-card-bg': '#3f121c',
+                '--md-visualizer': '#fb7185',
+                '--md-visualizer-end': '#f472b6',
+            },
+            forest: {
+                '--md-sys-color-primary': '#4ade80',
+                '--md-sys-color-on-primary': '#14532d',
+                '--md-sys-color-primary-container': '#22c55e',
+                '--md-sys-color-surface': '#0f1f16',
+                '--md-sys-color-on-surface': '#dcfce7',
+                '--md-sys-color-surface-variant': '#1a3d25',
+                '--md-sys-color-on-surface-variant': '#86efac',
+                '--md-sys-color-background': '#0f1f16',
+                '--md-card-bg': '#1a3d25',
+                '--md-visualizer': '#4ade80',
+                '--md-visualizer-end': '#22c55e',
+            },
+            amber: {
+                '--md-sys-color-primary': '#f59e0b',
+                '--md-sys-color-on-primary': '#1f1305',
+                '--md-sys-color-primary-container': '#d97706',
+                '--md-sys-color-surface': '#24160a',
+                '--md-sys-color-on-surface': '#fde68a',
+                '--md-sys-color-surface-variant': '#3d2a16',
+                '--md-sys-color-on-surface-variant': '#fcd34d',
+                '--md-sys-color-background': '#24160a',
+                '--md-card-bg': '#3d2a16',
+                '--md-visualizer': '#fbbf24',
+                '--md-visualizer-end': '#f59e0b',
+            },
+            rosegold: {
+                '--md-sys-color-primary': '#fda4af',
+                '--md-sys-color-on-primary': '#3e1c25',
+                '--md-sys-color-primary-container': '#fb7185',
+                '--md-sys-color-surface': '#25161b',
+                '--md-sys-color-on-surface': '#ffe4e6',
+                '--md-sys-color-surface-variant': '#3b232a',
+                '--md-sys-color-on-surface-variant': '#fecdd3',
+                '--md-sys-color-background': '#25161b',
+                '--md-card-bg': '#3b232a',
+                '--md-visualizer': '#fda4af',
+                '--md-visualizer-end': '#fb7185',
+            },
+            graphite: {
+                '--md-sys-color-primary': '#9ca3af',
+                '--md-sys-color-on-primary': '#111318',
+                '--md-sys-color-primary-container': '#6b7280',
+                '--md-sys-color-surface': '#111318',
+                '--md-sys-color-on-surface': '#e5e7eb',
+                '--md-sys-color-surface-variant': '#1f2937',
+                '--md-sys-color-on-surface-variant': '#cbd5e1',
+                '--md-sys-color-background': '#111318',
+                '--md-card-bg': '#1f2937',
+                '--md-visualizer': '#cbd5e1',
+                '--md-visualizer-end': '#6b7280',
+            },
+            monochrome: {
+                '--md-sys-color-primary': '#ffffff',
+                '--md-sys-color-on-primary': '#000000',
+                '--md-sys-color-primary-container': '#2a2a2a',
+                '--md-sys-color-surface': '#000000',
+                '--md-sys-color-on-surface': '#ffffff',
+                '--md-sys-color-surface-variant': '#1a1a1a',
+                '--md-sys-color-on-surface-variant': '#d4d4d4',
+                '--md-sys-color-background': '#000000',
+                '--md-card-bg': '#000000',
+                '--md-visualizer': '#ffffff',
+                '--md-visualizer-end': '#ffffff',
+            },
+            // ── New themes ──────────────────────────────────────────────────
+            cyberpunk: {
+                '--md-sys-color-primary': '#00ffcc',
+                '--md-sys-color-on-primary': '#000a08',
+                '--md-sys-color-primary-container': '#ff0066',
+                '--md-sys-color-surface': '#0a0a0f',
+                '--md-sys-color-on-surface': '#e0fff8',
+                '--md-sys-color-surface-variant': '#110022',
+                '--md-sys-color-on-surface-variant': '#ff0066',
+                '--md-sys-color-background': '#0a0a0f',
+                '--md-card-bg': '#0f0a1a',
+                '--md-visualizer': '#00ffcc',
+                '--md-visualizer-end': '#ff0066',
+            },
+            vaporwave: {
+                '--md-sys-color-primary': '#ff71ce',
+                '--md-sys-color-on-primary': '#1a0533',
+                '--md-sys-color-primary-container': '#b967ff',
+                '--md-sys-color-surface': '#1a0533',
+                '--md-sys-color-on-surface': '#ffe0f7',
+                '--md-sys-color-surface-variant': '#2d0a55',
+                '--md-sys-color-on-surface-variant': '#05ffa1',
+                '--md-sys-color-background': '#1a0533',
+                '--md-card-bg': '#2d0a55',
+                '--md-visualizer': '#ff71ce',
+                '--md-visualizer-end': '#05ffa1',
+            },
+            arctic: {
+                '--md-sys-color-primary': '#0077b6',
+                '--md-sys-color-on-primary': '#ffffff',
+                '--md-sys-color-primary-container': '#a8d8ea',
+                '--md-sys-color-surface': '#eaf4fb',
+                '--md-sys-color-on-surface': '#03045e',
+                '--md-sys-color-surface-variant': '#cae9ff',
+                '--md-sys-color-on-surface-variant': '#023e8a',
+                '--md-sys-color-background': '#d4eef7',
+                '--md-card-bg': '#f0f8ff',
+                '--md-visualizer': '#0077b6',
+                '--md-visualizer-end': '#00b4d8',
+            },
+            sakura: {
+                '--md-sys-color-primary': '#ffb7c5',
+                '--md-sys-color-on-primary': '#3d0020',
+                '--md-sys-color-primary-container': '#ff6b9d',
+                '--md-sys-color-surface': '#1a0d14',
+                '--md-sys-color-on-surface': '#ffe8ef',
+                '--md-sys-color-surface-variant': '#2d0f20',
+                '--md-sys-color-on-surface-variant': '#ffb7c5',
+                '--md-sys-color-background': '#1a0d14',
+                '--md-card-bg': '#2d0f20',
+                '--md-visualizer': '#ffb7c5',
+                '--md-visualizer-end': '#ff6b9d',
+            },
+            deepspace: {
+                '--md-sys-color-primary': '#cc00ff',
+                '--md-sys-color-on-primary': '#ffffff',
+                '--md-sys-color-primary-container': '#6600cc',
+                '--md-sys-color-surface': '#000005',
+                '--md-sys-color-on-surface': '#e8d0ff',
+                '--md-sys-color-surface-variant': '#1a0038',
+                '--md-sys-color-on-surface-variant': '#9966ff',
+                '--md-sys-color-background': '#000005',
+                '--md-card-bg': '#0d0020',
+                '--md-visualizer': '#cc00ff',
+                '--md-visualizer-end': '#6600cc',
+            },
+            noir: {
+                '--md-sys-color-primary': '#d4af37',
+                '--md-sys-color-on-primary': '#0a0a0a',
+                '--md-sys-color-primary-container': '#8b6914',
+                '--md-sys-color-surface': '#0a0a0a',
+                '--md-sys-color-on-surface': '#e8e0d0',
+                '--md-sys-color-surface-variant': '#1a1a1a',
+                '--md-sys-color-on-surface-variant': '#a89060',
+                '--md-sys-color-background': '#0a0a0a',
+                '--md-card-bg': '#111111',
+                '--md-visualizer': '#d4af37',
+                '--md-visualizer-end': '#8b6914',
+            },
+        };
+
+        // Special theme classes (body-level effects)
+        const themeBodyClasses = {
+            cyberpunk: 'cyberpunk-theme',
+            vaporwave: 'vaporwave-theme',
+            noir: 'noir-theme',
+            monochrome: 'mono-theme'
+        };
+        const allThemeBodyClasses = Object.values(themeBodyClasses);
+
         function generateId(prefix) {
             return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
         }
@@ -1754,17 +1554,13 @@
         
         function ensureSections() {
             if (!Array.isArray(sections) || sections.length === 0) {
-                sections = defaultSections.map(section => ({ ...section }));
+                sections = defaultSections.map(s => ({ ...s }));
             }
-            
-            const knownSectionIds = new Set(sections.map(section => section.id));
-            defaultSections.forEach(section => {
-                if (!knownSectionIds.has(section.id)) {
-                    sections.push({ ...section });
-                }
+            const knownIds = new Set(sections.map(s => s.id));
+            defaultSections.forEach(s => {
+                if (!knownIds.has(s.id)) sections.push({ ...s });
             });
-            
-            const validIds = new Set(sections.map(section => section.id));
+            const validIds = new Set(sections.map(s => s.id));
             streams.forEach(stream => {
                 if (!validIds.has(stream.sectionId)) {
                     stream.sectionId = stream.isDefault ? 'section-lofi' : 'section-custom';
@@ -1773,15 +1569,11 @@
         }
         
         function saveSections() {
-            try {
-                localStorage.setItem('lofi-sections', JSON.stringify(sections));
-            } catch (e) {}
+            try { localStorage.setItem('lofi-sections', JSON.stringify(sections)); } catch (e) {}
         }
         
         function saveDefaultStreams() {
-            try {
-                localStorage.setItem('lofi-default-streams', JSON.stringify(defaultStreams));
-            } catch (e) {}
+            try { localStorage.setItem('lofi-default-streams', JSON.stringify(defaultStreams)); } catch (e) {}
         }
         
         function loadSections() {
@@ -1790,16 +1582,12 @@
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     if (Array.isArray(parsed)) {
-                        sections = parsed.map(section => ({
-                            id: section.id,
-                            name: section.name,
-                            locked: Boolean(section.locked)
-                        })).filter(section => section.id && section.name);
+                        sections = parsed.map(s => ({
+                            id: s.id, name: s.name, locked: Boolean(s.locked)
+                        })).filter(s => s.id && s.name);
                     }
                 }
-            } catch (e) {
-                sections = [];
-            }
+            } catch (e) { sections = []; }
         }
         
         function loadDefaultStreams() {
@@ -1808,13 +1596,13 @@
                 if (!saved) return;
                 const parsed = JSON.parse(saved);
                 if (!Array.isArray(parsed)) return;
-                const byId = new Map(parsed.map(stream => [stream.id, stream]));
+                const byId = new Map(parsed.map(s => [s.id, s]));
                 defaultStreams.forEach(stream => {
-                    const savedStream = byId.get(stream.id);
-                    if (!savedStream) return;
-                    stream.name = savedStream.name || stream.name;
-                    stream.url = savedStream.url || stream.url;
-                    stream.sectionId = savedStream.sectionId || stream.sectionId;
+                    const saved = byId.get(stream.id);
+                    if (!saved) return;
+                    stream.name = saved.name || stream.name;
+                    stream.url = saved.url || stream.url;
+                    stream.sectionId = saved.sectionId || stream.sectionId;
                 });
             } catch (e) {}
         }
@@ -1837,33 +1625,30 @@
             setupUpdates();
             createVisualizerBars();
             setupContextMenu();
+            loadVolume();
         }
 
         function closeAllCustomSelects() {
-            document.querySelectorAll('.custom-select.open').forEach(select => {
-                select.classList.remove('open');
-                const trigger = select.querySelector('.custom-select-trigger');
-                if (trigger) {
-                    trigger.setAttribute('aria-expanded', 'false');
-                }
+            document.querySelectorAll('.custom-select.open').forEach(el => {
+                el.classList.remove('open');
+                const trigger = el.querySelector('.custom-select-trigger');
+                if (trigger) trigger.setAttribute('aria-expanded', 'false');
             });
         }
 
         function initCustomSelect(selectEl) {
             const wrapper = selectEl.closest('.custom-select');
             if (!wrapper) return;
-
             const trigger = wrapper.querySelector('.custom-select-trigger');
             const valueEl = wrapper.querySelector('.custom-select-value');
             const menu = wrapper.querySelector('.custom-select-menu');
             if (!trigger || !valueEl || !menu) return;
 
             function syncValue() {
-                const selectedOption = selectEl.options[selectEl.selectedIndex];
-                valueEl.textContent = selectedOption ? selectedOption.textContent : '';
-
-                menu.querySelectorAll('.custom-select-option').forEach(optionBtn => {
-                    optionBtn.classList.toggle('active', optionBtn.dataset.value === selectEl.value);
+                const opt = selectEl.options[selectEl.selectedIndex];
+                valueEl.textContent = opt ? opt.textContent : '';
+                menu.querySelectorAll('.custom-select-option').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.value === selectEl.value);
                 });
             }
 
@@ -1871,52 +1656,36 @@
                 const disabled = selectEl.disabled;
                 wrapper.classList.toggle('disabled', disabled);
                 trigger.disabled = disabled;
-                if (disabled) {
-                    wrapper.classList.remove('open');
-                    trigger.setAttribute('aria-expanded', 'false');
-                }
+                if (disabled) { wrapper.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
             }
 
             menu.innerHTML = '';
             Array.from(selectEl.options).forEach(option => {
-                const optionBtn = document.createElement('button');
-                optionBtn.type = 'button';
-                optionBtn.className = 'custom-select-option';
-                optionBtn.dataset.value = option.value;
-                optionBtn.textContent = option.textContent;
-                optionBtn.addEventListener('click', () => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'custom-select-option';
+                btn.dataset.value = option.value;
+                btn.textContent = option.textContent;
+                btn.addEventListener('click', () => {
                     selectEl.value = option.value;
                     selectEl.dispatchEvent(new Event('change', { bubbles: true }));
                     closeAllCustomSelects();
                 });
-                menu.appendChild(optionBtn);
+                menu.appendChild(btn);
             });
 
-            trigger.addEventListener('click', (event) => {
-                event.stopPropagation();
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
                 if (trigger.disabled) return;
                 const isOpen = wrapper.classList.contains('open');
                 closeAllCustomSelects();
-                if (!isOpen) {
-                    wrapper.classList.add('open');
-                    trigger.setAttribute('aria-expanded', 'true');
-                }
+                if (!isOpen) { wrapper.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
             });
 
-            menu.addEventListener('click', (event) => {
-                event.stopPropagation();
-            });
+            menu.addEventListener('click', (e) => e.stopPropagation());
 
-            selectEl.addEventListener('change', () => {
-                syncValue();
-                syncDisabled();
-            });
-
-            selectEl._syncCustomSelect = () => {
-                syncValue();
-                syncDisabled();
-            };
-
+            selectEl.addEventListener('change', () => { syncValue(); syncDisabled(); });
+            selectEl._syncCustomSelect = () => { syncValue(); syncDisabled(); };
             syncValue();
             syncDisabled();
         }
@@ -1925,34 +1694,22 @@
             initCustomSelect(weatherModeSelect);
             initCustomSelect(weatherIntensitySelect);
             initCustomSelect(sleepTimerSelect);
-
-            document.addEventListener('click', () => {
-                closeAllCustomSelects();
-            });
+            document.addEventListener('click', closeAllCustomSelects);
         }
 
         function saveVisualEffects() {
-            try {
-                localStorage.setItem('lofi-visual-effects', JSON.stringify(visualEffects));
-            } catch (e) {}
+            try { localStorage.setItem('lofi-visual-effects', JSON.stringify(visualEffects)); } catch (e) {}
         }
 
         function createWeatherParticles() {
             weatherContainer.innerHTML = '';
             if (visualEffects.weatherMode === 'none') return;
-
             const densityMap = { low: 28, medium: 52, high: 78 };
             const speedMap = { low: [12, 20], medium: [8, 16], high: [5, 12] };
-            const sizeMap = {
-                snow: [2, 5],
-                rain: [1.2, 1.8],
-                dust: [1.5, 3.8],
-                stars: [1, 3]
-            };
-
-            const count = densityMap[visualEffects.weatherIntensity] || densityMap.medium;
-            const speed = speedMap[visualEffects.weatherIntensity] || speedMap.medium;
-            const sizes = sizeMap[visualEffects.weatherMode] || sizeMap.snow;
+            const sizeMap = { snow: [2, 5], rain: [1.2, 1.8], dust: [1.5, 3.8], stars: [1, 3] };
+            const count = densityMap[visualEffects.weatherIntensity] || 52;
+            const speed = speedMap[visualEffects.weatherIntensity] || [8, 16];
+            const sizes = sizeMap[visualEffects.weatherMode] || [2, 5];
 
             for (let i = 0; i < count; i++) {
                 const particle = document.createElement('div');
@@ -1963,7 +1720,6 @@
                 const opacity = 0.25 + Math.random() * 0.7;
                 const driftScale = visualEffects.weatherMode === 'rain' ? 10 : 44;
                 const drift = -driftScale + Math.random() * (driftScale * 2);
-
                 particle.className = `weather-particle ${visualEffects.weatherMode}`;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${visualEffects.weatherMode === 'rain' ? 16 + Math.random() * 14 : size}px`;
@@ -1988,166 +1744,84 @@
             weatherModeSelect.value = visualEffects.weatherMode;
             weatherIntensitySelect.value = visualEffects.weatherIntensity;
             weatherIntensitySelect.disabled = visualEffects.weatherMode === 'none';
-            if (weatherModeSelect._syncCustomSelect) {
-                weatherModeSelect._syncCustomSelect();
-            }
-            if (weatherIntensitySelect._syncCustomSelect) {
-                weatherIntensitySelect._syncCustomSelect();
-            }
+            if (weatherModeSelect._syncCustomSelect) weatherModeSelect._syncCustomSelect();
+            if (weatherIntensitySelect._syncCustomSelect) weatherIntensitySelect._syncCustomSelect();
             pixelModeToggle.checked = visualEffects.pixelMode;
             pulseToggle.checked = visualEffects.pulse;
             noiseToggle.checked = visualEffects.ambientNoise;
-
             createWeatherParticles();
         }
 
         function setupVisualEffects() {
             try {
                 const saved = localStorage.getItem('lofi-visual-effects');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    visualEffects = {
-                        ...visualEffects,
-                        ...parsed
-                    };
-                }
+                if (saved) visualEffects = { ...visualEffects, ...JSON.parse(saved) };
             } catch (e) {}
 
             applyVisualEffects();
 
-            reactiveGlassToggle.addEventListener('change', () => {
-                visualEffects.reactiveGlass = reactiveGlassToggle.checked;
-                saveVisualEffects();
-                applyVisualEffects();
-            });
-
-            themeAuraToggle.addEventListener('change', () => {
-                visualEffects.themeAura = themeAuraToggle.checked;
-                saveVisualEffects();
-                applyVisualEffects();
-            });
-
-            weatherModeSelect.addEventListener('change', () => {
-                visualEffects.weatherMode = weatherModeSelect.value;
-                saveVisualEffects();
-                applyVisualEffects();
-            });
-
-            weatherIntensitySelect.addEventListener('change', () => {
-                visualEffects.weatherIntensity = weatherIntensitySelect.value;
-                saveVisualEffects();
-                applyVisualEffects();
-            });
-
-            pixelModeToggle.addEventListener('change', () => {
-                visualEffects.pixelMode = pixelModeToggle.checked;
-                saveVisualEffects();
-                applyVisualEffects();
-            });
-
-            pulseToggle.addEventListener('change', () => {
-                visualEffects.pulse = pulseToggle.checked;
-                saveVisualEffects();
-                applyVisualEffects();
-            });
-
-            noiseToggle.addEventListener('change', () => {
-                visualEffects.ambientNoise = noiseToggle.checked;
-                saveVisualEffects();
-                applyVisualEffects();
-            });
+            reactiveGlassToggle.addEventListener('change', () => { visualEffects.reactiveGlass = reactiveGlassToggle.checked; saveVisualEffects(); applyVisualEffects(); });
+            themeAuraToggle.addEventListener('change', () => { visualEffects.themeAura = themeAuraToggle.checked; saveVisualEffects(); applyVisualEffects(); });
+            weatherModeSelect.addEventListener('change', () => { visualEffects.weatherMode = weatherModeSelect.value; saveVisualEffects(); applyVisualEffects(); });
+            weatherIntensitySelect.addEventListener('change', () => { visualEffects.weatherIntensity = weatherIntensitySelect.value; saveVisualEffects(); applyVisualEffects(); });
+            pixelModeToggle.addEventListener('change', () => { visualEffects.pixelMode = pixelModeToggle.checked; saveVisualEffects(); applyVisualEffects(); });
+            pulseToggle.addEventListener('change', () => { visualEffects.pulse = pulseToggle.checked; saveVisualEffects(); applyVisualEffects(); });
+            noiseToggle.addEventListener('change', () => { visualEffects.ambientNoise = noiseToggle.checked; saveVisualEffects(); applyVisualEffects(); });
         }
 
         async function applyAlwaysOnTop(enabled) {
-            if (!window.electronAPI || !window.electronAPI.setAlwaysOnTop) {
-                return { ok: false, error: 'Always-on-top API unavailable' };
-            }
-
+            if (!window.electronAPI || !window.electronAPI.setAlwaysOnTop) return { ok: false };
             const result = await window.electronAPI.setAlwaysOnTop(Boolean(enabled));
-            if (result && result.ok) {
-                localStorage.setItem('lofi-always-on-top', String(Boolean(result.enabled)));
-            }
+            if (result && result.ok) localStorage.setItem('lofi-always-on-top', String(Boolean(result.enabled)));
             return result;
         }
 
         function setupWindowOptions() {
             const savedOnTop = localStorage.getItem('lofi-always-on-top') === 'true';
-
             alwaysOnTopToggle.checked = savedOnTop;
-
-            applyAlwaysOnTop(savedOnTop).then((result) => {
-                if (!result || !result.ok) {
-                    alwaysOnTopToggle.checked = false;
-                } else {
-                    alwaysOnTopToggle.checked = Boolean(result.enabled);
-                }
+            applyAlwaysOnTop(savedOnTop).then(result => {
+                if (!result || !result.ok) alwaysOnTopToggle.checked = false;
+                else alwaysOnTopToggle.checked = Boolean(result.enabled);
             });
-
             alwaysOnTopToggle.addEventListener('change', async () => {
                 const desired = alwaysOnTopToggle.checked;
                 const result = await applyAlwaysOnTop(desired);
-                if (!result || !result.ok) {
-                    alwaysOnTopToggle.checked = !desired;
-                    return;
-                }
+                if (!result || !result.ok) { alwaysOnTopToggle.checked = !desired; return; }
                 alwaysOnTopToggle.checked = Boolean(result.enabled);
             });
         }
 
         function formatSleepRemaining(ms) {
             const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-            return `${minutes}:${String(seconds).padStart(2, '0')}`;
+            return `${Math.floor(totalSeconds / 60)}:${String(totalSeconds % 60).padStart(2, '0')}`;
         }
 
         function clearSleepTimer(message) {
-            if (sleepTimerId) {
-                clearTimeout(sleepTimerId);
-                sleepTimerId = null;
-            }
-            if (sleepTickerId) {
-                clearInterval(sleepTickerId);
-                sleepTickerId = null;
-            }
+            if (sleepTimerId) { clearTimeout(sleepTimerId); sleepTimerId = null; }
+            if (sleepTickerId) { clearInterval(sleepTickerId); sleepTickerId = null; }
             sleepTimerEndsAt = 0;
             sleepTimerStatusText.textContent = message || 'Sleep timer is off.';
         }
 
         function updateSleepTimerStatus() {
-            if (!sleepTimerEndsAt) {
-                sleepTimerStatusText.textContent = 'Sleep timer is off.';
-                return;
-            }
-
+            if (!sleepTimerEndsAt) { sleepTimerStatusText.textContent = 'Sleep timer is off.'; return; }
             const remaining = sleepTimerEndsAt - Date.now();
-            if (remaining <= 0) {
-                clearSleepTimer('Sleep timer finished. Playback paused.');
-                return;
-            }
-
+            if (remaining <= 0) { clearSleepTimer('Sleep timer finished. Playback paused.'); return; }
             sleepTimerStatusText.textContent = `Sleep timer: ${formatSleepRemaining(remaining)} remaining.`;
         }
 
         function startSleepTimer() {
             const minutes = parseInt(sleepTimerSelect.value, 10) || 0;
             localStorage.setItem('lofi-sleep-minutes', String(minutes));
-
-            if (minutes <= 0) {
-                clearSleepTimer('Sleep timer is off.');
-                return;
-            }
-
+            if (minutes <= 0) { clearSleepTimer('Sleep timer is off.'); return; }
             clearSleepTimer();
             sleepTimerEndsAt = Date.now() + minutes * 60 * 1000;
             updateSleepTimerStatus();
-
             sleepTimerId = setTimeout(() => {
                 pause();
                 clearSleepTimer('Sleep timer finished. Playback paused.');
                 statusText.textContent = 'Paused by sleep timer';
             }, minutes * 60 * 1000);
-
             sleepTickerId = setInterval(updateSleepTimerStatus, 1000);
         }
 
@@ -2155,123 +1829,72 @@
             const savedMinutes = localStorage.getItem('lofi-sleep-minutes');
             if (savedMinutes !== null) {
                 sleepTimerSelect.value = savedMinutes;
-                if (sleepTimerSelect._syncCustomSelect) {
-                    sleepTimerSelect._syncCustomSelect();
-                }
+                if (sleepTimerSelect._syncCustomSelect) sleepTimerSelect._syncCustomSelect();
             }
-
-            startSleepTimerBtn.addEventListener('click', () => {
-                startSleepTimer();
-            });
-
-            cancelSleepTimerBtn.addEventListener('click', () => {
-                clearSleepTimer('Sleep timer cancelled.');
-            });
-
-            sleepTimerSelect.addEventListener('change', () => {
-                localStorage.setItem('lofi-sleep-minutes', sleepTimerSelect.value);
-            });
-
+            startSleepTimerBtn.addEventListener('click', startSleepTimer);
+            cancelSleepTimerBtn.addEventListener('click', () => clearSleepTimer('Sleep timer cancelled.'));
+            sleepTimerSelect.addEventListener('change', () => localStorage.setItem('lofi-sleep-minutes', sleepTimerSelect.value));
             updateSleepTimerStatus();
         }
 
-        function setLibraryToolsStatus(message) {
-            libraryToolsStatusText.textContent = message;
-        }
+        function setLibraryToolsStatus(msg) { libraryToolsStatusText.textContent = msg; }
 
         function loadStreamHealth() {
             try {
                 const saved = localStorage.getItem('lofi-stream-health');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    if (parsed && typeof parsed === 'object') {
-                        streamHealth = parsed;
-                    }
-                }
-            } catch (e) {
-                streamHealth = {};
-            }
+                if (saved) { const p = JSON.parse(saved); if (p && typeof p === 'object') streamHealth = p; }
+            } catch (e) { streamHealth = {}; }
         }
 
         function saveStreamHealth() {
-            try {
-                localStorage.setItem('lofi-stream-health', JSON.stringify(streamHealth));
-            } catch (e) {}
+            try { localStorage.setItem('lofi-stream-health', JSON.stringify(streamHealth)); } catch (e) {}
         }
 
         function getHealthLabel(health) {
             if (!health || !health.status) return 'Unchecked';
-            if (health.status === 'online') {
-                const ms = typeof health.responseMs === 'number' ? ` (${health.responseMs}ms)` : '';
-                return `Online${ms}`;
-            }
-            if (health.status === 'slow') {
-                const ms = typeof health.responseMs === 'number' ? ` (${health.responseMs}ms)` : '';
-                return `Slow${ms}`;
-            }
+            if (health.status === 'online') return `Online${typeof health.responseMs === 'number' ? ` (${health.responseMs}ms)` : ''}`;
+            if (health.status === 'slow') return `Slow${typeof health.responseMs === 'number' ? ` (${health.responseMs}ms)` : ''}`;
             return 'Offline';
         }
 
         async function checkStationHealth() {
             if (!window.electronAPI || !window.electronAPI.checkStreamHealth) {
-                setLibraryToolsStatus('Health check is unavailable in this environment.');
+                setLibraryToolsStatus('Health check unavailable in this environment.');
                 return;
             }
-
             checkHealthBtn.disabled = true;
             setLibraryToolsStatus('Checking station health...');
-
-            const payload = streams.map(stream => ({ id: stream.id, url: stream.url }));
+            const payload = streams.map(s => ({ id: s.id, url: s.url }));
             const result = await window.electronAPI.checkStreamHealth(payload);
-
             if (!result || !result.ok || !Array.isArray(result.results)) {
                 setLibraryToolsStatus(`Health check failed: ${(result && result.error) || 'Unknown error'}`);
                 checkHealthBtn.disabled = false;
                 return;
             }
-
             const nextHealth = {};
             result.results.forEach(item => {
                 if (item && item.id) {
-                    nextHealth[item.id] = {
-                        status: item.status || 'offline',
-                        responseMs: typeof item.responseMs === 'number' ? item.responseMs : null,
-                        statusCode: typeof item.statusCode === 'number' ? item.statusCode : null,
-                        checkedAt: Date.now()
-                    };
+                    nextHealth[item.id] = { status: item.status || 'offline', responseMs: item.responseMs || null, statusCode: item.statusCode || null, checkedAt: Date.now() };
                 }
             });
-
             streamHealth = nextHealth;
             saveStreamHealth();
             renderLibrary();
-
-            const onlineCount = result.results.filter(item => item.status === 'online').length;
-            const slowCount = result.results.filter(item => item.status === 'slow').length;
-            const offlineCount = result.results.filter(item => item.status === 'offline').length;
+            const onlineCount = result.results.filter(i => i.status === 'online').length;
+            const slowCount = result.results.filter(i => i.status === 'slow').length;
+            const offlineCount = result.results.filter(i => i.status === 'offline').length;
             setLibraryToolsStatus(`Health check done: ${onlineCount} online, ${slowCount} slow, ${offlineCount} offline.`);
             checkHealthBtn.disabled = false;
         }
 
         function normalizeImportedSection(section, index) {
-            return {
-                id: (section && section.id) || generateId(`import-section-${index}`),
-                name: (section && section.name) || `Section ${index + 1}`,
-                locked: Boolean(section && section.locked)
-            };
+            return { id: (section && section.id) || generateId(`import-section-${index}`), name: (section && section.name) || `Section ${index + 1}`, locked: Boolean(section && section.locked) };
         }
 
         function normalizeImportedStream(stream, index, isDefault) {
             const url = stream && typeof stream.url === 'string' ? stream.url.trim() : '';
             if (!url) return null;
-
-            return {
-                id: (stream && stream.id) || generateId(`${isDefault ? 'default' : 'custom'}-${index}`),
-                name: (stream && stream.name) || 'Custom Stream',
-                url,
-                sectionId: (stream && stream.sectionId) || (isDefault ? 'section-lofi' : 'section-custom'),
-                isDefault: Boolean(isDefault)
-            };
+            return { id: (stream && stream.id) || generateId(`${isDefault ? 'default' : 'custom'}-${index}`), name: (stream && stream.name) || 'Custom Stream', url, sectionId: (stream && stream.sectionId) || (isDefault ? 'section-lofi' : 'section-custom'), isDefault: Boolean(isDefault) };
         }
 
         async function setupLibraryTools() {
@@ -2279,169 +1902,73 @@
             renderLibrary();
 
             exportLibraryBtn.addEventListener('click', async () => {
-                if (!window.electronAPI || !window.electronAPI.exportLibraryData) {
-                    setLibraryToolsStatus('Export is unavailable in this environment.');
-                    return;
-                }
-
-                const payload = {
-                    format: 'lobeats-library-v1',
-                    exportedAt: new Date().toISOString(),
-                    appVersion: currentVersionLabel.textContent.replace(/^v/, ''),
-                    sections,
-                    defaultStreams,
-                    customStreams
-                };
-
+                if (!window.electronAPI || !window.electronAPI.exportLibraryData) { setLibraryToolsStatus('Export unavailable in this environment.'); return; }
+                const payload = { format: 'lobeats-library-v1', exportedAt: new Date().toISOString(), appVersion: currentVersionLabel.textContent.replace(/^v/, ''), sections, defaultStreams, customStreams };
                 const result = await window.electronAPI.exportLibraryData(payload);
-                if (result && result.ok) {
-                    setLibraryToolsStatus(`Library exported: ${result.filePath}`);
-                } else if (result && result.canceled) {
-                    setLibraryToolsStatus('Export canceled.');
-                } else {
-                    setLibraryToolsStatus(`Export failed: ${(result && result.error) || 'Unknown error'}`);
-                }
+                if (result && result.ok) setLibraryToolsStatus(`Library exported: ${result.filePath}`);
+                else if (result && result.canceled) setLibraryToolsStatus('Export canceled.');
+                else setLibraryToolsStatus(`Export failed: ${(result && result.error) || 'Unknown error'}`);
             });
 
             importLibraryBtn.addEventListener('click', async () => {
-                if (!window.electronAPI || !window.electronAPI.importLibraryData) {
-                    setLibraryToolsStatus('Import is unavailable in this environment.');
-                    return;
-                }
-
+                if (!window.electronAPI || !window.electronAPI.importLibraryData) { setLibraryToolsStatus('Import unavailable in this environment.'); return; }
                 const result = await window.electronAPI.importLibraryData();
-                if (result && result.canceled) {
-                    setLibraryToolsStatus('Import canceled.');
-                    return;
-                }
-                if (!result || !result.ok || !result.data) {
-                    setLibraryToolsStatus(`Import failed: ${(result && result.error) || 'Invalid file'}`);
-                    return;
-                }
-
+                if (result && result.canceled) { setLibraryToolsStatus('Import canceled.'); return; }
+                if (!result || !result.ok || !result.data) { setLibraryToolsStatus(`Import failed: ${(result && result.error) || 'Invalid file'}`); return; }
                 try {
                     const data = result.data;
-                    const hasDefault = Array.isArray(data.defaultStreams);
-                    const hasCustom = Array.isArray(data.customStreams);
-                    const hasSections = Array.isArray(data.sections);
-
-                    const nextDefaults = hasDefault
-                        ? data.defaultStreams.map((item, idx) => normalizeImportedStream(item, idx, true)).filter(Boolean)
-                        : [...defaultStreams];
-                    const nextCustom = hasCustom
-                        ? data.customStreams.map((item, idx) => normalizeImportedStream(item, idx, false)).filter(Boolean)
-                        : [...customStreams];
-                    const nextSections = hasSections
-                        ? data.sections.map((item, idx) => normalizeImportedSection(item, idx)).filter(Boolean)
-                        : [...sections];
-
-                    if (nextDefaults.length + nextCustom.length === 0) {
-                        throw new Error('Imported library has no valid stations');
-                    }
-
-                    if (hasDefault) {
-                        defaultStreams.splice(0, defaultStreams.length, ...nextDefaults);
-                    }
-                    if (hasCustom) {
-                        customStreams = nextCustom;
-                    }
-                    if (hasSections) {
-                        sections = nextSections;
-                    }
-
-                    buildStreams();
-                    ensureSections();
-                    if (currentStreamIndex >= streams.length) {
-                        currentStreamIndex = 0;
-                    }
-
-                    saveDefaultStreams();
-                    saveCustomStreams();
-                    saveSections();
-                    saveStation();
-                    populateSelect();
-                    updateStationName();
-                    renderLibrary();
-
-                    if (isPlaying) {
-                        loadStream(currentStreamIndex);
-                        audio.play().catch(() => {});
-                    }
-
+                    const nextDefaults = Array.isArray(data.defaultStreams) ? data.defaultStreams.map((item, idx) => normalizeImportedStream(item, idx, true)).filter(Boolean) : [...defaultStreams];
+                    const nextCustom = Array.isArray(data.customStreams) ? data.customStreams.map((item, idx) => normalizeImportedStream(item, idx, false)).filter(Boolean) : [...customStreams];
+                    const nextSections = Array.isArray(data.sections) ? data.sections.map((item, idx) => normalizeImportedSection(item, idx)).filter(Boolean) : [...sections];
+                    if (nextDefaults.length + nextCustom.length === 0) throw new Error('Imported library has no valid stations');
+                    if (Array.isArray(data.defaultStreams)) defaultStreams.splice(0, defaultStreams.length, ...nextDefaults);
+                    if (Array.isArray(data.customStreams)) customStreams = nextCustom;
+                    if (Array.isArray(data.sections)) sections = nextSections;
+                    buildStreams(); ensureSections();
+                    if (currentStreamIndex >= streams.length) currentStreamIndex = 0;
+                    saveDefaultStreams(); saveCustomStreams(); saveSections(); saveStation();
+                    populateSelect(); updateStationName(); renderLibrary();
+                    if (isPlaying) { loadStream(currentStreamIndex); audio.play().catch(() => {}); }
                     setLibraryToolsStatus('Library imported successfully.');
-                } catch (error) {
-                    setLibraryToolsStatus(`Import failed: ${error.message || 'Invalid data format'}`);
-                }
+                } catch (error) { setLibraryToolsStatus(`Import failed: ${error.message || 'Invalid data format'}`); }
             });
 
-            checkHealthBtn.addEventListener('click', () => {
-                checkStationHealth();
-            });
+            checkHealthBtn.addEventListener('click', checkStationHealth);
         }
 
-        function setUpdateStatus(message) {
-            updateStatusText.textContent = message;
-        }
+        function setUpdateStatus(msg) { updateStatusText.textContent = msg; }
 
         async function checkForUpdates() {
-            if (!window.electronAPI || !window.electronAPI.checkForUpdates) {
-                setUpdateStatus('Update service is unavailable in this environment.');
-                return;
-            }
-
+            if (!window.electronAPI || !window.electronAPI.checkForUpdates) { setUpdateStatus('Update service unavailable in this environment.'); return; }
             checkUpdatesBtn.disabled = true;
             setUpdateStatus('Checking for updates...');
             downloadUpdateBtn.style.display = 'none';
             latestDownloadUrl = '';
-
             try {
                 const result = await window.electronAPI.checkForUpdates();
-
-                if (!result || !result.ok) {
-                    setUpdateStatus(result && result.error ? `Update check failed: ${result.error}` : 'Update check failed.');
-                    return;
-                }
-
+                if (!result || !result.ok) { setUpdateStatus(result && result.error ? `Update check failed: ${result.error}` : 'Update check failed.'); return; }
                 currentVersionLabel.textContent = `v${result.currentVersion}`;
-
                 if (result.hasUpdate) {
                     latestDownloadUrl = result.downloadUrl || result.releasePageUrl || '';
                     const targetAsset = result.assetName || (result.platform === 'win32' ? 'LoBeats-windows.exe' : result.platform === 'linux' ? 'LoBeats-linux.zip' : 'release asset');
                     setUpdateStatus(`New version available: v${result.latestVersion}. Recommended file: ${targetAsset}.`);
-                    if (latestDownloadUrl) {
-                        downloadUpdateBtn.style.display = 'inline-block';
-                    }
+                    if (latestDownloadUrl) downloadUpdateBtn.style.display = 'inline-block';
                 } else {
                     setUpdateStatus(`You are up to date (v${result.currentVersion}).`);
                 }
-            } catch (error) {
-                setUpdateStatus(`Update check failed: ${error.message || 'Unknown error'}`);
-            } finally {
-                checkUpdatesBtn.disabled = false;
-            }
+            } catch (error) { setUpdateStatus(`Update check failed: ${error.message || 'Unknown error'}`); }
+            finally { checkUpdatesBtn.disabled = false; }
         }
 
         function setupUpdates() {
-            checkUpdatesBtn.addEventListener('click', () => {
-                checkForUpdates();
-            });
-
+            checkUpdatesBtn.addEventListener('click', checkForUpdates);
             downloadUpdateBtn.addEventListener('click', async () => {
                 if (!latestDownloadUrl) return;
-
-                if (!window.electronAPI || !window.electronAPI.openExternalUrl) {
-                    setUpdateStatus('Cannot open browser in this environment.');
-                    return;
-                }
-
+                if (!window.electronAPI || !window.electronAPI.openExternalUrl) { setUpdateStatus('Cannot open browser in this environment.'); return; }
                 const opened = await window.electronAPI.openExternalUrl(latestDownloadUrl);
-                if (opened && opened.ok) {
-                    setUpdateStatus('Download page opened. After downloading, run the new version and replace the old one.');
-                } else {
-                    setUpdateStatus(`Unable to open download link: ${(opened && opened.error) || 'Unknown error'}`);
-                }
+                if (opened && opened.ok) setUpdateStatus('Download page opened. After downloading, run the new version and replace the old one.');
+                else setUpdateStatus(`Unable to open download link: ${(opened && opened.error) || 'Unknown error'}`);
             });
-
             checkForUpdates();
         }
 
@@ -2457,61 +1984,35 @@
             stationContextMenu.style.left = '0px';
             stationContextMenu.style.top = '0px';
             stationContextMenu.classList.add('active');
-
             const menuRect = stationContextMenu.getBoundingClientRect();
             const maxLeft = window.innerWidth - menuRect.width - 8;
             const maxTop = window.innerHeight - menuRect.height - 8;
-            const left = Math.min(Math.max(8, x), Math.max(8, maxLeft));
-            const top = Math.min(Math.max(8, y), Math.max(8, maxTop));
-
-            stationContextMenu.style.left = `${left}px`;
-            stationContextMenu.style.top = `${top}px`;
+            stationContextMenu.style.left = `${Math.min(Math.max(8, x), Math.max(8, maxLeft))}px`;
+            stationContextMenu.style.top = `${Math.min(Math.max(8, y), Math.max(8, maxTop))}px`;
         }
 
         function setupContextMenu() {
-            document.addEventListener('click', () => {
-                closeStationContextMenu();
-            });
-
-            document.addEventListener('scroll', () => {
-                closeStationContextMenu();
-            }, true);
-
-            window.addEventListener('resize', () => {
-                closeStationContextMenu();
-            });
-
-            stationContextMenu.addEventListener('click', (event) => {
-                event.stopPropagation();
-            });
-
+            document.addEventListener('click', closeStationContextMenu);
+            document.addEventListener('scroll', closeStationContextMenu, true);
+            window.addEventListener('resize', closeStationContextMenu);
+            stationContextMenu.addEventListener('click', (e) => e.stopPropagation());
             contextPlayBtn.addEventListener('click', () => {
-                if (contextMenuStreamIndex >= 0) {
-                    selectStation(contextMenuStreamIndex);
-                    play();
-                }
+                if (contextMenuStreamIndex >= 0) { selectStation(contextMenuStreamIndex); play(); }
                 closeStationContextMenu();
             });
-
             contextEditBtn.addEventListener('click', () => {
-                if (contextMenuStreamId) {
-                    window.openEditModal(contextMenuStreamId);
-                }
+                if (contextMenuStreamId) window.openEditModal(contextMenuStreamId);
                 closeStationContextMenu();
             });
-
             contextDeleteBtn.addEventListener('click', () => {
-                if (contextMenuStreamId) {
-                    window.deleteStation(contextMenuStreamId);
-                }
+                if (contextMenuStreamId) window.deleteStation(contextMenuStreamId);
                 closeStationContextMenu();
             });
         }
         
         function createVisualizerBars() {
-            const barCount = 16;
             visualizer.innerHTML = '';
-            for (let i = 0; i < barCount; i++) {
+            for (let i = 0; i < 16; i++) {
                 const bar = document.createElement('div');
                 bar.className = 'visualizer-bar';
                 bar.style.height = '4px';
@@ -2521,7 +2022,6 @@
         
         function initAudioContext() {
             if (audioContext) return;
-            
             try {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioContext.createAnalyser();
@@ -2530,294 +2030,88 @@
                 source.connect(analyser);
                 analyser.connect(audioContext.destination);
                 dataArray = new Uint8Array(analyser.frequencyBinCount);
-            } catch (e) {
-                console.log('Audio context not supported');
-            }
+            } catch (e) {}
         }
         
         function updateVisualizer() {
-            if (!analyser || !dataArray) {
-                animationId = requestAnimationFrame(updateVisualizer);
-                return;
-            }
-            
+            if (!analyser || !dataArray) { animationId = requestAnimationFrame(updateVisualizer); return; }
             analyser.getByteFrequencyData(dataArray);
             const bars = visualizer.querySelectorAll('.visualizer-bar');
-            
             bars.forEach((bar, i) => {
                 const value = dataArray[i] || 0;
-                const height = Math.max(4, (value / 255) * 50);
-                bar.style.height = height + 'px';
-                const opacity = 0.3 + (value / 255) * 0.7;
-                bar.style.opacity = opacity;
+                bar.style.height = Math.max(4, (value / 255) * 50) + 'px';
+                bar.style.opacity = 0.3 + (value / 255) * 0.7;
             });
-
-            const avgEnergy = dataArray.reduce((sum, value) => sum + value, 0) / (dataArray.length || 1);
-            const normalized = Math.min(1, avgEnergy / 180);
-            nowPlayingCard.style.setProperty('--reactive-energy', normalized.toFixed(3));
-            
+            const avgEnergy = dataArray.reduce((sum, v) => sum + v, 0) / (dataArray.length || 1);
+            nowPlayingCard.style.setProperty('--reactive-energy', Math.min(1, avgEnergy / 180).toFixed(3));
             animationId = requestAnimationFrame(updateVisualizer);
         }
         
         function startVisualizer() {
             initAudioContext();
-            if (audioContext && audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
+            if (audioContext && audioContext.state === 'suspended') audioContext.resume();
             if (animationId) cancelAnimationFrame(animationId);
             updateVisualizer();
         }
         
         function stopVisualizer() {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-            const bars = visualizer.querySelectorAll('.visualizer-bar');
-            bars.forEach(bar => {
-                bar.style.height = '4px';
-                bar.style.opacity = '0.3';
-            });
+            if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+            visualizer.querySelectorAll('.visualizer-bar').forEach(bar => { bar.style.height = '4px'; bar.style.opacity = '0.3'; });
             nowPlayingCard.style.setProperty('--reactive-energy', '0');
         }
         
+        // ── Tab switching ────────────────────────────────────────────────────
+        function switchTab(activeTab, activeContent) {
+            [tabPlayer, tabLibrary, tabSettings].forEach(t => t.classList.remove('active'));
+            [playerTab, libraryTab, settingsTab].forEach(c => c.classList.remove('active'));
+            activeTab.classList.add('active');
+            activeContent.classList.add('active');
+        }
+
         function setupTabs() {
-            tabPlayer.addEventListener('click', () => {
-                tabPlayer.classList.add('active');
-                tabLibrary.classList.remove('active');
-                tabSettings.classList.remove('active');
-                playerTab.classList.add('active');
-                libraryTab.classList.remove('active');
-                settingsTab.classList.remove('active');
-            });
-            
-            tabLibrary.addEventListener('click', () => {
-                tabLibrary.classList.add('active');
-                tabPlayer.classList.remove('active');
-                tabSettings.classList.remove('active');
-                libraryTab.classList.add('active');
-                playerTab.classList.remove('active');
-                settingsTab.classList.remove('active');
-            });
-            
-            tabSettings.addEventListener('click', () => {
-                tabSettings.classList.add('active');
-                tabPlayer.classList.remove('active');
-                tabLibrary.classList.remove('active');
-                settingsTab.classList.add('active');
-                playerTab.classList.remove('active');
-                libraryTab.classList.remove('active');
-            });
-            
+            tabPlayer.addEventListener('click', () => switchTab(tabPlayer, playerTab));
+            tabLibrary.addEventListener('click', () => switchTab(tabLibrary, libraryTab));
+            tabSettings.addEventListener('click', () => switchTab(tabSettings, settingsTab));
             setupTheme();
             setupModal();
         }
         
+        function applyTheme(themeName) {
+            const theme = themes[themeName];
+            if (!theme) return;
+
+            // Apply CSS variables
+            Object.keys(theme).forEach(key => document.documentElement.style.setProperty(key, theme[key]));
+
+            // Remove all special theme body classes, then add the right one
+            allThemeBodyClasses.forEach(cls => document.body.classList.remove(cls));
+            if (themeBodyClasses[themeName]) document.body.classList.add(themeBodyClasses[themeName]);
+
+            // Background
+            const bg = theme['--md-sys-color-background'];
+            const surfaceVar = theme['--md-sys-color-surface-variant'];
+            if (themeName === 'monochrome' || themeName === 'noir') {
+                document.body.style.background = bg;
+            } else if (themeName === 'cyberpunk') {
+                document.body.style.background = `radial-gradient(ellipse at 20% 50%, rgba(255,0,102,0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(0,255,204,0.1) 0%, transparent 50%), ${bg}`;
+            } else if (themeName === 'vaporwave') {
+                document.body.style.background = `radial-gradient(ellipse at 50% 0%, rgba(255,113,206,0.2) 0%, transparent 60%), ${bg}`;
+            } else if (themeName === 'deepspace') {
+                document.body.style.background = `radial-gradient(ellipse at 30% 30%, rgba(102,0,204,0.3) 0%, transparent 60%), radial-gradient(ellipse at 70% 70%, rgba(204,0,255,0.15) 0%, transparent 50%), ${bg}`;
+            } else if (themeName === 'sakura') {
+                document.body.style.background = `radial-gradient(ellipse at 60% 20%, rgba(255,107,157,0.18) 0%, transparent 50%), ${bg}`;
+            } else {
+                document.body.style.background = `linear-gradient(135deg, ${bg} 0%, ${surfaceVar || bg} 100%)`;
+            }
+        }
+
         function setupTheme() {
-            const themes = {
-                dark: {
-                    '--md-sys-color-primary': '#e8def8',
-                    '--md-sys-color-on-primary': '#381e72',
-                    '--md-sys-color-primary-container': '#4f378b',
-                    '--md-sys-color-surface': '#1c1b1f',
-                    '--md-sys-color-on-surface': '#e6e1e5',
-                    '--md-sys-color-surface-variant': '#49454f',
-                    '--md-sys-color-on-surface-variant': '#cac4d0',
-                    '--md-sys-color-background': '#1c1b1f',
-                    '--md-card-bg': '#2d2a3e',
-                    '--md-visualizer': '#e8def8',
-                    '--md-visualizer-end': '#4f378b',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                light: {
-                    '--md-sys-color-primary': '#6750a4',
-                    '--md-sys-color-on-primary': '#ffffff',
-                    '--md-sys-color-primary-container': '#eaddff',
-                    '--md-sys-color-surface': '#fffbfe',
-                    '--md-sys-color-on-surface': '#1c1b1f',
-                    '--md-sys-color-surface-variant': '#e7e0ec',
-                    '--md-sys-color-on-surface-variant': '#49454f',
-                    '--md-sys-color-background': '#f5f0ff',
-                    '--md-card-bg': '#ffffff',
-                    '--md-visualizer': '#6750a4',
-                    '--md-visualizer-end': '#b794f4',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                midnight: {
-                    '--md-sys-color-primary': '#58a6ff',
-                    '--md-sys-color-on-primary': '#ffffff',
-                    '--md-sys-color-primary-container': '#1f6feb',
-                    '--md-sys-color-surface': '#0d1117',
-                    '--md-sys-color-on-surface': '#c9d1d9',
-                    '--md-sys-color-surface-variant': '#21262d',
-                    '--md-sys-color-on-surface-variant': '#8b949e',
-                    '--md-sys-color-background': '#0d1117',
-                    '--md-card-bg': '#161b22',
-                    '--md-visualizer': '#58a6ff',
-                    '--md-visualizer-end': '#1f6feb',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                ocean: {
-                    '--md-sys-color-primary': '#38bdf8',
-                    '--md-sys-color-on-primary': '#0c4a6e',
-                    '--md-sys-color-primary-container': '#0369a1',
-                    '--md-sys-color-surface': '#0c4a6e',
-                    '--md-sys-color-on-surface': '#e0f2fe',
-                    '--md-sys-color-surface-variant': '#164e63',
-                    '--md-sys-color-on-surface-variant': '#7dd3fc',
-                    '--md-sys-color-background': '#0c4a6e',
-                    '--md-card-bg': '#164e63',
-                    '--md-visualizer': '#38bdf8',
-                    '--md-visualizer-end': '#06b6d4',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                sunset: {
-                    '--md-sys-color-primary': '#fb7185',
-                    '--md-sys-color-on-primary': '#881337',
-                    '--md-sys-color-primary-container': '#be123c',
-                    '--md-sys-color-surface': '#1f090e',
-                    '--md-sys-color-on-surface': '#ffe4e6',
-                    '--md-sys-color-surface-variant': '#3f121c',
-                    '--md-sys-color-on-surface-variant': '#fda4af',
-                    '--md-sys-color-background': '#1f090e',
-                    '--md-card-bg': '#3f121c',
-                    '--md-visualizer': '#fb7185',
-                    '--md-visualizer-end': '#f472b6',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                forest: {
-                    '--md-sys-color-primary': '#4ade80',
-                    '--md-sys-color-on-primary': '#14532d',
-                    '--md-sys-color-primary-container': '#22c55e',
-                    '--md-sys-color-surface': '#0f1f16',
-                    '--md-sys-color-on-surface': '#dcfce7',
-                    '--md-sys-color-surface-variant': '#1a3d25',
-                    '--md-sys-color-on-surface-variant': '#86efac',
-                    '--md-sys-color-background': '#0f1f16',
-                    '--md-card-bg': '#1a3d25',
-                    '--md-visualizer': '#4ade80',
-                    '--md-visualizer-end': '#22c55e',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                amber: {
-                    '--md-sys-color-primary': '#f59e0b',
-                    '--md-sys-color-on-primary': '#1f1305',
-                    '--md-sys-color-primary-container': '#d97706',
-                    '--md-sys-color-surface': '#24160a',
-                    '--md-sys-color-on-surface': '#fde68a',
-                    '--md-sys-color-surface-variant': '#3d2a16',
-                    '--md-sys-color-on-surface-variant': '#fcd34d',
-                    '--md-sys-color-background': '#24160a',
-                    '--md-card-bg': '#3d2a16',
-                    '--md-visualizer': '#fbbf24',
-                    '--md-visualizer-end': '#f59e0b',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                rosegold: {
-                    '--md-sys-color-primary': '#fda4af',
-                    '--md-sys-color-on-primary': '#3e1c25',
-                    '--md-sys-color-primary-container': '#fb7185',
-                    '--md-sys-color-surface': '#25161b',
-                    '--md-sys-color-on-surface': '#ffe4e6',
-                    '--md-sys-color-surface-variant': '#3b232a',
-                    '--md-sys-color-on-surface-variant': '#fecdd3',
-                    '--md-sys-color-background': '#25161b',
-                    '--md-card-bg': '#3b232a',
-                    '--md-visualizer': '#fda4af',
-                    '--md-visualizer-end': '#fb7185',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                graphite: {
-                    '--md-sys-color-primary': '#9ca3af',
-                    '--md-sys-color-on-primary': '#111318',
-                    '--md-sys-color-primary-container': '#6b7280',
-                    '--md-sys-color-surface': '#111318',
-                    '--md-sys-color-on-surface': '#e5e7eb',
-                    '--md-sys-color-surface-variant': '#1f2937',
-                    '--md-sys-color-on-surface-variant': '#cbd5e1',
-                    '--md-sys-color-background': '#111318',
-                    '--md-card-bg': '#1f2937',
-                    '--md-visualizer': '#cbd5e1',
-                    '--md-visualizer-end': '#6b7280',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                },
-                monochrome: {
-                    '--md-sys-color-primary': '#ffffff',
-                    '--md-sys-color-on-primary': '#000000',
-                    '--md-sys-color-primary-container': '#2a2a2a',
-                    '--md-sys-color-surface': '#000000',
-                    '--md-sys-color-on-surface': '#ffffff',
-                    '--md-sys-color-surface-variant': '#1a1a1a',
-                    '--md-sys-color-on-surface-variant': '#d4d4d4',
-                    '--md-sys-color-background': '#000000',
-                    '--md-card-bg': '#000000',
-                    '--md-visualizer': '#ffffff',
-                    '--md-visualizer-end': '#ffffff',
-                    '--md-shape-corner-none': '0',
-                    '--md-shape-corner-extra-small': '4px',
-                    '--md-shape-corner-small': '8px',
-                    '--md-shape-corner-medium': '12px',
-                    '--md-shape-corner-large': '16px',
-                    '--md-shape-corner-extra-large': '28px'
-                }
-            };
-            
             const savedTheme = localStorage.getItem('lofi-theme') || 'dark';
             applyTheme(savedTheme);
 
             const themeOptions = document.querySelectorAll('.theme-option');
-            themeOptions.forEach(option => option.classList.remove('active'));
-            
             themeOptions.forEach(option => {
-                if (option.dataset.theme === savedTheme) {
-                    option.classList.add('active');
-                }
-                
+                option.classList.toggle('active', option.dataset.theme === savedTheme);
                 option.addEventListener('click', () => {
                     themeOptions.forEach(o => o.classList.remove('active'));
                     option.classList.add('active');
@@ -2825,29 +2119,6 @@
                     localStorage.setItem('lofi-theme', option.dataset.theme);
                 });
             });
-            
-            function applyTheme(themeName) {
-                const theme = themes[themeName];
-                if (!theme) return;
-                
-                Object.keys(theme).forEach(key => {
-                    document.documentElement.style.setProperty(key, theme[key]);
-                });
-
-                if (themeName === 'monochrome') {
-                    document.body.classList.add('mono-theme');
-                } else {
-                    document.body.classList.remove('mono-theme');
-                }
-                
-                if (themeName === 'monochrome') {
-                    document.body.style.background = theme['--md-sys-color-background'] || '#000000';
-                } else {
-                    document.body.style.background = theme['--md-sys-color-background']
-                        ? `linear-gradient(135deg, ${theme['--md-sys-color-background']} 0%, ${theme['--md-sys-color-surface-variant']} 100%)`
-                        : 'linear-gradient(135deg, #1c1b1f 0%, #16213e 100%)';
-                }
-            }
         }
         
         let modalMode = null;
@@ -2862,11 +2133,7 @@
             const modalCancel = document.getElementById('modalCancel');
             const modalSave = document.getElementById('modalSave');
             
-            function closeModal() {
-                modalOverlay.classList.remove('active');
-                modalMode = null;
-                modalStationId = null;
-            }
+            function closeModal() { modalOverlay.classList.remove('active'); modalMode = null; modalStationId = null; }
             
             function fillSectionSelect(selectedId) {
                 modalSectionSelect.innerHTML = '';
@@ -2874,15 +2141,13 @@
                     const option = document.createElement('option');
                     option.value = section.id;
                     option.textContent = section.name;
-                    if (section.id === selectedId) {
-                        option.selected = true;
-                    }
+                    if (section.id === selectedId) option.selected = true;
                     modalSectionSelect.appendChild(option);
                 });
             }
             
             window.openEditModal = (streamId) => {
-                const station = streams.find(stream => stream.id === streamId);
+                const station = streams.find(s => s.id === streamId);
                 if (!station) return;
                 modalMode = 'edit-station';
                 modalStationId = streamId;
@@ -2912,150 +2177,82 @@
             
             window.deleteStation = (streamId) => {
                 closeStationContextMenu();
-                const stream = streams.find(item => item.id === streamId);
+                const stream = streams.find(i => i.id === streamId);
                 if (!stream) return;
-                
                 if (stream.isDefault) {
-                    const defaultIndex = defaultStreams.findIndex(item => item.id === streamId);
-                    if (defaultIndex >= 0) {
-                        defaultStreams.splice(defaultIndex, 1);
-                        saveDefaultStreams();
-                    }
+                    const idx = defaultStreams.findIndex(i => i.id === streamId);
+                    if (idx >= 0) { defaultStreams.splice(idx, 1); saveDefaultStreams(); }
                 } else {
-                    customStreams = customStreams.filter(item => item.id !== streamId);
+                    customStreams = customStreams.filter(i => i.id !== streamId);
                     saveCustomStreams();
                 }
-                
                 buildStreams();
-                if (currentStreamIndex >= streams.length) {
-                    currentStreamIndex = Math.max(0, streams.length - 1);
-                }
-                populateSelect();
-                updateStationName();
-                saveStation();
-                renderLibrary();
+                if (currentStreamIndex >= streams.length) currentStreamIndex = Math.max(0, streams.length - 1);
+                populateSelect(); updateStationName(); saveStation(); renderLibrary();
             };
             
             window.deleteSection = (sectionId) => {
-                const section = sections.find(item => item.id === sectionId);
+                const section = sections.find(i => i.id === sectionId);
                 if (!section || section.locked) return;
-                streams.forEach(stream => {
-                    if (stream.sectionId === sectionId) {
-                        stream.sectionId = stream.isDefault ? 'section-lofi' : 'section-custom';
-                    }
-                });
-                sections = sections.filter(item => item.id !== sectionId);
-                saveSections();
-                saveDefaultStreams();
-                saveCustomStreams();
-                renderLibrary();
+                streams.forEach(stream => { if (stream.sectionId === sectionId) stream.sectionId = stream.isDefault ? 'section-lofi' : 'section-custom'; });
+                sections = sections.filter(i => i.id !== sectionId);
+                saveSections(); saveDefaultStreams(); saveCustomStreams(); renderLibrary();
             };
             
             function saveModal() {
                 const title = modalInput.value.trim();
-                if (!title) {
-                    closeModal();
-                    return;
-                }
-                
+                if (!title) { closeModal(); return; }
                 if (modalMode === 'create-section') {
-                    sections.push({
-                        id: generateId('section'),
-                        name: title,
-                        locked: false
-                    });
-                    saveSections();
-                    renderLibrary();
-                    closeModal();
-                    return;
+                    sections.push({ id: generateId('section'), name: title, locked: false });
+                    saveSections(); renderLibrary(); closeModal(); return;
                 }
-                
                 if (modalMode === 'edit-station' && modalStationId) {
                     const newUrl = modalUrlInput.value.trim();
-                    if (!newUrl || (!newUrl.startsWith('http://') && !newUrl.startsWith('https://'))) {
-                        statusText.textContent = 'Invalid URL';
-                        closeModal();
-                        return;
-                    }
-                    
-                    const station = streams.find(stream => stream.id === modalStationId);
-                    if (!station) {
-                        closeModal();
-                        return;
-                    }
-                    
-                    station.name = title;
-                    station.url = newUrl;
-                    station.sectionId = modalSectionSelect.value;
-                    
-                    saveDefaultStreams();
-                    saveCustomStreams();
-                    populateSelect();
-                    updateStationName();
-                    renderLibrary();
+                    if (!newUrl || (!newUrl.startsWith('http://') && !newUrl.startsWith('https://'))) { statusText.textContent = 'Invalid URL'; closeModal(); return; }
+                    const station = streams.find(s => s.id === modalStationId);
+                    if (!station) { closeModal(); return; }
+                    station.name = title; station.url = newUrl; station.sectionId = modalSectionSelect.value;
+                    saveDefaultStreams(); saveCustomStreams(); populateSelect(); updateStationName(); renderLibrary();
                 }
-                
                 closeModal();
             }
             
             modalCancel.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', (e) => {
-                if (e.target === modalOverlay) closeModal();
-            });
+            modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
             modalSave.addEventListener('click', saveModal);
+            modalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveModal(); });
         }
         
         function renderLibrary() {
             let html = '';
-            
             sections.forEach(section => {
-                const items = streams.map((station, index) => ({ station, index }))
-                    .filter(item => item.station.sectionId === section.id);
-                
-                if (items.length === 0 && section.id !== 'section-custom') {
-                    return;
-                }
-                
-                html += `<div class="category-title">${section.name}${section.locked ? '' : `<button class="action-btn delete-btn section-delete-btn" onclick="event.stopPropagation(); deleteSection('${section.id}')"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>`}</div>`;
-                
+                const items = streams.map((station, index) => ({ station, index })).filter(item => item.station.sectionId === section.id);
+                if (items.length === 0 && section.id !== 'section-custom') return;
+                html += `<div class="category-title">${section.name}${section.locked ? '' : `<button class="action-btn delete-btn section-delete-btn" onclick="event.stopPropagation();deleteSection('${section.id}')"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>`}</div>`;
                 items.forEach(item => {
-                    const station = item.station;
-                    const globalIdx = item.index;
+                    const { station, index: globalIdx } = item;
                     const isActive = globalIdx === currentStreamIndex;
-                    const url = station.url.replace('https://', '').replace('http://', '').split('/')[0];
+                    const urlHost = station.url.replace('https://', '').replace('http://', '').split('/')[0];
                     const health = streamHealth[station.id];
                     const healthStatus = health && health.status ? health.status : 'unchecked';
-                    const healthLabel = getHealthLabel(health);
-                    html += `
-                        <div class="station-item ${isActive ? 'active' : ''}" data-index="${globalIdx}">
-                            <div class="station-icon">
-                                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                            </div>
-                            <div class="station-info">
-                                <div class="station-item-name">${station.name}</div>
-                                <div class="station-item-url">${url}</div>
-                                <div class="station-health"><span class="health-dot ${healthStatus}"></span>${healthLabel}</div>
-                            </div>
+                    html += `<div class="station-item ${isActive ? 'active' : ''}" data-index="${globalIdx}">
+                        <div class="station-icon"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div>
+                        <div class="station-info">
+                            <div class="station-item-name">${station.name}</div>
+                            <div class="station-item-url">${urlHost}</div>
+                            <div class="station-health"><span class="health-dot ${healthStatus}"></span>${getHealthLabel(health)}</div>
                         </div>
-                    `;
+                    </div>`;
                 });
             });
-            
             stationList.innerHTML = html;
-            
             document.querySelectorAll('.station-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const idx = parseInt(item.dataset.index, 10);
-                    selectStation(idx);
-                    play();
-                });
-
-                item.addEventListener('contextmenu', (event) => {
-                    event.preventDefault();
+                item.addEventListener('click', () => { selectStation(parseInt(item.dataset.index, 10)); play(); });
+                item.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
                     const idx = parseInt(item.dataset.index, 10);
                     const stream = streams[idx];
-                    if (!stream) return;
-                    openStationContextMenu(event.clientX, event.clientY, stream.id, idx);
+                    if (stream) openStationContextMenu(e.clientX, e.clientY, stream.id, idx);
                 });
             });
         }
@@ -3075,24 +2272,20 @@
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     if (Array.isArray(parsed)) {
-                        customStreams = parsed.map((stream, index) => ({
-                            id: stream.id || generateId(`custom-${index}`),
-                            name: stream.name || 'Custom Stream',
-                            url: stream.url || '',
-                            sectionId: stream.sectionId || 'section-custom',
+                        customStreams = parsed.map((s, i) => ({
+                            id: s.id || generateId(`custom-${i}`),
+                            name: s.name || 'Custom Stream',
+                            url: s.url || '',
+                            sectionId: s.sectionId || 'section-custom',
                             isDefault: false
-                        })).filter(stream => stream.url);
+                        })).filter(s => s.url);
                     }
                 }
-            } catch (e) {
-                customStreams = [];
-            }
+            } catch (e) { customStreams = []; }
         }
         
         function saveCustomStreams() {
-            try {
-                localStorage.setItem('lofi-custom-streams', JSON.stringify(customStreams));
-            } catch (e) {}
+            try { localStorage.setItem('lofi-custom-streams', JSON.stringify(customStreams)); } catch (e) {}
         }
         
         function populateSelect() {
@@ -3111,26 +2304,21 @@
                 const saved = localStorage.getItem('lofi-current-station');
                 if (saved !== null) {
                     const idx = parseInt(saved, 10);
-                    if (!Number.isNaN(idx) && idx >= 0 && idx < streams.length) {
-                        currentStreamIndex = idx;
-                    }
+                    if (!Number.isNaN(idx) && idx >= 0 && idx < streams.length) currentStreamIndex = idx;
                 }
                 updateStationName();
             } catch (e) {}
         }
         
         function saveStation() {
-            try {
-                localStorage.setItem('lofi-current-station', currentStreamIndex);
-            } catch (e) {}
+            try { localStorage.setItem('lofi-current-station', currentStreamIndex); } catch (e) {}
         }
         
         function updateStationName() {
             const stream = streams[currentStreamIndex];
             if (!stream) return;
             stationName.textContent = stream.name;
-            const url = stream.url.replace('https://', '').replace('http://', '').split('/')[0];
-            stationUrl.textContent = url;
+            stationUrl.textContent = stream.url.replace('https://', '').replace('http://', '').split('/')[0];
         }
         
         function loadStream(index) {
@@ -3169,31 +2357,20 @@
         }
         
         function togglePlay() {
-            if (isPlaying) {
-                pause();
-            } else {
-                play();
-            }
+            if (isPlaying) pause(); else play();
         }
         
         function updateUI() {
-            if (isPlaying) {
-                playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
-            } else {
-                playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-            }
+            playIcon.innerHTML = isPlaying
+                ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
+                : '<path d="M8 5v14l11-7z"/>';
         }
         
         function handleStreamError() {
             retryCount++;
-            console.log('Stream error, retry:', retryCount);
-            
             if (retryCount < maxRetries) {
-                const nextIndex = (currentStreamIndex + 1) % streams.length;
-                loadStream(nextIndex);
-                if (isPlaying) {
-                    audio.play().catch(() => {});
-                }
+                loadStream((currentStreamIndex + 1) % streams.length);
+                if (isPlaying) audio.play().catch(() => {});
             } else {
                 statusText.textContent = 'Connection failed';
                 statusDot.classList.remove('playing');
@@ -3202,55 +2379,37 @@
                 updateUI();
             }
         }
-        
+
+        // ── BUG FIX: addCustomStream now switches to Player tab ───────────
         function addCustomStream(urlToAdd) {
-            const url = urlToAdd || customUrl.value.trim();
+            const url = (urlToAdd || customUrl.value || '').trim();
             if (!url) return;
-            
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 statusText.textContent = 'Invalid URL';
                 return;
             }
-            
             const name = url.replace('https://', '').replace('http://', '').split('/')[0] || 'Custom Stream';
-            
-            customStreams.push({
-                id: generateId('custom-stream'),
-                name: name,
-                url: url,
-                sectionId: 'section-custom',
-                isDefault: false
-            });
+            customStreams.push({ id: generateId('custom-stream'), name, url, sectionId: 'section-custom', isDefault: false });
             saveCustomStreams();
-            
             buildStreams();
             ensureSections();
             saveSections();
             populateSelect();
             renderLibrary();
-            
             const newIndex = streams.length - 1;
             currentStreamIndex = newIndex;
             stationSelect.value = String(newIndex);
             updateStationName();
-            
             customUrl.value = '';
             libraryUrl.value = '';
-            
-            tabLibrary.click();
+            // Switch to Player tab to show the new station playing
+            switchTab(tabPlayer, playerTab);
             play();
             statusText.textContent = 'Station added';
         }
         
-        audio.addEventListener('error', (e) => {
-            console.error('Audio error:', e);
-            handleStreamError();
-        });
-        
-        audio.addEventListener('stalled', () => {
-            console.log('Stream stalled');
-        });
-        
+        audio.addEventListener('error', handleStreamError);
+        audio.addEventListener('stalled', () => console.log('Stream stalled'));
         audio.addEventListener('playing', () => {
             retryCount = 0;
             statusText.textContent = 'Now playing';
@@ -3262,32 +2421,14 @@
             currentStreamIndex = idx;
             updateStationName();
             saveStation();
-            if (isPlaying) {
-                loadStream(idx);
-                audio.play().catch(() => {});
-            }
+            if (isPlaying) { loadStream(idx); audio.play().catch(() => {}); }
         });
         
-        addSectionBtn.addEventListener('click', () => {
-            window.openSectionModal();
-        });
-        
+        addSectionBtn.addEventListener('click', () => window.openSectionModal());
         addBtn.addEventListener('click', () => addCustomStream());
-        
-        customUrl.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addCustomStream();
-            }
-        });
-        
+        customUrl.addEventListener('keypress', (e) => { if (e.key === 'Enter') addCustomStream(); });
         libraryAddBtn.addEventListener('click', () => addCustomStream(libraryUrl.value));
-        
-        libraryUrl.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addCustomStream(libraryUrl.value);
-            }
-        });
-        
+        libraryUrl.addEventListener('keypress', (e) => { if (e.key === 'Enter') addCustomStream(libraryUrl.value); });
         playBtn.addEventListener('click', togglePlay);
         
         volumeSlider.addEventListener('input', (e) => {
@@ -3296,30 +2437,12 @@
             saveVolume(e.target.value);
         });
         
-        volumeSlider.addEventListener('click', (e) => {
-            if (e.detail === 2) {
-                audio.muted = !audio.muted;
-            }
-        });
-        
-        minimizeBtn.addEventListener('click', () => {
-            window.electronAPI.minimize();
-        });
-        
-        closeBtn.addEventListener('click', () => {
-            window.electronAPI.close();
-        });
-        
-        if (window.electronAPI) {
-            window.electronAPI.onTogglePlay(() => {
-                togglePlay();
-            });
-        }
+        minimizeBtn.addEventListener('click', () => window.electronAPI && window.electronAPI.minimize());
+        closeBtn.addEventListener('click', () => window.electronAPI && window.electronAPI.close());
+        if (window.electronAPI) window.electronAPI.onTogglePlay(() => togglePlay());
         
         function saveVolume(value) {
-            try {
-                localStorage.setItem('lofi-volume', value);
-            } catch (e) {}
+            try { localStorage.setItem('lofi-volume', value); } catch (e) {}
         }
         
         function loadVolume() {
@@ -3329,14 +2452,15 @@
                     volumeSlider.value = saved;
                     volumeValue.textContent = saved + '%';
                     audio.volume = saved / 100;
+                } else {
+                    audio.volume = volumeSlider.value / 100;
                 }
-            } catch (e) {}
+            } catch (e) {
+                audio.volume = volumeSlider.value / 100;
+            }
         }
         
         init();
-        loadVolume();
-        
-        audio.volume = volumeSlider.value / 100;
     </script>
 </body>
 </html>

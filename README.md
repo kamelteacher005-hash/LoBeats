@@ -1,7 +1,7 @@
 # LoBeats
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.1.0-2ea44f" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.2.0-2ea44f" alt="Version">
   <img src="https://img.shields.io/badge/platform-Windows-0078d7" alt="Platform Windows">
   <img src="https://img.shields.io/badge/platform-Linux-4DB33D" alt="Platform Linux">
   <img src="https://img.shields.io/badge/Electron-41.0.3-47848f?logo=electron&logoColor=white" alt="Electron">
@@ -12,10 +12,9 @@
   <img src="https://img.shields.io/github/forks/alnyxcs/LoBeats?style=social" alt="GitHub Forks">
 </p>
 
+LoBeats is a desktop internet radio player built with Electron. It focuses on a Lo‑Fi first experience with curated stations, distraction-free playback, and expressive visuals.
 
-LoBeats is a desktop internet radio player built with Electron. It focuses on a Lo-Fi first experience with curated stations, distraction-free playback, and expressive visuals.
-
-Version 1.1.0 brings branding updates, Windows and Linux packaging changes, and incremental polish across the UI.
+Version 1.2.0 brings branding updates, Windows and Linux packaging changes, and incremental polish across the UI.
 
 Table of contents
 - Quick Start
