@@ -1,6 +1,6 @@
 {
   "name": "lobeats",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "LoBeats - Internet Radio Player",
   "main": "src/main.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build:linux": "electron-builder --linux"
   },
   "author": "Alnyx <alnyxcs@gmail.com>",
-  "license": "ISC",
+  "license": "GNU GENERAL PUBLIC LICENSE",
   "dependencies": {
     "electron-log": "^5.4.3"
   },
@@ -20,6 +20,7 @@
   "build": {
     "appId": "com.lobeats.app",
     "productName": "LoBeats",
+    "icon": "Assets/logo.png",
     "directories": {
       "output": "dist"
     },
@@ -29,7 +30,6 @@
     },
     "linux": {
       "target": [
-        "AppImage",
         "zip"
       ],
       "category": "AudioVideo",
