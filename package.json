@@ -1,6 +1,6 @@
 {
   "name": "lobeats",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "LoBeats - Internet Radio Player",
   "main": "src/main.js",
   "scripts": {
@@ -11,7 +11,8 @@
   "author": "Alnyx <alnyxcs@gmail.com>",
   "license": "GNU GENERAL PUBLIC LICENSE",
   "dependencies": {
-    "electron-log": "^5.4.3"
+    "electron-log": "^5.4.3",
+    "electron-updater": "^6.3.9"
   },
   "devDependencies": {
     "electron": "^41.0.3",
@@ -37,7 +38,30 @@
       "artifactName": "LoBeats-linux.${ext}"
     },
     "files": [
-      "src/**/*"
-    ]
+      "src/**/*",
+      "node_modules/electron-log/**/*",
+      "node_modules/electron-updater/**/*",
+      "node_modules/builder-util-runtime/**/*",
+      "node_modules/semver/**/*",
+      "node_modules/axios/**/*",
+      "node_modules/form-data/**/*",
+      "node_modules/proxy-from-env/**/*",
+      "node_modules/conf/**/*",
+      "node_modules/atomically/**/*",
+      "node_modules/dot-prop/**/*",
+      "node_modules/env-paths/**/*",
+      "node_modules/json-schema-typed/**/*",
+      "node_modules/ajv/**/*",
+      "node_modules/ajv-formats/**/*",
+      "node_modules/debounce-fn/**/*",
+      "node_modules/mimic-fn/**/*",
+      "node_modules/onetime/**/*",
+      "node_modules/type-fest/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "alnyxcs",
+      "repo": "LoBeats"
+    }
   }
 }

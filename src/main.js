@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain, nativeImage, shell, dialog } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const https = require('https');
 const http = require('http');
@@ -21,6 +22,16 @@ process.on('unhandledRejection', (reason) => {
 let mainWindow = null;
 let tray = null;
 let isQuitting = false;
+
+autoUpdater.logger = log;
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = true;
+autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'alnyxcs',
+    repo: 'LoBeats'
+});
+
 const UPDATE_REPO_OWNER = 'alnyxcs';
 const UPDATE_REPO_NAME = 'LoBeats';
 const STABLE_ASSETS = {
@@ -319,27 +330,78 @@ ipcMain.handle('get-app-path', () => {
     return __dirname;
 });
 
+autoUpdater.on('checking-for-update', () => {
+    log.info('Checking for updates...');
+    if (mainWindow) {
+        mainWindow.webContents.send('update-status', { status: 'checking' });
+    }
+});
+
+autoUpdater.on('update-available', (info) => {
+    log.info('Update available:', info.version);
+    if (mainWindow) {
+        mainWindow.webContents.send('update-status', {
+            status: 'available',
+            version: info.version
+        });
+    }
+});
+
+autoUpdater.on('update-not-available', () => {
+    log.info('No updates available');
+    if (mainWindow) {
+        mainWindow.webContents.send('update-status', { status: 'not-available' });
+    }
+});
+
+autoUpdater.on('download-progress', (progress) => {
+    log.info(`Download progress: ${progress.percent.toFixed(1)}%`);
+    if (mainWindow) {
+        mainWindow.webContents.send('update-status', {
+            status: 'downloading',
+            percent: progress.percent
+        });
+    }
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+    log.info('Update downloaded:', info.version);
+    if (mainWindow) {
+        mainWindow.webContents.send('update-status', {
+            status: 'downloaded',
+            version: info.version
+        });
+    }
+});
+
+autoUpdater.on('error', (error) => {
+    log.error('AutoUpdater error:', error);
+    if (mainWindow) {
+        mainWindow.webContents.send('update-status', {
+            status: 'error',
+            error: error.message
+        });
+    }
+});
+
 ipcMain.handle('check-for-updates', async () => {
     try {
-        const platform = process.platform;
-        const currentVersion = app.getVersion();
-        const release = await fetchLatestRelease();
-        const latestVersion = String(release.tag_name || '').replace(/^v/i, '');
-        const hasUpdate = isVersionNewer(currentVersion, latestVersion);
-        const platformAsset = pickReleaseAsset(release.assets, platform);
-        const downloadUrl = (platformAsset && platformAsset.browser_download_url)
-            || getStableLatestDownloadUrl(platform)
-            || release.html_url;
-
+        const result = await autoUpdater.checkForUpdates();
+        if (result && result.updateInfo) {
+            const currentVersion = app.getVersion();
+            const latestVersion = String(result.updateInfo.version || '').replace(/^v/i, '');
+            return {
+                ok: true,
+                currentVersion,
+                latestVersion,
+                hasUpdate: isVersionNewer(currentVersion, latestVersion)
+            };
+        }
         return {
             ok: true,
-            platform,
-            currentVersion,
-            latestVersion,
-            hasUpdate,
-            downloadUrl,
-            assetName: platformAsset ? platformAsset.name : null,
-            releasePageUrl: release.html_url
+            currentVersion: app.getVersion(),
+            latestVersion: app.getVersion(),
+            hasUpdate: false
         };
     } catch (error) {
         log.error('Update check failed:', error);
@@ -348,6 +410,22 @@ ipcMain.handle('check-for-updates', async () => {
             error: error.message || 'Failed to check updates'
         };
     }
+});
+
+ipcMain.handle('download-update', async () => {
+    try {
+        await autoUpdater.downloadUpdate();
+        return { ok: true };
+    } catch (error) {
+        log.error('Update download failed:', error);
+        return { ok: false, error: error.message || 'Failed to download update' };
+    }
+});
+
+ipcMain.handle('install-update', () => {
+    isQuitting = true;
+    autoUpdater.quitAndInstall(false, true);
+    return { ok: true };
 });
 
 ipcMain.handle('open-external-url', async (_, url) => {
